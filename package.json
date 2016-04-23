@@ -20,7 +20,6 @@
     "bootstrap": "3.3.6",
     "d3-array": "0.7.1",
     "d3-scale": "0.6.4",
-    "d3-selection": "^0.7.0",
     "d3-shape": "0.6.0",
     "d3-timer": "^0.4.1",
     "react": "15.0.1",
