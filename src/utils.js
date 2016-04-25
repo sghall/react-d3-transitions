@@ -1,6 +1,11 @@
 import { area, stack, stackOffsetSilhouette } from 'd3-shape';
-import { extent, merge } from 'd3-array';
-import { scaleBand, scaleLinear } from 'd3-scale';
+import { extent, merge, range } from 'd3-array';
+import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
+
+export let colors = scaleOrdinal()
+  .range(range(100).map(() => {
+    return `rgb(0,${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`;
+  }));
 
 // Adapted from https://bl.ocks.org/mbostock/4060954
 function genRandomSeries(m) {
