@@ -104,4 +104,60 @@ export function getData(n, m, dims) {
   return result;
 } 
 
+export function getTimeSeries(n, m, dims) {
+  let dataSet = [];
+  let xDomain = {};
+  let yDomain = [];
+  let zDomain = {};
+
+  let series = {}; 
+
+  for (let i = 0; i < n; i++) {
+    series[`series-${i}`] = genRandomSeries(m);
+  }
+
+  for (let i = 0; i < m; i++) {
+    let xVal = `x-${leftpad(i, 5)}`;
+    let data = {xVal: xVal};
+    xDomain[xVal] = true;
+
+    for (let key in series) {
+      data[key] = series[key][i];
+    }
+    dataSet.push(data);
+  }
+
+  xDomain = Object.keys(xDomain);
+  zDomain = Object.keys(series);
+
+  let layout = stack()
+    .keys(zDomain)
+    .value((d, k) => d[k])
+    .offset(stackOffsetSilhouette)(dataSet);
+
+  let xScale = scaleBand()
+    .range([0, dims[0]])
+    .domain(xDomain);
+
+  yDomain = extent(merge(merge(layout)));
+
+  let yScale = scaleLinear()
+    .range([0, dims[1]])
+    .domain(yDomain);
+
+  let result = [];
+
+  for (let k = 0; k < zDomain.length; k++) {
+    series[zDomain[k]].path = area()
+      .x(d => xScale(d))
+      .y1((d, i) => yScale(layout[k][i][1]))
+      .y0((d, i) => yScale(layout[k][i][0]))(xDomain);
+
+    series[zDomain[k]].name = zDomain[k];
+
+    result.push(series[zDomain[k]]);
+  }
+
+  return result;
+} 
 
