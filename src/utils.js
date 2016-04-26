@@ -1,6 +1,8 @@
 import { area, stack, stackOffsetSilhouette } from 'd3-shape';
+import moment from 'moment';
+
 import { extent, merge, range } from 'd3-array';
-import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
+import { scaleBand, scaleLinear, scaleOrdinal, scaleUtc } from 'd3-scale';
 
 export let colors = scaleOrdinal()
   .range(range(100).map(() => {
@@ -110,6 +112,8 @@ export function getTimeSeries(n, m, dims) {
   let yDomain = [];
   let zDomain = {};
 
+  let currentTime = moment(new Date().toISOString());
+
   let series = {}; 
 
   for (let i = 0; i < n; i++) {
@@ -117,17 +121,17 @@ export function getTimeSeries(n, m, dims) {
   }
 
   for (let i = 0; i < m; i++) {
-    let xVal = `x-${leftpad(i, 5)}`;
-    let data = {xVal: xVal};
-    xDomain[xVal] = true;
+    let value = currentTime.clone().subtract(i * m, 'minutes').toISOString();
+    let point = {xVal: value};
+    xDomain[value] = true;
 
     for (let key in series) {
-      data[key] = series[key][i];
+      point[key] = series[key][i];
     }
-    dataSet.push(data);
+    dataSet.push(point);
   }
 
-  xDomain = Object.keys(xDomain);
+  xDomain = Object.keys(xDomain).sort();
   zDomain = Object.keys(series);
 
   let layout = stack()
@@ -135,9 +139,9 @@ export function getTimeSeries(n, m, dims) {
     .value((d, k) => d[k])
     .offset(stackOffsetSilhouette)(dataSet);
 
-  let xScale = scaleBand()
+  window.xScale = scaleUtc()
     .range([0, dims[0]])
-    .domain(xDomain);
+    .domain([xDomain[0], xDomain[xDomain.length - 1]]);
 
   yDomain = extent(merge(merge(layout)));
 
@@ -158,6 +162,11 @@ export function getTimeSeries(n, m, dims) {
     result.push(series[zDomain[k]]);
   }
 
+  result.xDomain = [xDomain[0], xDomain[xDomain.length - 1]];
+  result.yDomain = yDomain;
+
   return result;
-} 
+}
+
+console.log(getTimeSeries(20, 200, [1000, 200]));
 

@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import Example from './components';
 import DataGenerator from './components/DataGenerator';
+import utils from './utils';
 
 import configureStore from './store';
 let store = configureStore();
