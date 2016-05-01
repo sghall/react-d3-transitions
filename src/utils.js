@@ -24,13 +24,15 @@ export function getUpdateHandler(keyFunc) {
         cursor -= 1;
       } else if (mounted[key] && !removed[key]) {
         result[key] = {
-          datum: data[i],
+          udid: key,
+          data: data[i],
           stage: 'updating',
           index: cursor
         };
       } else {
         result[key] = {
-          datum: data[i],
+          udid: key,
+          data: data[i],
           stage: 'mounting',
           index: cursor
         };
@@ -40,7 +42,8 @@ export function getUpdateHandler(keyFunc) {
     for (let key in mounted) {
       if (!result[key] && !removed[key]) {
         result[key] = {
-          datum: mounted[key].datum,
+          udid: mounted[key].udid,
+          data: mounted[key].data,
           stage: 'removing',
           index: mounted[key].index
         };
