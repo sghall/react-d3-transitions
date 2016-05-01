@@ -9,6 +9,52 @@ export let colors = scaleOrdinal()
     return `rgb(0,${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`;
   }));
 
+export function getUpdateHandler(keyFunc) {
+  return function(mounted, removed, data) {
+    let result = {};
+
+    let cursor = 0;
+
+    for (let i = 0; i < data.length; i++) {
+      let key = keyFunc(data[i]);
+
+      cursor += 1;
+
+      if (mounted[key] && removed[key]) {
+        cursor -= 1;
+      } else if (mounted[key] && !removed[key]) {
+        result[key] = {
+          datum: data[i],
+          stage: 'updating',
+          index: cursor
+        };
+      } else {
+        result[key] = {
+          datum: data[i],
+          stage: 'mounting',
+          index: cursor
+        };
+      }
+    }
+
+    for (let key in mounted) {
+      if (!result[key] && !removed[key]) {
+        result[key] = {
+          datum: mounted[key].data,
+          stage: 'removing',
+          index: mounted[key].index
+        };
+      }
+    }
+
+    return result;
+}
+
+
+
+
+
+
 // Adapted from https://bl.ocks.org/mbostock/4060954
 function genRandomSeries(m) {
 
