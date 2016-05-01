@@ -48,7 +48,7 @@ export function getUpdateHandler(keyFunc) {
     }
 
     return result;
-  }
+  };
 }
 
 // Adapted from https://bl.ocks.org/mbostock/4060954
