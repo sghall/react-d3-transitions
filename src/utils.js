@@ -40,7 +40,7 @@ export function getUpdateHandler(keyFunc) {
     for (let key in mounted) {
       if (!result[key] && !removed[key]) {
         result[key] = {
-          datum: mounted[key].data,
+          datum: mounted[key].datum,
           stage: 'removing',
           index: mounted[key].index
         };
@@ -48,12 +48,8 @@ export function getUpdateHandler(keyFunc) {
     }
 
     return result;
+  }
 }
-
-
-
-
-
 
 // Adapted from https://bl.ocks.org/mbostock/4060954
 function genRandomSeries(m) {
