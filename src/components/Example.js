@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Container } from './common/Container';
-import { Text } from './Text';
+import { Bar } from './Bar';
 import { removedItem, fetchData } from '../actions/exampleActions';
 
 export class Example extends Component {
@@ -19,15 +19,15 @@ export class Example extends Component {
   }
 
   render() {
-    let { mounted } = this.props;
-    let view = [1000, 500];
-    let trbl = [35, 50, 50, 50];
+    let { view, trbl, mounted } = this.props;
 
-    let textNodes = Object.keys(mounted).map(key => {
+
+    let barNodes = Object.keys(mounted).map(key => {
+      let bar = mounted[key];
       return (
-        <Text 
-          key={key}
-          data={mounted[key]}
+        <Bar 
+          key={bar.udid}
+          data={bar}
           removeItem={this.removeItem.bind(this)}
         />
       );
@@ -50,7 +50,7 @@ export class Example extends Component {
         <div className='row'>
           <div className='col-md-12'>
             <Container view={view} trbl={trbl}>
-              {textNodes}
+              {barNodes}
             </Container>
           </div>
         </div>
@@ -60,6 +60,9 @@ export class Example extends Component {
 }
 
 Example.propTypes = {
+  view: PropTypes.array.isRequired,
+  trbl: PropTypes.array.isRequired,
+  sortKey: PropTypes.string.isRequired,
   mounted: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
@@ -68,6 +71,9 @@ function mapStateToProps(state) {
   const { example } = state;
 
   return {
+    view: example.view,
+    trbl: example.trbl,
+    sortKey: example.sortKey,
     mounted: example.mounted
   };
 }

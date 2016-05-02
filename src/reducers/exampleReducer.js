@@ -18,13 +18,13 @@ function removeNode(state, key) {
 }
 
 let initialState = {
-  view: [1000, 200],         // ViewBox: Width, Height
-  trbl: [10, 10, 10, 10],    // Margins: Top, Right, Bottom, Lrft
+  view: [1000, 300],         // ViewBox: Width, Height
+  trbl: [10, 10, 10, 30],    // Margins: Top, Right, Bottom, Lrft
   yScale: null,              // Ordinal y-scale (not actually needed)
   xScale: null,              // Linear x-scale for obtaining updated ticks
   mounted: {},               // Currently Mounted Nodes
   removed: {},               // Nodes removed since last update
-  showTop: 10,               // Number of bars to swow
+  showTop: 15,               // Number of bars to swow
   sortKey: '18 to 24 Years', // The age group currently selected
   isFetching: false,         // Is the data fetching from server
   requestErr: false          // Was there an issue retrieving the data
@@ -48,7 +48,6 @@ export function exampleReducer(state = initialState, action) {
 
   case EXAMPLE_RECEIVE_DATA:
     let data0 = action.data.sort(sortByKey(state.sortKey)).slice(0, state.showTop);
-    console.log(data0);
     return Object.assign({}, state, update(state, state.sortKey, data0));
 
   case EXAMPLE_UPDATE_ORDER:
