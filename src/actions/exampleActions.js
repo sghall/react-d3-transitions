@@ -1,7 +1,8 @@
 export const EXAMPLE_REQUEST_DATA = 'EXAMPLE_REQUEST_DATA';
 export const EXAMPLE_RECEIVE_DATA = 'EXAMPLE_RECEIVE_DATA';
 export const EXAMPLE_REQUEST_FAIL = 'EXAMPLE_REQUEST_FAIL';
-export const EXAMPLE_REMOVED_ITEM = 'EXAMPLE_REMOVED_ITEM';
+export const EXAMPLE_REMOVED_NODE = 'EXAMPLE_REMOVED_NODE';
+export const EXAMPLE_UPDATE_ORDER = 'EXAMPLE_UPDATE_ORDER';
 
 function requestData() {
   return {
@@ -24,10 +25,10 @@ function receiveFail(errMessage) {
   };
 }
 
-export function removeItem(item) {
+export function removedNode(node) {
   return {
-    type: EXAMPLE_REMOVED_ITEM,
-    item: item
+    type: EXAMPLE_REMOVED_NODE,
+    node: node
   };
 }
 
@@ -36,9 +37,9 @@ export function fetchData() {
     dispatch(requestData());
 
     let request = new XMLHttpRequest();
-    request.open('GET', '/data/states_by_age.json', true);
+    request.open('GET', '/src/data/states_by_age.json', true);
 
-    request.onload = function() {
+    request.onload = () => {
       if (request.status >= 200 && request.status < 400) {
         dispatch(receiveData(request.responseText));
       } else {
@@ -46,8 +47,8 @@ export function fetchData() {
       }
     };
 
-    request.onerror = function() {
-      dispatch(receiveFail('Connection Error'));
+    request.onerror = e => {
+      dispatch(receiveFail(`Connection Error: ${e}`));
     };
 
     request.send();

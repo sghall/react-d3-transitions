@@ -2,9 +2,7 @@ import 'babel-polyfill';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import Example from './components';
-import DataGenerator from './components/DataGenerator';
-import utils from './utils';
+import Example from './components/Example';
 
 import configureStore from './store';
 let store = configureStore();
@@ -20,7 +18,6 @@ class App extends Component {
         }}
       >
         <div className='col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1'>
-          <DataGenerator />
           <Example />
         </div>
       </div>

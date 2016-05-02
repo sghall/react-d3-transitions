@@ -2,13 +2,20 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Container } from './common/Container';
 import { Text } from './Text';
-import { removeItem } from '../actions/exampleActions';
+import { removedItem, fetchData } from '../actions/exampleActions';
 
 export class Example extends Component {
 
+
+  componentDidMount() {
+    let { dispatch } = this.props;
+
+    dispatch(fetchData());
+  }
+
   removeItem(letter) {
     let { dispatch } = this.props;
-    dispatch(removeItem(letter));
+    dispatch(removedItem(letter));
   }
 
   render() {

@@ -1,81 +1,63 @@
 import {
-  EXAMPLE_DATA_UPDATE,
-  EXAMPLE_REMOVE_ITEM
+  EXAMPLE_REQUEST_DATA,
+  EXAMPLE_RECEIVE_DATA,
+  EXAMPLE_REQUEST_FAIL,
+  EXAMPLE_REMOVED_NODE,
+  EXAMPLE_UPDATE_ORDER
 } from '../actions/exampleActions';
 
-let colors = {
-  mounting: '#33605A',
-  updating: '#070001',
-  removing: '#68462B'
-};
+import { getUpdateHandler, sortByKey } from '../utils';
 
-function processUpdate(state, data) {
-  let result = {};
+let update = getUpdateHandler(d => d.State);
 
-  let cursor = 0;
-
-  for (let i = 0; i < data.length; i++) {
-    let letter = data[i];
-
-    cursor += 1;
-
-    if (state.mounted[letter] && state.removed[letter]) {
-      cursor -= 1;
-    } else if (state.mounted[letter] && !state.removed[letter]) {
-      result[letter] = {
-        name: letter,
-        fill: colors['updating'],
-        type: 'updating',
-        xVal: cursor * 32
-      };
-    } else {
-      result[letter] = {
-        name: letter,
-        fill: colors['mounting'],
-        type: 'mounting',
-        xVal: cursor * 32
-      };
-    }
-  }
-
-  for (let letter in state.mounted) {
-    if (!result[letter] && !state.removed[letter]) {
-      result[letter] = {
-        name: letter,
-        fill: colors['removing'],
-        type: 'removing',
-        xVal: state.mounted[letter].xVal
-      };
-    }
-  }
-
-  return result;
-}
-
-function removeItem(state, item) {
+function removeNode(state, key) {
   let removed = {};
-  removed[item] = true;
+  removed[key] = true;
 
   return Object.assign({}, state.removed, removed);
 }
 
 let initialState = {
-  mounted: {},
-  removed: {}
+  view: [1000, 200],         // ViewBox: Width, Height
+  trbl: [10, 10, 10, 10],    // Margins: Top, Right, Bottom, Lrft
+  yScale: null,              // Ordinal y-scale (not actually needed)
+  xScale: null,              // Linear x-scale for obtaining updated ticks
+  mounted: {},               // Currently Mounted Nodes
+  removed: {},               // Nodes removed since last update
+  showTop: 10,               // Number of bars to swow
+  sortKey: '18 to 24 Years', // The age group currently selected
+  isFetching: false,         // Is the data fetching from server
+  requestErr: false          // Was there an issue retrieving the data
 };
 
 export function exampleReducer(state = initialState, action) {
+
   switch (action.type) {
 
-  case EXAMPLE_DATA_UPDATE:
+  case EXAMPLE_REQUEST_DATA:
     return Object.assign({}, state, {
-      mounted: processUpdate(state, action.data),
-      removed: {}
+      isFetching: true,
+      requestErr: false
     });
 
-  case EXAMPLE_REMOVE_ITEM:
+  case EXAMPLE_REQUEST_FAIL:
     return Object.assign({}, state, {
-      removed: removeItem(state, action.item)
+      requestErr: true,
+      isFetching: false
+    });
+
+  case EXAMPLE_RECEIVE_DATA:
+    let data0 = action.data.sort(sortByKey(state.sortKey)).slice(0, state.showTop);
+    console.log(data0);
+    return Object.assign({}, state, update(state, state.sortKey, data0));
+
+  case EXAMPLE_UPDATE_ORDER:
+    let data1 = action.data.sort(sortByKey(action.sortKey)).slice(0, state.showTop);
+    return Object.assign({}, state, update(state, action.sortKey, data1));
+
+  case EXAMPLE_REMOVED_NODE:
+    return Object.assign({}, state, {
+      removed: removeNode(state, action.item)
     });
 
   default:
