@@ -25,10 +25,17 @@ function receiveFail(errMessage) {
   };
 }
 
-export function removedNode(node) {
+export function removedNode(udid) {
   return {
     type: EXAMPLE_REMOVED_NODE,
-    node: node
+    udid: udid
+  };
+}
+
+export function updateSortOrder(sortKey) {
+  return {
+    type: EXAMPLE_UPDATE_ORDER,
+    sortKey: sortKey
   };
 }
 

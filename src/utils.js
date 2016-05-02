@@ -46,9 +46,9 @@ export function getUpdateHandler(keyFunc) {
       };
 
       if (mounted[key] && !removed[key]) {
-        nodes[key].mode = 'updating';
+        nodes[key].type = 'UPDATING';
       } else {
-        nodes[key].mode = 'mounting';
+        nodes[key].type = 'MOUNTING';
       }
     }
 
@@ -59,7 +59,7 @@ export function getUpdateHandler(keyFunc) {
           data: mounted[key].data,
           size: mounted[key].size,
           yVal: mounted[key].yVal,
-          mode: 'removing'
+          type: 'REMOVING'
         };
       }
     }

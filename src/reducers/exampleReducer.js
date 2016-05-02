@@ -10,21 +10,22 @@ import { getUpdateHandler, sortByKey } from '../utils';
 
 let update = getUpdateHandler(d => d.State);
 
-function removeNode(state, key) {
+function removedNode(state, udid) {
   let removed = {};
-  removed[key] = true;
+  removed[udid] = true;
 
   return Object.assign({}, state.removed, removed);
 }
 
 let initialState = {
+  data: [],
   view: [1000, 300],         // ViewBox: Width, Height
   trbl: [10, 10, 10, 30],    // Margins: Top, Right, Bottom, Lrft
   yScale: null,              // Ordinal y-scale (not actually needed)
   xScale: null,              // Linear x-scale for obtaining updated ticks
   mounted: {},               // Currently Mounted Nodes
   removed: {},               // Nodes removed since last update
-  showTop: 15,               // Number of bars to swow
+  showTop: 10,               // Number of bars to swow
   sortKey: '18 to 24 Years', // The age group currently selected
   isFetching: false,         // Is the data fetching from server
   requestErr: false          // Was there an issue retrieving the data
@@ -48,15 +49,15 @@ export function exampleReducer(state = initialState, action) {
 
   case EXAMPLE_RECEIVE_DATA:
     let data0 = action.data.sort(sortByKey(state.sortKey)).slice(0, state.showTop);
-    return Object.assign({}, state, update(state, state.sortKey, data0));
+    return Object.assign({}, state, update(state, state.sortKey, data0), {data: action.data});
 
   case EXAMPLE_UPDATE_ORDER:
-    let data1 = action.data.sort(sortByKey(action.sortKey)).slice(0, state.showTop);
+    let data1 = state.data.sort(sortByKey(action.sortKey)).slice(0, state.showTop);
     return Object.assign({}, state, update(state, action.sortKey, data1));
 
   case EXAMPLE_REMOVED_NODE:
     return Object.assign({}, state, {
-      removed: removeNode(state, action.item)
+      removed: removedNode(state, action.udid)
     });
 
   default:
