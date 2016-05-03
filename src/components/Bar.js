@@ -52,7 +52,7 @@ export class Bar extends Component {
       rect.setAttribute('width', next.data.size[0]);
       rect.setAttribute('height', next.data.size[1]);
 
-      let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.data.yVal})`);
+      let interp0 = interpolateTransformSvg('translate(0,500)', `translate(0,${next.data.yVal})`);
       let interp1 = interpolateNumber(1e-6, 1);
 
       this.transition = timer(elapsed => {
@@ -91,6 +91,7 @@ export class Bar extends Component {
         <rect
           className='bar'
           ref='rect'
+          opacity={0.7}
           fill='#4E5676'
         />
         <text
