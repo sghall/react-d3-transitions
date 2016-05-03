@@ -4,6 +4,8 @@ import { Container } from './common/Container';
 import { Bar } from './Bar';
 import { fetchData, updateSortOrder, removedNode } from '../actions/exampleActions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
+import {Card, CardHeader } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 let ages = ['Under 5 Years', '5 to 13 Years', '14 to 17 Years', '18 to 24 Years', '16 Years and Over', '18 Years and Over', '15 to 44 Years', '45 to 64 Years', '65 Years and Over', '85 Years and Over'];
 
@@ -46,19 +48,13 @@ export class Example extends Component {
     });
 
     return (
-      <div>
-        <div className='row'>
-          <div className='col-md-12'>
-            <h3>React Transitions</h3>
-            <p>Enter, update and exit pattern using React 15.0, D3 4.0 and Redux</p>
-          </div>
-        </div>
-        <div className='row' style={{marginTop: 10}}>
-          <div className='col-md-12'>
-            <a className='pull-right' href='https://bl.ocks.org/mbostock/raw/3808234/'>Code on Github</a>
-            <a className='pull-left' href='https://bl.ocks.org/mbostock/raw/3808234/'>Mike Bosktock's Original</a>
-          </div>
-        </div>
+      <Card>
+        <CardHeader
+          title="React Transitions"
+          subtitle="Enter, update and exit pattern using React 15.0, D3 4.0 and Redux"
+          actAsExpander={false}
+          showExpandableButton={false}
+        />
         <div className='row'>
           <div className='col-md-3'>
             <Table
@@ -76,7 +72,28 @@ export class Example extends Component {
             </Container>
           </div>
         </div>
-      </div>
+        <hr />
+        <div className='row'>
+          <div className='col-md-12'>
+            <div className='pull-left'>
+              <FlatButton
+                linkButton={true}
+                label='Mike Bostock Original'
+                href='https://bost.ocks.org/mike/constancy/'
+                target='_blank'
+              />
+            </div>
+            <div className='pull-right'>
+              <FlatButton
+                linkButton={true}
+                label='GitHub Link'
+                href='https://github.com/callemall/material-ui'
+                target='_blank'
+              />
+            </div>
+          </div>
+        </div>
+      </Card>
     );
   }
 }

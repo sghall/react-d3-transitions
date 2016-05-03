@@ -4,7 +4,7 @@ import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
 import { format } from 'd3-format';
 
 const duration = 1500;
-const percentFormat = format('.1%');
+const percentFormat = format('.2%');
 
 export class Bar extends Component {
 

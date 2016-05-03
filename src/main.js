@@ -19,7 +19,7 @@ class App extends Component {
     return (
       <div 
         className='row'
-        style={{backgroundColor: 'rgb(48, 48, 48)'}}
+        style={{backgroundColor: 'rgb(48, 48, 48)', minHeight: 1000}}
       >
         <div className='col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1'>
           <Example />
