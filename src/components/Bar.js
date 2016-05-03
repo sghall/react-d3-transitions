@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { timer } from 'd3-timer';
 import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
+import { format } from 'd3-format';
 
 const duration = 1500;
+const percentFormat = format('.1%');
 
 export class Bar extends Component {
 
@@ -45,7 +47,22 @@ export class Bar extends Component {
         if (t === 1) {
           this.transition.stop();
         }
-      }); 
+      });
+    } else if (next.data.type === 'MOUNTING') {
+      rect.setAttribute('width', next.data.size[0]);
+      rect.setAttribute('height', next.data.size[1]);
+
+      let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.data.yVal})`);
+      let interp1 = interpolateNumber(1e-6, 1);
+
+      this.transition = timer(elapsed => {
+        let t = elapsed < duration ? (elapsed / duration): 1;
+        node.setAttribute('transform', interp0(t));
+        node.setAttribute('opacity', interp1(t));
+        if (t === 1) {
+          this.transition.stop();
+        }
+      });
     } else { // REMOVING
       let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, 'translate(0,500)');
       let interp1 = interpolateNumber(1, 1e-6);
@@ -67,15 +84,15 @@ export class Bar extends Component {
   }
 
   render() {
-    let {data: { udid, size }} = this.props;
+    let {xScale, data: { udid, size, xVal }} = this.props;
 
     return (
       <g ref='node' opacity={1e-6}>
         <rect
+          className='bar'
           ref='rect'
-          fill='rgba(0,0,255,0.5)'
-          >
-        </rect>
+          fill='#4E5676'
+        />
         <text
           fontSize={'10px'}
           fill='white'
@@ -83,6 +100,14 @@ export class Bar extends Component {
           x={-20}
           y={size[1] / 2}
         >{udid}</text>
+        <text
+          fontSize={'10px'}
+          textAnchor='end'
+          fill='white'
+          dy='0.35em'
+          x={size[0] - 3}
+          y={size[1] / 2}
+        >{percentFormat(xScale.invert(xVal))}</text>
       </g>
     );
   }
@@ -90,5 +115,6 @@ export class Bar extends Component {
 
 Bar.propTypes = {
   data: PropTypes.object.isRequired,
+  xScale: PropTypes.func.isRequired,
   removeNode: PropTypes.func.isRequired
 };

@@ -13,7 +13,7 @@ class App extends Component {
       <div 
         className='row'
         style={{
-          backgroundImage: 'linear-gradient(#E9E0D1, #91A398)',
+          backgroundColor: 'black',
           height: 1000
         }}
       >

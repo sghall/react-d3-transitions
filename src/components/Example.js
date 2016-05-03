@@ -21,7 +21,7 @@ export class Example extends Component {
   }
 
   render() {
-    let {view, trbl, mounted, dispatch, sortKey} = this.props;
+    let {view, trbl, mounted, dispatch, sortKey, xScale} = this.props;
 
 
     let barNodes = Object.keys(mounted).map(key => {
@@ -30,6 +30,7 @@ export class Example extends Component {
         <Bar 
           key={key}
           data={bar}
+          xScale={xScale}
           removeNode={this.removeItem.bind(this)}
         />
       );
@@ -43,8 +44,8 @@ export class Example extends Component {
             margin: 2,
             borderRadius: 3,
             cursor: 'pointer',
-            color: sortKey === age ? '#fff': '#333',
-            backgroundColor: sortKey === age ? 'rgba(0,0,0,0.6)': 'rgba(0,0,0,0.3)'
+            color: '#fff',
+            backgroundColor: sortKey === age ? 'rgba(255,255,255,0.5)': 'rgba(255,255,255,0.3)'
           }}
           onClick={() => dispatch(updateSortOrder(age))}
         >{age}</div>
@@ -86,6 +87,8 @@ export class Example extends Component {
 Example.propTypes = {
   view: PropTypes.array.isRequired,
   trbl: PropTypes.array.isRequired,
+  xScale: PropTypes.func.isRequired,
+  yScale: PropTypes.func.isRequired,
   sortKey: PropTypes.string.isRequired,
   mounted: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
@@ -97,6 +100,8 @@ function mapStateToProps(state) {
   return {
     view: example.view,
     trbl: example.trbl,
+    xScale: example.xScale,
+    yScale: example.yScale,
     sortKey: example.sortKey,
     mounted: example.mounted
   };

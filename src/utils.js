@@ -42,7 +42,8 @@ export function getUpdateHandler(keyFunc) {
         udid: key,
         data: val,
         size: [x(val[sortKey]), y.bandwidth()],
-        yVal: y(key)
+        yVal: y(key),
+        xVal: x(val[sortKey])
       };
 
       if (mounted[key] && !removed[key]) {
@@ -59,6 +60,7 @@ export function getUpdateHandler(keyFunc) {
           data: mounted[key].data,
           size: mounted[key].size,
           yVal: mounted[key].yVal,
+          xVal: mounted[key].xVal,
           type: 'REMOVING'
         };
       }

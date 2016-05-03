@@ -19,16 +19,16 @@ function removedNode(state, udid) {
 
 let initialState = {
   data: [],
-  view: [1000, 300],         // ViewBox: Width, Height
-  trbl: [10, 10, 10, 30],    // Margins: Top, Right, Bottom, Lrft
-  yScale: null,              // Ordinal y-scale (not actually needed)
-  xScale: null,              // Linear x-scale for obtaining updated ticks
-  mounted: {},               // Currently Mounted Nodes
-  removed: {},               // Nodes removed since last update
-  showTop: 10,               // Number of bars to swow
-  sortKey: '18 to 24 Years', // The age group currently selected
-  isFetching: false,         // Is the data fetching from server
-  requestErr: false          // Was there an issue retrieving the data
+  view: [1000, 300],            // ViewBox: Width, Height
+  trbl: [10, 10, 10, 30],       // Margins: Top, Right, Bottom, Lrft
+  yScale: null,                 // Ordinal y-scale (not actually needed)
+  xScale: null,                 // Linear x-scale for obtaining updated ticks
+  mounted: {},                  // Currently Mounted Nodes
+  removed: {},                  // Nodes removed since last update
+  showTop: 10,                  // Number of bars to swow
+  sortKey: '65 Years and Over', // The age group currently selected
+  isFetching: false,            // Is the data fetching from server
+  requestErr: false             // Was there an issue retrieving the data
 };
 
 export function exampleReducer(state = initialState, action) {
