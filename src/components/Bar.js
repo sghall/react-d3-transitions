@@ -9,10 +9,12 @@ const percentFormat = format('.1%');
 export class Bar extends Component {
 
   componentDidMount() {
-    let {props: {data: {yVal, size: [w, h]}}, refs: {node, rect}} = this;
+    let {props: {data: {yVal, size: [w, h]}}, refs: {node, rect, text}} = this;
 
     rect.setAttribute('width', w);
     rect.setAttribute('height', h);
+    text.setAttribute('x', w - 3);
+
 
     let interp0 = interpolateTransformSvg('translate(0,500)', `translate(0,${yVal})`);
     let interp1 = interpolateNumber(1e-6, 1);
@@ -28,7 +30,7 @@ export class Bar extends Component {
   }
 
   componentWillReceiveProps(next) {
-    let {props: {data: {yVal, udid, size: [w, h]}, removeNode}, refs: {node, rect}} = this;
+    let {props: {data: {yVal, udid, size: [w, h]}, removeNode}, refs: {node, rect, text}} = this;
 
     this.transition.stop();
 
@@ -36,6 +38,7 @@ export class Bar extends Component {
       let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.data.yVal})`);
       let interp1 = interpolateNumber(w, next.data.size[0]);
       let interp2 = interpolateNumber(h, next.data.size[1]);
+      let interp3 = interpolateNumber(w - 3, next.data.size[0] - 3);
 
       node.setAttribute('opacity', 1);
 
@@ -44,6 +47,7 @@ export class Bar extends Component {
         node.setAttribute('transform', interp0(t));
         rect.setAttribute('width', interp1(t));
         rect.setAttribute('height', interp2(t));
+        text.setAttribute('x', interp3(t));
         if (t === 1) {
           this.transition.stop();
         }
@@ -51,6 +55,7 @@ export class Bar extends Component {
     } else if (next.data.type === 'MOUNTING') {
       rect.setAttribute('width', next.data.size[0]);
       rect.setAttribute('height', next.data.size[1]);
+      text.setAttribute('x', next.data.size[0] - 3);
 
       let interp0 = interpolateTransformSvg('translate(0,500)', `translate(0,${next.data.yVal})`);
       let interp1 = interpolateNumber(1e-6, 1);
@@ -89,8 +94,8 @@ export class Bar extends Component {
     return (
       <g ref='node' opacity={1e-6}>
         <rect
-          className='bar'
           ref='rect'
+          className='bar'
           opacity={0.7}
           fill='#4E5676'
         />
@@ -102,11 +107,11 @@ export class Bar extends Component {
           y={size[1] / 2}
         >{udid}</text>
         <text
+          ref='text'
           fontSize={'10px'}
           textAnchor='end'
           fill='white'
           dy='0.35em'
-          x={size[0] - 3}
           y={size[1] / 2}
         >{percentFormat(xScale.invert(xVal))}</text>
       </g>
