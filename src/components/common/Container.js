@@ -14,12 +14,7 @@ export class Container extends Component {
         }}
       >
         <svg
-          style={{
-            position: 'absolute',
-            top: 0, left: 0,
-            backgroundColor: 'rgba(0,0,0,0.1)',
-            borderRadius: 3
-          }}
+          style={{position: 'absolute', top: 0, left: 0}}
           viewBox={`0 0 ${view[0]} ${view[1]}`}
         >
           <g transform={`translate(${trbl[3]} ,${trbl[0]})`}>

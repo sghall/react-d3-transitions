@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Container } from './common/Container';
 import { Bar } from './Bar';
 import { fetchData, updateSortOrder, removedNode } from '../actions/exampleActions';
+import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 
 let ages = ['Under 5 Years', '5 to 13 Years', '14 to 17 Years', '18 to 24 Years', '16 Years and Over', '18 Years and Over', '15 to 44 Years', '45 to 64 Years', '65 Years and Over', '85 Years and Over'];
 
@@ -36,19 +37,11 @@ export class Example extends Component {
       );
     });
 
-    let buttons = ages.map(age => {
+    let tableRows = ages.map(age => {
       return (
-        <div
-          className='col-md-2'
-          style={{
-            margin: 2,
-            borderRadius: 3,
-            cursor: 'pointer',
-            color: '#fff',
-            backgroundColor: sortKey === age ? 'rgba(255,255,255,0.5)': 'rgba(255,255,255,0.3)'
-          }}
-          onClick={() => dispatch(updateSortOrder(age))}
-        >{age}</div>
+        <TableRow selected={sortKey === age}>
+          <TableRowColumn>{age}</TableRowColumn>
+        </TableRow>
       );
     });
 
@@ -60,20 +53,24 @@ export class Example extends Component {
             <p>Enter, update and exit pattern using React 15.0, D3 4.0 and Redux</p>
           </div>
         </div>
-        <div className='row'>
-          {buttons.slice(0, 5)}
-        </div>
-        <div className='row'>
-          {buttons.slice(5)}
-        </div>
-        <div className='row'>
+        <div className='row' style={{marginTop: 10}}>
           <div className='col-md-12'>
             <a className='pull-right' href='https://bl.ocks.org/mbostock/raw/3808234/'>Code on Github</a>
             <a className='pull-left' href='https://bl.ocks.org/mbostock/raw/3808234/'>Mike Bosktock's Original</a>
           </div>
         </div>
         <div className='row'>
-          <div className='col-md-12'>
+          <div className='col-md-3'>
+            <Table
+              wrapperStyle={{width: '100%'}} 
+              onCellClick={d => dispatch(updateSortOrder(ages[d]))}
+            >
+              <TableBody deselectOnClickaway={false}>
+                {tableRows}
+              </TableBody>
+            </Table>
+          </div>
+          <div className='col-md-9' style={{padding: 0}}>
             <Container view={view} trbl={trbl}>
               {barNodes}
             </Container>

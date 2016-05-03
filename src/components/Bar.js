@@ -96,8 +96,8 @@ export class Bar extends Component {
         <rect
           ref='rect'
           className='bar'
-          opacity={0.7}
-          fill='#4E5676'
+          opacity={0.6}
+          fill='#0097a7'
         />
         <text
           fontSize={'10px'}
