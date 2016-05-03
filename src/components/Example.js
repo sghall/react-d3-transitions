@@ -41,7 +41,7 @@ export class Example extends Component {
 
     let tableRows = ages.map(age => {
       return (
-        <TableRow selected={sortKey === age}>
+        <TableRow selected={sortKey === age} style={{cursor: 'pointer'}}>
           <TableRowColumn>{age}</TableRowColumn>
         </TableRow>
       );
