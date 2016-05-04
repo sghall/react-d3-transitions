@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { timer } from 'd3-timer';
-import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
+import { interpolateNumber, interpolateObject, interpolateTransformSvg } from 'd3-interpolate';
 import { format } from 'd3-format';
 
 const duration = 1500;
@@ -37,18 +37,21 @@ export class Bar extends Component {
     let {yScale, node: {xVal, yVal}} = props;
 
     let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.node.yVal})`);
-    let interp1 = interpolateNumber(xVal, next.node.xVal);
-    let interp2 = interpolateNumber(yScale.bandwidth(), next.yScale.bandwidth());
-    let interp3 = interpolateNumber(xVal - 3, next.node.xVal - 3);
+
+    let begVals = {w: xVal, h: yScale.bandwidth(), x: xVal - 3};
+    let endVals = {w: next.node.xVal, h: next.yScale.bandwidth(), x: next.node.xVal - 3};
+    let interp1 = interpolateObject(begVals, endVals);
 
     refs.node.setAttribute('opacity', 1);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
       refs.node.setAttribute('transform', interp0(t));
-      refs.rect.setAttribute('width', interp1(t));
-      refs.rect.setAttribute('height', interp2(t));
-      refs.text.setAttribute('x', interp3(t));
+
+      let {w, h, x} = interp1(t);
+      refs.rect.setAttribute('width', w);
+      refs.rect.setAttribute('height', h);
+      refs.text.setAttribute('x', x);
       if (t === 1) {
         this.transition.stop();
       }
