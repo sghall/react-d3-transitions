@@ -41,7 +41,6 @@ export function getUpdateHandler(keyFunc) {
       nodes[key] = {
         udid: key,
         data: val,
-        size: [x(val[sortKey]), y.bandwidth()],
         yVal: y(key),
         xVal: x(val[sortKey])
       };
@@ -58,7 +57,6 @@ export function getUpdateHandler(keyFunc) {
         nodes[key] = {
           udid: mounted[key].udid,
           data: mounted[key].data,
-          size: mounted[key].size,
           yVal: mounted[key].yVal,
           xVal: mounted[key].xVal,
           type: 'REMOVING'

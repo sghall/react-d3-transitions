@@ -19,12 +19,12 @@ export class Example extends Component {
   }
 
   removeItem(key) {
-    let { dispatch } = this.props;
+    let {dispatch} = this.props;
     dispatch(removedNode(key));
   }
 
   render() {
-    let {view, trbl, mounted, dispatch, sortKey, xScale} = this.props;
+    let {view, trbl, mounted, dispatch, sortKey, xScale, yScale} = this.props;
 
     console.log(xScale && xScale.ticks(5));
 
@@ -35,6 +35,7 @@ export class Example extends Component {
           key={key}
           node={node}
           xScale={xScale}
+          yScale={yScale}
           removeNode={this.removeItem.bind(this)}
         />
       );
@@ -110,7 +111,7 @@ Example.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { example } = state;
+  const {example} = state;
 
   return {
     view: example.view,

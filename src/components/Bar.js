@@ -14,11 +14,11 @@ export class Bar extends Component {
 
   isMounting(props, refs) {
     let {node, rect, text} = refs;
-    let {node: {yVal, size: [w, h]}} = props;
+    let {yScale, node: {xVal, yVal}} = props;
 
-    rect.setAttribute('width', w);
-    rect.setAttribute('height', h);
-    text.setAttribute('x', w - 3);
+    rect.setAttribute('width', xVal);
+    rect.setAttribute('height', yScale.bandwidth());
+    text.setAttribute('x', xVal - 3);
 
     let interp0 = interpolateTransformSvg('translate(0,500)', `translate(0,${yVal})`);
     let interp1 = interpolateNumber(1e-6, 1);
@@ -34,12 +34,12 @@ export class Bar extends Component {
   }
 
   isUpating(props, next, refs) {
-    let {node: {yVal, size: [w, h]}} = props;
+    let {yScale, node: {xVal, yVal}} = props;
 
     let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.node.yVal})`);
-    let interp1 = interpolateNumber(w, next.node.size[0]);
-    let interp2 = interpolateNumber(h, next.node.size[1]);
-    let interp3 = interpolateNumber(w - 3, next.node.size[0] - 3);
+    let interp1 = interpolateNumber(xVal, next.node.xVal);
+    let interp2 = interpolateNumber(yScale.bandwidth(), next.yScale.bandwidth());
+    let interp3 = interpolateNumber(xVal - 3, next.node.xVal - 3);
 
     refs.node.setAttribute('opacity', 1);
 
@@ -93,7 +93,7 @@ export class Bar extends Component {
   }
 
   render() {
-    let {xScale, node: { udid, size, xVal }} = this.props;
+    let {xScale, yScale, node: {udid, xVal}} = this.props;
 
     return (
       <g ref='node' opacity={1e-6}>
@@ -108,7 +108,7 @@ export class Bar extends Component {
           fill='white'
           dy='0.35em'
           x={-20}
-          y={size[1] / 2}
+          y={yScale.bandwidth() / 2}
         >{udid}</text>
         <text
           ref='text'
@@ -116,7 +116,7 @@ export class Bar extends Component {
           textAnchor='end'
           fill='white'
           dy='0.35em'
-          y={size[1] / 2}
+          y={yScale.bandwidth() / 2}
         >{percentFormat(xScale.invert(xVal))}</text>
       </g>
     );
@@ -126,5 +126,6 @@ export class Bar extends Component {
 Bar.propTypes = {
   node: PropTypes.object.isRequired,
   xScale: PropTypes.func.isRequired,
+  yScale: PropTypes.func.isRequired,
   removeNode: PropTypes.func.isRequired
 };
