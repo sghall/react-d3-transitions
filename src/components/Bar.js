@@ -3,7 +3,6 @@ import { timer } from 'd3-timer';
 import { interpolateNumber, interpolateObject, interpolateTransformSvg } from 'd3-interpolate';
 import { format } from 'd3-format';
 
-// const duration = 1500;
 const percentFormat = format('.2%');
 
 export class Bar extends Component {
