@@ -26,13 +26,14 @@ export class Example extends Component {
   render() {
     let {view, trbl, mounted, dispatch, sortKey, xScale} = this.props;
 
+    console.log(xScale && xScale.ticks(5));
 
     let barNodes = Object.keys(mounted).map(key => {
-      let bar = mounted[key];
+      let node = mounted[key];
       return (
         <Bar 
           key={key}
-          data={bar}
+          node={node}
           xScale={xScale}
           removeNode={this.removeItem.bind(this)}
         />

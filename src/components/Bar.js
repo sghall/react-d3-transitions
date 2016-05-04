@@ -9,12 +9,12 @@ const percentFormat = format('.2%');
 export class Bar extends Component {
 
   componentDidMount() {
-    this.isMounting.call(this, this.props, this.refs);
+    this.isMounting(this.props, this.refs);
   }
 
   isMounting(props, refs) {
     let {node, rect, text} = refs;
-    let {data: {yVal, size: [w, h]}} = props;
+    let {node: {yVal, size: [w, h]}} = props;
 
     rect.setAttribute('width', w);
     rect.setAttribute('height', h);
@@ -34,12 +34,12 @@ export class Bar extends Component {
   }
 
   isUpating(props, next, refs) {
-    let {data: {yVal, size: [w, h]}} = props;
+    let {node: {yVal, size: [w, h]}} = props;
 
-    let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.data.yVal})`);
-    let interp1 = interpolateNumber(w, next.data.size[0]);
-    let interp2 = interpolateNumber(h, next.data.size[1]);
-    let interp3 = interpolateNumber(w - 3, next.data.size[0] - 3);
+    let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.node.yVal})`);
+    let interp1 = interpolateNumber(w, next.node.size[0]);
+    let interp2 = interpolateNumber(h, next.node.size[1]);
+    let interp3 = interpolateNumber(w - 3, next.node.size[0] - 3);
 
     refs.node.setAttribute('opacity', 1);
 
@@ -56,7 +56,7 @@ export class Bar extends Component {
   }
 
   isRemoving(props, refs) {
-    let {data: {yVal, udid}, removeNode} = props;
+    let {node: {yVal, udid}, removeNode} = props;
 
     let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, 'translate(0,500)');
     let interp1 = interpolateNumber(1, 1e-6);
@@ -77,12 +77,12 @@ export class Bar extends Component {
 
     this.transition.stop();
 
-    if (next.data.type === 'UPDATING') {
-      this.isUpating.call(this, props, next, refs);
-    } else if (next.data.type === 'MOUNTING') {
-      this.isMounting.call(this, next, refs);
-    } else if (next.data.type === 'REMOVING') {
-      this.isRemoving.call(this, props, refs);
+    if (next.node.type === 'MOUNTING') {
+      this.isMounting(next, refs);
+    } else if (next.node.type === 'UPDATING') {
+      this.isUpating(props, next, refs);
+    } else if (next.node.type === 'REMOVING') {
+      this.isRemoving(props, refs);
     } else {
       throw new Error('Invalid Node Type');
     }
@@ -93,14 +93,14 @@ export class Bar extends Component {
   }
 
   render() {
-    let {xScale, data: { udid, size, xVal }} = this.props;
+    let {xScale, node: { udid, size, xVal }} = this.props;
 
     return (
       <g ref='node' opacity={1e-6}>
         <rect
           ref='rect'
           className='bar'
-          opacity={0.6}
+          opacity={0.5}
           fill='#0097a7'
         />
         <text
@@ -124,7 +124,7 @@ export class Bar extends Component {
 }
 
 Bar.propTypes = {
-  data: PropTypes.object.isRequired,
+  node: PropTypes.object.isRequired,
   xScale: PropTypes.func.isRequired,
   removeNode: PropTypes.func.isRequired
 };
