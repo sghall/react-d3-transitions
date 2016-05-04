@@ -2,15 +2,24 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Container } from './common/Container';
 import { Bar } from './Bar';
-import { fetchData, updateSortOrder, removedNode } from '../actions/exampleActions';
+import { fetchData, updateSortOrder, updateTopCount, removedNode } from '../actions/exampleActions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import {Card, CardHeader } from 'material-ui/Card';
+import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
 
 let ages = ['Under 5 Years', '5 to 13 Years', '14 to 17 Years', '18 to 24 Years', '16 Years and Over', '18 Years and Over', '15 to 44 Years', '45 to 64 Years', '65 Years and Over', '85 Years and Over'];
 
 export class Example extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state ={
+      duration: 1000,
+      showTopN: 15
+    };
+  }
 
   componentDidMount() {
     let { dispatch } = this.props;
@@ -23,10 +32,23 @@ export class Example extends Component {
     dispatch(removedNode(key));
   }
 
+  setDuration(e, value) {
+    this.setState({
+      duration: Math.floor(value * 10000)
+    });
+  }
+
+  setShowTopN(e, value) {
+    this.setState({
+      showTopN: Math.floor(value * 20) + 5
+    });
+  }
+
   render() {
     let {view, trbl, mounted, dispatch, sortKey, xScale, yScale} = this.props;
+    let {duration, showTopN} = this.state;
 
-    console.log(xScale && xScale.ticks(5));
+    // console.log(xScale && xScale.ticks(5));
 
     let barNodes = Object.keys(mounted).map(key => {
       let node = mounted[key];
@@ -36,6 +58,7 @@ export class Example extends Component {
           node={node}
           xScale={xScale}
           yScale={yScale}
+          duration={duration}
           removeNode={this.removeItem.bind(this)}
         />
       );
@@ -57,6 +80,21 @@ export class Example extends Component {
           actAsExpander={false}
           showExpandableButton={false}
         />
+        <div className='row' style={{marginLeft: 0, marginRight: 0}}>
+          <div className='col-md-12'>
+            <span>Transition Duration: {(duration / 1000).toFixed(1)} Seconds</span>
+            <Slider
+              defaultValue={0.1}
+              onChange={this.setDuration.bind(this)}
+            />
+            <span>Show Top {showTopN} States:</span>
+            <Slider
+              defaultValue={0.5}
+              onChange={this.setShowTopN.bind(this)}
+              onDragStop={() => dispatch(updateTopCount(showTopN))}
+            />
+          </div>
+        </div>
         <div className='row'>
           <div className='col-md-3'>
             <Table

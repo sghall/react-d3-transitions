@@ -3,7 +3,8 @@ import {
   EXAMPLE_RECEIVE_DATA,
   EXAMPLE_REQUEST_FAIL,
   EXAMPLE_REMOVED_NODE,
-  EXAMPLE_UPDATE_ORDER
+  EXAMPLE_UPDATE_ORDER,
+  EXAMPLE_UPDATE_COUNT
 } from '../actions/exampleActions';
 
 import { getUpdateHandler, sortByKey } from '../utils';
@@ -19,7 +20,7 @@ function removedNode(state, udid) {
 
 let initialState = {
   data: [],
-  view: [500, 300],            // ViewBox: Width, Height
+  view: [500, 325],            // ViewBox: Width, Height
   trbl: [0, 10, 10, 30],       // Margins: Top, Right, Bottom, Lrft
   yScale: null,                 // Ordinal y-scale (not actually needed)
   xScale: null,                 // Linear x-scale for obtaining updated ticks
@@ -32,6 +33,7 @@ let initialState = {
 };
 
 export function exampleReducer(state = initialState, action) {
+  let data;
 
   switch (action.type) {
 
@@ -48,12 +50,16 @@ export function exampleReducer(state = initialState, action) {
     });
 
   case EXAMPLE_RECEIVE_DATA:
-    let data0 = action.data.sort(sortByKey(state.sortKey)).slice(0, state.showTop);
-    return Object.assign({}, state, update(state, state.sortKey, data0), {data: action.data});
+    data = action.data.sort(sortByKey(state.sortKey)).slice(0, state.showTop);
+    return Object.assign({}, state, update(state, state.sortKey, data), {data: action.data});
 
   case EXAMPLE_UPDATE_ORDER:
-    let data1 = state.data.sort(sortByKey(action.sortKey)).slice(0, state.showTop);
-    return Object.assign({}, state, update(state, action.sortKey, data1));
+    data = state.data.sort(sortByKey(action.sortKey)).slice(0, state.showTop);
+    return Object.assign({}, state, update(state, action.sortKey, data));
+
+  case EXAMPLE_UPDATE_COUNT:
+    data = state.data.sort(sortByKey(state.sortKey)).slice(0, action.topN);
+    return Object.assign({}, state, update(state, state.sortKey, data), {showTop: action.topN});
 
   case EXAMPLE_REMOVED_NODE:
     return Object.assign({}, state, {

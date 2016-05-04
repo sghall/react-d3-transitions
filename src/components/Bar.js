@@ -3,7 +3,7 @@ import { timer } from 'd3-timer';
 import { interpolateNumber, interpolateObject, interpolateTransformSvg } from 'd3-interpolate';
 import { format } from 'd3-format';
 
-const duration = 1500;
+// const duration = 1500;
 const percentFormat = format('.2%');
 
 export class Bar extends Component {
@@ -14,7 +14,7 @@ export class Bar extends Component {
 
   isMounting(props, refs) {
     let {node, rect, text} = refs;
-    let {yScale, node: {xVal, yVal}} = props;
+    let {yScale, node: {xVal, yVal}, duration} = props;
 
     rect.setAttribute('width', xVal);
     rect.setAttribute('height', yScale.bandwidth());
@@ -34,7 +34,7 @@ export class Bar extends Component {
   }
 
   isUpating(props, next, refs) {
-    let {yScale, node: {xVal, yVal}} = props;
+    let {yScale, node: {xVal, yVal}, duration} = props;
 
     let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.node.yVal})`);
 
@@ -59,7 +59,7 @@ export class Bar extends Component {
   }
 
   isRemoving(props, refs) {
-    let {node: {yVal, udid}, removeNode} = props;
+    let {node: {yVal, udid}, removeNode, duration} = props;
 
     let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, 'translate(0,500)');
     let interp1 = interpolateNumber(1, 1e-6);
@@ -78,16 +78,18 @@ export class Bar extends Component {
   componentWillReceiveProps(next) {
     let { props, refs } = this;
 
-    this.transition.stop();
+    if (props.node !== next.node) {
+      this.transition.stop();
 
-    if (next.node.type === 'MOUNTING') {
-      this.isMounting(next, refs);
-    } else if (next.node.type === 'UPDATING') {
-      this.isUpating(props, next, refs);
-    } else if (next.node.type === 'REMOVING') {
-      this.isRemoving(props, refs);
-    } else {
-      throw new Error('Invalid Node Type');
+      if (next.node.type === 'MOUNTING') {
+        this.isMounting(next, refs);
+      } else if (next.node.type === 'UPDATING') {
+        this.isUpating(props, next, refs);
+      } else if (next.node.type === 'REMOVING') {
+        this.isRemoving(props, refs);
+      } else {
+        throw new Error('Invalid Node Type');
+      }  
     }
   }
 
@@ -107,7 +109,7 @@ export class Bar extends Component {
           fill='#0097a7'
         />
         <text
-          fontSize={'10px'}
+          fontSize={'9px'}
           fill='white'
           dy='0.35em'
           x={-20}
@@ -115,7 +117,7 @@ export class Bar extends Component {
         >{udid}</text>
         <text
           ref='text'
-          fontSize={'10px'}
+          fontSize={'9px'}
           textAnchor='end'
           fill='white'
           dy='0.35em'
@@ -130,5 +132,6 @@ Bar.propTypes = {
   node: PropTypes.object.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
+  duration: PropTypes.number.isRequired,
   removeNode: PropTypes.func.isRequired
 };
