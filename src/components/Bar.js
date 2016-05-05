@@ -108,7 +108,7 @@ export class Bar extends Component {
           fill='#0097a7'
         />
         <text
-          fontSize={'9px'}
+          fontSize={'8px'}
           fill='white'
           dy='0.35em'
           x={-20}
@@ -116,7 +116,7 @@ export class Bar extends Component {
         >{udid}</text>
         <text
           ref='text'
-          fontSize={'9px'}
+          fontSize={'8px'}
           textAnchor='end'
           fill='white'
           dy='0.35em'

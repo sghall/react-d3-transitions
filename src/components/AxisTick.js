@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { timer } from 'd3-timer';
 import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
-import { format } from 'd3-format';
-
-const percentFormat = format('.1%');
 
 export class AxisTick extends Component {
 
@@ -45,17 +42,14 @@ export class AxisTick extends Component {
     });
   }
 
-  isRemoving(props, next, refs) {
+  isRemoving(props, refs) {
     let {tick} = refs;
-    let {tick: {udid, xVal}, duration, removeTick} = props;
+    let {tick: {udid}, duration, removeTick} = props;
 
-    let interp0 = interpolateTransformSvg(`translate(${xVal},0)`, `translate(${next.tick.xVal},0)`);
-    let interp1 = interpolateNumber(1, 1e-6);
+    tick.setAttribute('opacity', 0);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
-      tick.setAttribute('transform', interp0(t));
-      tick.setAttribute('opacity', interp1(t));
       if (t === 1) {
         this.transition.stop();
         removeTick(udid);
@@ -74,7 +68,7 @@ export class AxisTick extends Component {
       } else if (next.tick.type === 'UPDATING') {
         this.isUpating(props, next, refs);
       } else if (next.tick.type === 'REMOVING') {
-        this.isRemoving(props, next, refs);
+        this.isRemoving(props, refs);
       } else {
         throw new Error('Invalid tick Type');
       }  
@@ -86,7 +80,7 @@ export class AxisTick extends Component {
   }
 
   render() {
-    let {xScale, yScale, tick: {xVal}} = this.props;
+    let {yScale, tick: {text}} = this.props;
 
     let yRange = yScale.range();
 
@@ -103,7 +97,7 @@ export class AxisTick extends Component {
           textAnchor='middle'
           fill='white'
           x={0} y={-5} 
-        >{percentFormat(xScale.invert(xVal))}</text>
+        >{text}</text>
       </g>
     );
   }

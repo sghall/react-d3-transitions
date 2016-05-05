@@ -22,7 +22,7 @@ export class Axis extends Component {
     }
   }
 
-  update({xScale}, {mounted}) {
+  update({xScale, format}, {mounted}) {
 
     if (!xScale) {
       return;
@@ -38,6 +38,7 @@ export class Axis extends Component {
       nodes[key] = {
         udid: key,
         data: val,
+        text: format(val),
         xVal: xScale(val)
       };
 
@@ -53,6 +54,7 @@ export class Axis extends Component {
         nodes[key] = {
           udid: mounted[key].udid,
           data: mounted[key].data,
+          text: mounted[key].text,
           xVal: mounted[key].xVal,
           type: 'REMOVING'
         };

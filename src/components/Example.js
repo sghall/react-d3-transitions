@@ -10,7 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Axis } from './Axis';
 import { format } from 'd3-format';
 
-const percentFormat = format('.2%');
+const percentFormat = format('.1%');
 
 let ages = ['Under 5 Years', '5 to 13 Years', '14 to 17 Years', '18 to 24 Years', '16 Years and Over', '18 Years and Over', '15 to 44 Years', '45 to 64 Years', '65 Years and Over', '85 Years and Over'];
 
