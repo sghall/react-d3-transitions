@@ -88,9 +88,6 @@ export class Axis extends Component {
       );
     });
 
-
-    console.log(mounted);
-
     return (
       <g>{ticks}</g>
     );

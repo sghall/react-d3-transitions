@@ -47,19 +47,18 @@ export class AxisTick extends Component {
 
   isRemoving(props, next, refs) {
     let {tick} = refs;
-    let {tick: {xVal}, duration} = props;
+    let {tick: {udid, xVal}, duration, removeTick} = props;
 
-    // let interp0 = interpolateTransformSvg(`translate(${xVal},0)`, `translate(${next.tick.xVal},0)`);
-    // let interp1 = interpolateNumber(1, 1e-6);
-    tick.setAttribute('opacity', 0);
-    tick.setAttribute('transform', 'translate(0,0)');
+    let interp0 = interpolateTransformSvg(`translate(${xVal},0)`, `translate(${next.tick.xVal},0)`);
+    let interp1 = interpolateNumber(1, 1e-6);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
-      // tick.setAttribute('transform', interp0(t));
-      // tick.setAttribute('opacity', interp1(t));
+      tick.setAttribute('transform', interp0(t));
+      tick.setAttribute('opacity', interp1(t));
       if (t === 1) {
         this.transition.stop();
+        removeTick(udid);
       }
     });
   }
@@ -115,5 +114,5 @@ AxisTick.propTypes = {
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   duration: PropTypes.number.isRequired,
-  removetick: PropTypes.func.isRequired
+  removeTick: PropTypes.func.isRequired
 };
