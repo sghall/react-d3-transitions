@@ -21,7 +21,7 @@ function removedNode(state, udid) {
 let initialState = {
   data: [],
   view: [500, 325],            // ViewBox: Width, Height
-  trbl: [0, 10, 10, 30],       // Margins: Top, Right, Bottom, Lrft
+  trbl: [15, 10, 10, 30],       // Margins: Top, Right, Bottom, Lrft
   yScale: null,                 // Ordinal y-scale (not actually needed)
   xScale: null,                 // Linear x-scale for obtaining updated ticks
   mounted: {},                  // Currently Mounted Nodes

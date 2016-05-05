@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { AxisTick } from './AxisTick';
 
 export class Axis extends Component {
 
@@ -21,8 +22,14 @@ export class Axis extends Component {
     }
   }
 
-  update({ticks, xScale}, {mounted}) {
+  update({xScale}, {mounted}) {
+
+    if (!xScale) {
+      return;
+    }
+
     let nodes = {};
+    let ticks = xScale.ticks(5);
 
     for (let i = 0; i < ticks.length; i++) {
       let val = ticks[i];
@@ -64,15 +71,33 @@ export class Axis extends Component {
   }
 
   render() {
+    let {mounted} = this.state;
+    let {xScale, yScale, duration} = this.props;
+
+    let ticks = Object.keys(mounted).map(key => {
+      let tick = mounted[key];
+      return (
+        <AxisTick
+          key={key}
+          tick={tick}
+          xScale={xScale}
+          yScale={yScale}
+          duration={duration}
+          removeTick={this.removeTick.bind(this)}
+        />
+      );
+    });
+
+
+    console.log(mounted);
 
     return (
-      <div></div>
+      <g>{ticks}</g>
     );
   }
 }
 
 Axis.propTypes = {
-  ticks: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   format: PropTypes.func.isRequired,

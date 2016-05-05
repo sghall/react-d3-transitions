@@ -3,7 +3,7 @@ import { timer } from 'd3-timer';
 import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
 import { format } from 'd3-format';
 
-const percentFormat = format('.2%');
+const percentFormat = format('.1%');
 
 export class AxisTick extends Component {
 
@@ -33,27 +33,31 @@ export class AxisTick extends Component {
     let {tick: {xVal}, duration} = props;
 
     let interp0 = interpolateTransformSvg(`translate(${xVal},0)`, `translate(${next.tick.xVal},0)`);
+    let interp1 = interpolateNumber(tick.getAttribute('opacity'), 1);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
       tick.setAttribute('transform', interp0(t));
+      tick.setAttribute('opacity', interp1(t));
       if (t === 1) {
         this.transition.stop();
       }
     });
   }
 
-  isRemoving(props, refs) {
+  isRemoving(props, next, refs) {
     let {tick} = refs;
     let {tick: {xVal}, duration} = props;
 
-    let interp0 = interpolateTransformSvg(`translate(${xVal},0)`, 'translate(500,0)');
-    let interp1 = interpolateNumber(1e-6, 1);
+    // let interp0 = interpolateTransformSvg(`translate(${xVal},0)`, `translate(${next.tick.xVal},0)`);
+    // let interp1 = interpolateNumber(1, 1e-6);
+    tick.setAttribute('opacity', 0);
+    tick.setAttribute('transform', 'translate(0,0)');
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
-      tick.setAttribute('transform', interp0(t));
-      tick.setAttribute('opacity', interp1(t));
+      // tick.setAttribute('transform', interp0(t));
+      // tick.setAttribute('opacity', interp1(t));
       if (t === 1) {
         this.transition.stop();
       }
@@ -71,7 +75,7 @@ export class AxisTick extends Component {
       } else if (next.tick.type === 'UPDATING') {
         this.isUpating(props, next, refs);
       } else if (next.tick.type === 'REMOVING') {
-        this.isRemoving(props, refs);
+        this.isRemoving(props, next, refs);
       } else {
         throw new Error('Invalid tick Type');
       }  
@@ -89,10 +93,11 @@ export class AxisTick extends Component {
 
     return (
       <g ref='tick' opacity={1e-6}>
-        <path
-          d={`M0,${yRange[0]} 0,${yRange[1]}Z`}
-          opacity={0.5}
-          fill='#fff'
+        <line
+          x1={0} y1={yRange[0]}
+          x2={0} y2={yRange[1]}
+          opacity={0.2}
+          stroke='#fff'
         />
         <text
           fontSize={'9px'}

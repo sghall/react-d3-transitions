@@ -7,6 +7,10 @@ import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import {Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
+import { Axis } from './Axis';
+import { format } from 'd3-format';
+
+const percentFormat = format('.2%');
 
 let ages = ['Under 5 Years', '5 to 13 Years', '14 to 17 Years', '18 to 24 Years', '16 Years and Over', '18 Years and Over', '15 to 44 Years', '45 to 64 Years', '65 Years and Over', '85 Years and Over'];
 
@@ -47,8 +51,6 @@ export class Example extends Component {
   render() {
     let {view, trbl, mounted, dispatch, sortKey, xScale, yScale} = this.props;
     let {duration, showTopN} = this.state;
-
-    // console.log(xScale && xScale.ticks(5));
 
     let barNodes = Object.keys(mounted).map(key => {
       let node = mounted[key];
@@ -109,6 +111,12 @@ export class Example extends Component {
           <div className='col-md-9' style={{padding: 0}}>
             <Container view={view} trbl={trbl}>
               {barNodes}
+              <Axis
+                xScale={xScale}
+                yScale={yScale}
+                format={percentFormat}
+                duration={duration}
+              />
             </Container>
           </div>
         </div>
