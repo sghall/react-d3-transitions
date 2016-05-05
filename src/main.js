@@ -16,36 +16,28 @@ let store = configureStore();
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400
-  }
-};
-
 class App extends Component {
   render() {
     return (
       <div 
-        className='row'
-        style={{backgroundColor: 'rgb(48, 48, 48)', minHeight: 1000}}
+        className='container'
       >
         <Tabs>
           <Tab label="Item One" >
-            <div className='col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1'>
+            <div className='col-md-12 col-sm-12'>
               <Example />
             </div>
           </Tab>
           <Tab label="Item Two" >
-            <div className='col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1'>
-              <Example />
+            <div className='col-md-12 col-sm-12'>
+              <h1>Example</h1>
+              <p>Some more text for this example.</p>
             </div>
           </Tab>
           <Tab label="Item Three" >
-            <div className='col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1'>
-              <Example />
+            <div className='col-md-12 col-sm-12'>
+              <h1>Example</h1>
+              <p>Some more text for this example.</p>
             </div>
           </Tab>
         </Tabs>
