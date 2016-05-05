@@ -3,25 +3,22 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './index',
   output: {
-    path: __dirname,
-    filename: './build/build.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
       {
-        test: path.join(__dirname, 'src'),
-        loader: 'babel',
-        query: {
-          cacheDirectory: true,
-          presets: ['es2015', 'react']
-        }
+        test: /\.js$/,
+        loaders: ['babel'],
+        exclude: /node_modules/,
+        include: __dirname
       }
     ]
   },
   plugins: [
-    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({'process.env': {NODE_ENV: '"production"'}})
   ],
   stats: {

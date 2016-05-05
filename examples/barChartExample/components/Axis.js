@@ -24,7 +24,7 @@ export class Axis extends Component {
 
   update({xScale, format}, {mounted}) {
 
-    if (!xScale) {
+    if (!xScale || !xScale.ticks) {
       return;
     }
 
@@ -77,14 +77,11 @@ export class Axis extends Component {
     let {mounted} = this.state;
     let {xScale, yScale, duration} = this.props;
 
-    console.log(mounted);
-
     let ticks = Object.keys(mounted).map(key => {
       let tick = mounted[key];
       return (
         <AxisTick
-          key={key}
-          tick={tick}
+          key={key} tick={tick}
           xScale={xScale}
           yScale={yScale}
           duration={duration}

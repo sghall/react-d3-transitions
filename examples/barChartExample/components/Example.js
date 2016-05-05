@@ -83,14 +83,18 @@ export class Example extends Component {
           showExpandableButton={false}
         />
         <div className='row' style={{marginLeft: 0, marginRight: 0}}>
-          <div className='col-md-12'>
+          <div className='col-md-6'>
             <span>Transition Duration: {(duration / 1000).toFixed(1)} Seconds</span>
             <Slider
+              style={{marginBottom: 15, marginTop: 10}}
               defaultValue={0.1}
               onChange={this.setDuration.bind(this)}
             />
+          </div>
+          <div className='col-md-6'>
             <span>Show Top {showTopN} States:</span>
             <Slider
+              style={{marginBottom: 15, marginTop: 10}}
               defaultValue={0.5}
               onChange={this.setShowTopN.bind(this)}
               onDragStop={() => dispatch(updateTopCount(showTopN))}
