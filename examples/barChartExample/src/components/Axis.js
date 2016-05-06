@@ -38,13 +38,14 @@ export class Axis extends Component {
       nodes[key] = {
         udid: key,
         data: val,
-        text: format(val),
         xVal: xScale(val)
       };
 
       if (mounted[key] && !this.removed[key]) {
+        nodes[key].text = mounted[key].text,
         nodes[key].type = 'UPDATING';
       } else {
+        nodes[key].text = format(val),
         nodes[key].type = 'MOUNTING';
       }
     }
@@ -75,6 +76,8 @@ export class Axis extends Component {
   render() {
     let {mounted} = this.state;
     let {xScale, yScale, duration} = this.props;
+
+    console.log(mounted);
 
     let ticks = Object.keys(mounted).map(key => {
       let tick = mounted[key];
