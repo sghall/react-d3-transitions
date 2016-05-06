@@ -5,17 +5,14 @@ import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
 export class AxisTick extends Component {
 
   componentDidMount() {
-    this.isMounting(this.props, null, this.refs);
+    this.isMounting(this.props, this.refs);
   }
 
-  isMounting(props, next, refs) {
+  isMounting(props, refs) {
     let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
+    let {tick: {xVal}, duration} = props;
 
-    let beg = next ? `translate(${xScale(data)},0)`: 'translate(0,0)';
-    let end = next ? `translate(${next.xScale(next.tick.data)},0)`: `translate(${xScale(data)},0)`;
-
-    let interp0 = interpolateTransformSvg(beg, end);
+    let interp0 = interpolateTransformSvg('translate(0,0)', `translate(${xVal},0)`);
     let interp1 = interpolateNumber(1e-6, 1);
 
     this.transition = timer(elapsed => {
@@ -30,12 +27,9 @@ export class AxisTick extends Component {
 
   isUpating(props, next, refs) {
     let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
+    let {tick: {xVal}, duration} = props;
 
-    let beg = `translate(${xScale(data)},0)`;
-    let end = `translate(${next.xScale(next.tick.data)},0)`;
-
-    let interp0 = interpolateTransformSvg(beg, end);
+    let interp0 = interpolateTransformSvg(`translate(${xVal},0)`, `translate(${next.tick.xVal},0)`);
     let interp1 = interpolateNumber(tick.getAttribute('opacity'), 1);
 
     this.transition = timer(elapsed => {
@@ -48,22 +42,17 @@ export class AxisTick extends Component {
     });
   }
 
-  isRemoving(props, next, refs) {
+  isRemoving(props, refs) {
     let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
+    let {tick: {udid}, duration, removeTick} = props;
 
-    let beg = `translate(${xScale(data)},0)`;
-    let end = `translate(${next.xScale(next.tick.data)},0)`;
-
-    let interp0 = interpolateTransformSvg(beg, end);
-    let interp1 = interpolateNumber(tick.getAttribute('opacity'), 1e-6);
+    tick.setAttribute('opacity', 0);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
-      tick.setAttribute('transform', interp0(t));
-      tick.setAttribute('opacity', interp1(t));
       if (t === 1) {
         this.transition.stop();
+        removeTick(udid);
       }
     });
   }
@@ -75,11 +64,11 @@ export class AxisTick extends Component {
       this.transition.stop();
 
       if (next.tick.type === 'MOUNTING') {
-        this.isMounting(props, next, refs);
+        this.isMounting(next, refs);
       } else if (next.tick.type === 'UPDATING') {
         this.isUpating(props, next, refs);
       } else if (next.tick.type === 'REMOVING') {
-        this.isRemoving(props, next, refs);
+        this.isRemoving(props, refs);
       } else {
         throw new Error('Invalid tick Type');
       }  

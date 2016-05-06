@@ -3,25 +3,29 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',
-  entry: ['webpack-hot-middleware/client', './index'],
+  entry: './src/main.js',
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: __dirname,
+    filename: './build/build.js'
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-  ],
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        loaders: ['babel'],
-        exclude: /node_modules/,
-        include: __dirname
+        test: path.join(__dirname, 'src'),
+        loader: 'babel',
+        query: {
+          cacheDirectory: true,
+          presets: ['es2015', 'react']
+        }
       }
     ]
-  }
-}
+  },
+  plugins: [
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({'process.env': {NODE_ENV: '"production"'}})
+  ],
+  stats: {
+    colors: true
+  },
+  devtool: 'source-map'
+};
