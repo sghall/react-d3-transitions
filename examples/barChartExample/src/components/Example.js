@@ -84,14 +84,6 @@ export class Example extends Component {
         />
         <div className='row' style={{marginLeft: 0, marginRight: 0}}>
           <div className='col-md-6'>
-            <span>Transition Duration: {(duration / 1000).toFixed(1)} Seconds</span>
-            <Slider
-              style={{margin: '5px 0px'}}
-              defaultValue={0.1}
-              onChange={this.setDuration.bind(this)}
-            />
-          </div>
-          <div className='col-md-6'>
             <span>Show Top {showTopN} States:</span>
             <Slider
               style={{margin: '5px 0px'}}
@@ -100,11 +92,19 @@ export class Example extends Component {
               onDragStop={() => dispatch(updateTopCount(showTopN))}
             />
           </div>
+          <div className='col-md-6'>
+            <span>Transition Duration: {(duration / 1000).toFixed(1)} Seconds</span>
+            <Slider
+              style={{margin: '5px 0px'}}
+              defaultValue={0.1}
+              onChange={this.setDuration.bind(this)}
+            />
+          </div>
         </div>
         <div className='row' style={{margin: '20px 0px'}}>
           <div className='col-md-12'>
             <h4>Top States by Age Bracket, 2008</h4>
-            <p>The bar chart shows the top states for a given age bracket, sorted by population percentage.</p>
+            <p>The bar chart shows the top states for the selected age bracket sorted by population percentage.</p>
           </div>
         </div>
         <div className='row'>
