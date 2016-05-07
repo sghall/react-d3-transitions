@@ -1,1 +1,1 @@
-##  Chart Transistions in React ##
+##  Bar Chart Example ##
