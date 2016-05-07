@@ -8,11 +8,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import configureStore from './store';
-let store = configureStore();
-
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
+
+import configureStore from './store';
+let store = configureStore();
 
 class App extends Component {
   render() {

@@ -1,5 +1,4 @@
 import { scaleLinear, scaleBand } from 'd3-scale';
-import { max } from 'd3-array';
 
 export function sortByKey(key, ascending) {
   return function (a, b) {
@@ -27,7 +26,7 @@ export function getUpdateHandler(keyFunc) {
 
     let x = scaleLinear()
       .range([0, dims[0]])
-      .domain([0, max(data, d => d[sortKey])]);
+      .domain([0, data.reduce((m, d) => m > d[sortKey] ? m: d[sortKey], 0)];
 
     let y = scaleBand()
       .rangeRound([0, dims[1]])

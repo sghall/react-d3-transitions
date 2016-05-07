@@ -77,8 +77,6 @@ export class Axis extends Component {
     let {mounted} = this.state;
     let {xScale, yScale, duration} = this.props;
 
-    console.log(mounted);
-
     let ticks = Object.keys(mounted).map(key => {
       let tick = mounted[key];
       return (

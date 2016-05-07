@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Container } from './common/Container';
 import { Bar } from './Bar';
-import { fetchData, updateSortOrder, updateTopCount, removedNode } from '../actions/exampleActions';
+import { updateSortOrder, updateTopCount, removedNode } from '../actions/exampleActions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import {Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
@@ -26,9 +26,9 @@ export class Example extends Component {
   }
 
   componentDidMount() {
-    let { dispatch } = this.props;
+    let { dispatch, sortKey } = this.props;
 
-    dispatch(fetchData());
+    dispatch(updateSortOrder(sortKey);
   }
 
   removeItem(key) {
