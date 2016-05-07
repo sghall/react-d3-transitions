@@ -10,12 +10,12 @@ import { data } from '../data';
 let initialState = {
   data: data,
   view: [500, 325],         // ViewBox: Width, Height
-  trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Lrft
-  yScale: () => {},         // Ordinal y-scale (not actually needed)
-  xScale: () => {},         // Linear x-scale for obtaining updated ticks
+  trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
+  yScale: () => {},         // Ordinal y-scale
+  xScale: () => {},         // Linear x-scale
   mounted: {},              // Currently Mounted Nodes
   removed: {},              // Nodes removed since last update
-  showTop: 15,              // Number of bars to swow
+  showTop: 15,              // Number of bars to show
   sortKey: 'Under 5 Years'  // The age group currently selected
 };
 
