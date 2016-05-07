@@ -24,7 +24,7 @@ export class Axis extends Component {
 
   update({xScale, format}, {mounted}) {
 
-    if (!xScale) {
+    if (!xScale.ticks) {
       return;
     }
 

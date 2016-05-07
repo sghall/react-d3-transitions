@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export class Container extends Component {
+export class Chart extends Component {
   render() {
     let { view, trbl, children } = this.props;
 
@@ -26,7 +26,7 @@ export class Container extends Component {
   }
 }
 
-Container.propTypes = {
+Chart.propTypes = {
   view: PropTypes.array.isRequired,
   trbl: PropTypes.array.isRequired,
   children: PropTypes.array.isRequired

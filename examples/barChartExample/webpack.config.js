@@ -22,7 +22,7 @@ module.exports = {
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({'process.env': {NODE_ENV: '"production"'}})
+    new webpack.DefinePlugin({'process.env': {NODE_ENV: '"development"'}})
   ],
   stats: {
     colors: true

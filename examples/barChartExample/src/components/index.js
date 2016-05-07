@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Container } from './common/Container';
+import { Chart } from './Chart';
 import { Bar } from './Bar';
-import { updateSortOrder, updateTopCount, removedNode } from '../actions/exampleActions';
+import { updateSortOrder, updateTopCount, removedNode } from '../actions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import {Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
@@ -68,7 +68,11 @@ export class Example extends Component {
 
     let tableRows = ages.map(age => {
       return (
-        <TableRow selected={sortKey === age} style={{cursor: 'pointer'}}>
+        <TableRow
+          key={age}
+          selected={sortKey === age} 
+          style={{cursor: 'pointer'}}
+        >
           <TableRowColumn>{age}</TableRowColumn>
         </TableRow>
       );
@@ -119,7 +123,7 @@ export class Example extends Component {
             </Table>
           </div>
           <div className='col-md-9' style={{padding: 0}}>
-            <Container view={view} trbl={trbl}>
+            <Chart view={view} trbl={trbl}>
               {barNodes}
               <Axis
                 xScale={xScale}
@@ -127,7 +131,7 @@ export class Example extends Component {
                 format={percentFormat}
                 duration={duration}
               />
-            </Container>
+            </Chart>
           </div>
         </div>
         <hr />
