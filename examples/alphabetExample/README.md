@@ -1,4 +1,4 @@
-##  Bar Chart Example ##
+##  Alphbet Example ##
 
 ## Development ##
 webpack --watch

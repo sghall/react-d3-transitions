@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export class Container extends Component {
+export class Chart extends Component {
   render() {
     let { view, trbl, children } = this.props;
 
@@ -16,9 +16,7 @@ export class Container extends Component {
         <svg
           style={{
             position: 'absolute',
-            top: 0, left: 0,
-            backgroundColor: 'rgba(0,0,0,0.1)',
-            borderRadius: 3
+            top: 0, left: 0
           }}
           viewBox={`0 0 ${view[0]} ${view[1]}`}
         >
@@ -31,7 +29,7 @@ export class Container extends Component {
   }
 }
 
-Container.propTypes = {
+Chart.propTypes = {
   view: PropTypes.array.isRequired,
   trbl: PropTypes.array.isRequired,
   children: PropTypes.array.isRequired

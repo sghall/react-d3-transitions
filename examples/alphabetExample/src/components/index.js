@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Container } from './common/Container';
+
+// Material UI Components
+import {Card, CardHeader } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+
+import { Chart } from './Chart';
 import { Text } from './Text';
 import { removeItem } from '../actions/exampleActions';
 
@@ -13,8 +18,8 @@ export class Example extends Component {
 
   render() {
     let { mounted } = this.props;
-    let view = [1000, 500];
-    let trbl = [35, 50, 50, 50];
+    let view = [1000, 420];
+    let trbl = [0, 10, 10, 10];
 
     let textNodes = Object.keys(mounted).map(key => {
       return (
@@ -27,27 +32,48 @@ export class Example extends Component {
     });
 
     return (
-      <div>
-        <div className='row'>
+      <Card>
+        <CardHeader
+          title="React Chart Transitions"
+          subtitle="Enter, update and exit pattern using React 15.0, D3 4.0 and Redux"
+          actAsExpander={false}
+          showExpandableButton={false}
+        />
+        <div className='row' style={{margin: '20px 0px'}}>
           <div className='col-md-12'>
-            <h3>React Transitions</h3>
-            <p>Enter, update and exit pattern using React 15.0, D3 4.0 and Redux</p>
+            <h4>General Update Pattern</h4>
+            <p>Adapted from the <a href='https://bl.ocks.org/mbostock/3808234'>original example</a> from Mike Bostock</p>
           </div>
         </div>
         <div className='row'>
-          <div className='col-md-12'>
-            <a className='pull-right' href='https://bl.ocks.org/mbostock/raw/3808234/'>Code on Github</a>
-            <a className='pull-left' href='https://bl.ocks.org/mbostock/raw/3808234/'>Mike Bosktock's Original</a>
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-md-12'>
-            <Container view={view} trbl={trbl}>
+          <div className='col-md-12' style={{padding: 0}}>
+            <Chart view={view} trbl={trbl}>
               {textNodes}
-            </Container>
+            </Chart>
           </div>
         </div>
-      </div>
+        <hr />
+        <div className='row'>
+          <div className='col-md-12'>
+            <div className='pull-left'>
+              <FlatButton
+                linkButton={true}
+                label='Mike Bostock Original'
+                href='https://bost.ocks.org/mike/constancy/'
+                target='_blank'
+              />
+            </div>
+            <div className='pull-right'>
+              <FlatButton
+                linkButton={true}
+                label='GitHub Link'
+                href='https://github.com/callemall/material-ui'
+                target='_blank'
+              />
+            </div>
+          </div>
+        </div>
+      </Card>
     );
   }
 }

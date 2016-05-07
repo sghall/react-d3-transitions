@@ -4,9 +4,9 @@ import {
 } from '../actions/exampleActions';
 
 let colors = {
-  mounting: '#33605A',
-  updating: '#070001',
-  removing: '#68462B'
+  mounting: '#CDDC39',
+  updating: '#FAFAFA',
+  removing: '#F44336'
 };
 
 function processUpdate(state, data) {

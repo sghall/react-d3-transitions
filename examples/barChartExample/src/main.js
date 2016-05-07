@@ -17,9 +17,7 @@ let store = configureStore();
 class App extends Component {
   render() {
     return (
-      <div 
-        className='container'
-      >
+      <div>
         <a href='https://github.com/sghall'>
           <img 
             style={{position: 'absolute', top: 0, right: 0, border: 0}}
@@ -40,5 +38,3 @@ render(
     </MuiThemeProvider>
 	</Provider>, document.getElementById('content')
 );
-
-
