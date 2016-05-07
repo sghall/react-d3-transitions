@@ -1,18 +1,35 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Chart } from './Chart';
-import { Bar } from './Bar';
+
+// Action Creator Functions
 import { updateSortOrder, updateTopCount, removedNode } from '../actions';
+
+// Material UI Components
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import {Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
-import { Axis } from './Axis';
-import { format } from 'd3-format';
 
+// Local Example Components
+import { Chart } from './Chart';
+import { Axis } from './Axis';
+import { Bar } from './Bar';
+
+import { format } from 'd3-format';
 const percentFormat = format('.1%');
 
-let ages = ['Under 5 Years', '5 to 13 Years', '14 to 17 Years', '18 to 24 Years', '16 Years and Over', '18 Years and Over', '15 to 44 Years', '45 to 64 Years', '65 Years and Over', '85 Years and Over'];
+const ages = [
+  'Under 5 Years',
+  '5 to 13 Years',
+  '14 to 17 Years',
+  '18 to 24 Years',
+  '16 Years and Over',
+  '18 Years and Over',
+  '15 to 44 Years',
+  '45 to 64 Years',
+  '65 Years and Over',
+  '85 Years and Over'
+];
 
 export class Example extends Component {
 
@@ -27,7 +44,6 @@ export class Example extends Component {
 
   componentDidMount() {
     let { dispatch, sortKey } = this.props;
-
     dispatch(updateSortOrder(sortKey));
   }
 
