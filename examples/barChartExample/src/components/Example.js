@@ -28,7 +28,7 @@ export class Example extends Component {
   componentDidMount() {
     let { dispatch, sortKey } = this.props;
 
-    dispatch(updateSortOrder(sortKey);
+    dispatch(updateSortOrder(sortKey));
   }
 
   removeItem(key) {

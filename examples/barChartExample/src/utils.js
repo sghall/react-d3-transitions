@@ -26,7 +26,7 @@ export function getUpdateHandler(keyFunc) {
 
     let x = scaleLinear()
       .range([0, dims[0]])
-      .domain([0, data.reduce((m, d) => m > d[sortKey] ? m: d[sortKey], 0)];
+      .domain([0, data.reduce((m, d) => m > d[sortKey] ? m: d[sortKey], 0)]);
 
     let y = scaleBand()
       .rangeRound([0, dims[1]])
