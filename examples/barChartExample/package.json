@@ -18,6 +18,7 @@
   "homepage": "https://github.com/sghall/chart-transitions-react#readme",
   "dependencies": {
     "d3-format": "0.5.1",
+    "d3-interpolate": "0.7.0",
     "d3-scale": "0.6.4",
     "d3-timer": "0.4.1",
     "material-ui": "0.15.0-beta.2",
