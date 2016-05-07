@@ -69,7 +69,7 @@ export class AxisTick extends Component {
   }
 
   componentWillReceiveProps(next) {
-    let { props, refs } = this;
+    let {props, refs} = this;
 
     if (props.tick !== next.tick) {
       this.transition.stop();
@@ -115,7 +115,13 @@ export class AxisTick extends Component {
 }
 
 AxisTick.propTypes = {
-  tick: PropTypes.object.isRequired,
+  tick: PropTypes.shape({
+    udid: React.PropTypes.string.isRequired,
+    type: React.PropTypes.string.isRequired,
+    xVal: React.PropTypes.number.isRequired,
+    data: React.PropTypes.number.isRequired,
+    text: React.PropTypes.string.isRequired
+  }).isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   duration: PropTypes.number.isRequired,

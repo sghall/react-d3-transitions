@@ -128,7 +128,13 @@ export class Bar extends Component {
 }
 
 Bar.propTypes = {
-  node: PropTypes.object.isRequired,
+  node: PropTypes.shape({
+    udid: React.PropTypes.string.isRequired,
+    type: React.PropTypes.string.isRequired,
+    xVal: React.PropTypes.number.isRequired,
+    yVal: React.PropTypes.number.isRequired,
+    data: React.PropTypes.object.isRequired
+  }).isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   duration: PropTypes.number.isRequired,
