@@ -59,41 +59,36 @@ export function getData(m, dims) {
     dataSet.push(item);
   }
 
-  console.log(dataSet);
-
   xDomain = Object.keys(xDomain);
   zDomain = Object.keys(zDomain);
 
   let layout = stack()
     .keys(zDomain)
-    .value((d, k) => d[k])
+    .value((d, key) => d[key])
     .offset(stackOffsetSilhouette)(dataSet);
 
   let xScale = scaleBand()
     .range([0, dims[0]])
     .domain(xDomain);
 
-  console.log('layout', layout);
-  // yDomain = extent(merge(merge(layout)));
+  let yScale = scaleLinear()
+    .range([0, dims[1]])
+    .domain(extent(merge(merge(layout))));
 
-  // let yScale = scaleLinear()
-  //   .range([0, dims[1]])
-  //   .domain(yDomain);
+  let result = [];
 
-  // let result = [];
+  for (let k = 0; k < zDomain.length; k++) {
+    let series = {};
 
-  // for (let k = 0; k < zDomain.length; k++) {
-  //   series[zDomain[k]].path = area()
-  //     .x(d => xScale(d))
-  //     .y1((d, i) => yScale(layout[k][i][1]))
-  //     .y0((d, i) => yScale(layout[k][i][0]))(xDomain);
+    series.path = area()
+      .x(d => xScale(d))
+      .y1((d, i) => yScale(layout[k][i][1]))
+      .y0((d, i) => yScale(layout[k][i][0]))(xDomain);
 
-  //   series[zDomain[k]].name = zDomain[k];
+    series.name = zDomain[k];
 
-  //   result.push(series[zDomain[k]]);
-  // }
-
+    result.push(series);
+  }
+  console.log(result);
   return [];
-} 
-
-
+}

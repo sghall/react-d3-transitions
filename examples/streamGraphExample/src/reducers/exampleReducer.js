@@ -8,7 +8,7 @@ import { scaleLinear, scaleBand } from 'd3-scale';
 import { getData } from './utils';
 
 let initialState = {
-  data: getData(200, [1000, 200]),
+  data: getData(10, [1000, 200]),
   view: [500, 325],         // ViewBox: Width, Height
   trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
   yScale: () => {},         // Ordinal y-scale
