@@ -1,7 +1,10 @@
 import moment from 'moment';
 import { area, stack, stackOffsetSilhouette } from 'd3-shape';
-import { extent, merge, range } from 'd3-array';
+import { extent, merge, range, shuffle } from 'd3-array';
 import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
+import { fruits } from '../data/';
+
+const data = shuffle(fruits).slice(0, 20);
 
 export let colors = scaleOrdinal()
   .range(range(100).map(() => {
@@ -34,45 +37,32 @@ function genRandomSeries(m) {
   return a.map(d => +Math.max(0, d).toFixed(5));
 }
 
-function leftpad(d, l) {  // :)
-  d = `${d}`;
-
-  let i = -1;
-
-  l = l - d.length;
-
-  while (++i < l) {
-    d = `0${d}`;
-  }
-
-  return d;
-}
-
-export function getData(n, m, dims) {
+export function getData(m, dims) {
+  let timeNow = moment();
   let dataSet = [];
-  let xDomain = {};
-  let yDomain = [];
-  let zDomain = {};
-
-  let series = {}; 
-
-  for (let i = 0; i < n; i++) {
-    series[`series-${i}`] = genRandomSeries(m);
-  }
+  let xDomain = {}; // Dates
+  let zDomain = {}; // Series
 
   for (let i = 0; i < m; i++) {
-    let xVal = `x-${leftpad(i, 5)}`;
-    let data = {xVal: xVal};
-    xDomain[xVal] = true;
+    let date = timeNow.subtract(i, 'days').toISOString();
+    xDomain[date] = true;
 
-    for (let key in series) {
-      data[key] = series[key][i];
+    let item = {date};
+    let vals = genRandomSeries(data.length);
+    
+    for (let j = 0; j < data.length; j++) {
+      let name = data[j].name;
+      zDomain[name] = true;
+      item[name] = Math.floor(vals[j] * 10000);
     }
-    dataSet.push(data);
+
+    dataSet.push(item);
   }
 
+  console.log(dataSet);
+
   xDomain = Object.keys(xDomain);
-  zDomain = Object.keys(series);
+  zDomain = Object.keys(zDomain);
 
   let layout = stack()
     .keys(zDomain)
@@ -83,26 +73,27 @@ export function getData(n, m, dims) {
     .range([0, dims[0]])
     .domain(xDomain);
 
-  yDomain = extent(merge(merge(layout)));
+  console.log('layout', layout);
+  // yDomain = extent(merge(merge(layout)));
 
-  let yScale = scaleLinear()
-    .range([0, dims[1]])
-    .domain(yDomain);
+  // let yScale = scaleLinear()
+  //   .range([0, dims[1]])
+  //   .domain(yDomain);
 
-  let result = [];
+  // let result = [];
 
-  for (let k = 0; k < zDomain.length; k++) {
-    series[zDomain[k]].path = area()
-      .x(d => xScale(d))
-      .y1((d, i) => yScale(layout[k][i][1]))
-      .y0((d, i) => yScale(layout[k][i][0]))(xDomain);
+  // for (let k = 0; k < zDomain.length; k++) {
+  //   series[zDomain[k]].path = area()
+  //     .x(d => xScale(d))
+  //     .y1((d, i) => yScale(layout[k][i][1]))
+  //     .y0((d, i) => yScale(layout[k][i][0]))(xDomain);
 
-    series[zDomain[k]].name = zDomain[k];
+  //   series[zDomain[k]].name = zDomain[k];
 
-    result.push(series[zDomain[k]]);
-  }
+  //   result.push(series[zDomain[k]]);
+  // }
 
-  return result;
+  return [];
 } 
 
 

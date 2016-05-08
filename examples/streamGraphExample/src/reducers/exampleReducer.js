@@ -5,10 +5,10 @@ import {
 } from '../actions';
 
 import { scaleLinear, scaleBand } from 'd3-scale';
-import { data } from '../data';
+import { getData } from './utils';
 
 let initialState = {
-  data: data,
+  data: getData(200, [1000, 200]),
   view: [500, 325],         // ViewBox: Width, Height
   trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
   yScale: () => {},         // Ordinal y-scale

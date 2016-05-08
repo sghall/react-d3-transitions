@@ -1,4 +1,4 @@
-export const data = [{
+export const fruits = [{
   'name': 'Abaca',
   'scientific': 'Musa textilis',
   'family': 'Musaceae'
