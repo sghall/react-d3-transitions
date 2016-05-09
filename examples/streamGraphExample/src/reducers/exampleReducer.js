@@ -7,22 +7,24 @@ import {
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { getData } from './utils';
 
+let [data, names, dates] = getData(200);
+
 let initialState = {
-  data: getData(100, [1000, 200]),
+  data: data,
   view: [500, 325],         // ViewBox: Width, Height
   trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
+  names: names,             // Array of data series names
+  dates: dates,
   yScale: () => {},         // Ordinal y-scale
   xScale: () => {},         // Linear x-scale
   mounted: {},              // Currently Mounted Nodes
-  removed: {},              // Nodes removed since last update
-  showTop: 15,              // Number of bars to show
-  sortKey: 'Under 5 Years'  // The age group currently selected
+  removed: {}               // Nodes removed since last update
 };
 
 function sortByKey(key, ascending) {
   return function (a, b) {
     let result = 0;
-
+  
     if (a[key] > b[key]) {
       result = ascending ? 1: -1;
     }
