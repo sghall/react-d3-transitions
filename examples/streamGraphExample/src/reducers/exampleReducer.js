@@ -5,15 +5,16 @@ import {
 } from '../actions';
 
 import { scaleLinear, scaleBand } from 'd3-scale';
-import { getData } from './utils';
+import { getInitialValues } from './utils';
 
-let [data, names, dates] = getData(200);
+let [data, names, dates] = getInitialValues(200);
+console.log('data: ', data, 'names: ', 'Dates: ', dates);
 
 let initialState = {
   data: data,
   view: [500, 325],         // ViewBox: Width, Height
   trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
-  names: names,             // Array of data series names
+  names: names,
   dates: dates,
   yScale: () => {},         // Ordinal y-scale
   xScale: () => {},         // Linear x-scale

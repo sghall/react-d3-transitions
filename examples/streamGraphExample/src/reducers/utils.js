@@ -31,11 +31,11 @@ function genRandomSeries(m) {
   return a.map(d => +Math.max(0, d).toFixed(5));
 }
 
-export function getData(days) {
+export function getInitialValues(days) {
   let timeNow = moment();
   
-  let dates = {};
-  let names = {};
+  let dates = {}; // All dates in utc format
+  let names = {}; // All fruit names in data
 
   for (let i = 0; i < data.length; i++) {
     let name = data[i].name;
@@ -61,24 +61,26 @@ export function getData(days) {
     items.push(item);
   }
 
-  console.log(items);
-
-  return [items, Object.keys(dates).sort(), Object.keys(names).sort()];
+  return [
+    items,
+    Object.keys(names).sort().map(d => ({name: d, show: true})),
+    Object.keys(dates).sort()
+  ];
 }
 
-export function getNodePaths(dataSet, series, dates) {
+function getPath(x, y, yVals, dates) {
+  return area()
+    .x(d => x(d))
+    .y0((d, i) => y(yVals[i][0]))
+    .y1((d, i) => y(yVals[i][1]))(dates);
+}
 
-  function getPath(x, y, layout) {
-    return area()
-      .x(d => x(d))
-      .y1((d, i) => y(layout[i][1]))
-      .y0((d, i) => y(layout[i][0]))(dates);
-  }
+export function getPathsAndScales(dims, data, names, dates) {
 
   let layout = stack()
-    .keys(series)
+    .keys(names)
     .value((d, key) => d[key])
-    .offset(stackOffsetSilhouette)(dataSet);
+    .offset(stackOffsetSilhouette)(data);
 
   let x = scaleBand()
     .range([0, dims[0]])
@@ -88,16 +90,13 @@ export function getNodePaths(dataSet, series, dates) {
     .range([0, dims[1]])
     .domain(extent(merge(merge(layout))));
 
-  let values = [];
+  let paths = {};
 
-  for (let k = 0; k < series.length; k++) {
-    values.push({
-      path: getPath(x, y, layout[k]),
-      name: series[k]
-    });
+  for (let k = 0; k < names.length; k++) {
+    paths[names[k]] = getPath(x, y, layout[k], dates);
   }
 
-  return values;
+  return [paths, x, y];
 }
 
 
