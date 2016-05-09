@@ -49,14 +49,19 @@ export function getData(days) {
     dates[date] = true;
 
     let item = {date};
+    item.total = 0;
 
     for (let j = 0; j < data.length; j++) {
-      let name = data[j].name;
-      item[name] = Math.floor(names[name][i] * 100000);
+      let label = data[j].name;
+      let value = Math.floor(names[label][i] * 100000); 
+      item[label] = value;
+      item.total += value;
     }
 
     items.push(item);
   }
+
+  console.log(items);
 
   return [items, Object.keys(dates).sort(), Object.keys(names).sort()];
 }
