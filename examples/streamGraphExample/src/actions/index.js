@@ -1,6 +1,5 @@
 export const EXAMPLE_REMOVED_NODE = 'EXAMPLE_REMOVED_NODE';
-export const EXAMPLE_UPDATE_ORDER = 'EXAMPLE_UPDATE_ORDER';
-export const EXAMPLE_UPDATE_COUNT = 'EXAMPLE_UPDATE_COUNT';
+export const EXAMPLE_TOGGLED_NAME = 'EXAMPLE_TOGGLED_NAME';
 
 export function removedNode(udid) {
   return {
@@ -9,16 +8,10 @@ export function removedNode(udid) {
   };
 }
 
-export function updateSortOrder(sortKey) {
+export function toggleName(name) {
   return {
-    type: EXAMPLE_UPDATE_ORDER,
-    sortKey: sortKey
+    type: EXAMPLE_TOGGLED_NAME,
+    name: name
   };
 }
 
-export function updateTopCount(topN) {
-  return {
-    type: EXAMPLE_UPDATE_COUNT,
-    topN: topN
-  };
-}
