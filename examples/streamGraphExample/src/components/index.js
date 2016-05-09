@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 // Action Creator Functions
-import { updateSortOrder, updateTopCount, removedNode } from '../actions';
+import { updatePaths, toggledName, removedNode } from '../actions';
 
 // Material UI Components
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
@@ -18,19 +18,6 @@ import { Bar } from './Bar';
 import { format } from 'd3-format';
 const percentFormat = format('.1%');
 
-const ages = [
-  'Under 5 Years',
-  '5 to 13 Years',
-  '14 to 17 Years',
-  '18 to 24 Years',
-  '16 Years and Over',
-  '18 Years and Over',
-  '15 to 44 Years',
-  '45 to 64 Years',
-  '65 Years and Over',
-  '85 Years and Over'
-];
-
 export class Example extends Component {
 
   constructor(props) {
@@ -42,10 +29,10 @@ export class Example extends Component {
     };
   }
 
-  componentDidMount() {
-    let { dispatch, sortKey } = this.props;
-    dispatch(updateSortOrder(sortKey));
-  }
+  // componentDidMount() {
+  //   let { dispatch } = this.props;
+  //   dispatch(updatePaths());
+  // }
 
   removeItem(key) {
     let {dispatch} = this.props;
@@ -65,31 +52,31 @@ export class Example extends Component {
   }
 
   render() {
-    let {view, trbl, mounted, dispatch, sortKey, xScale, yScale} = this.props;
+    let {view, trbl, names, mounted, dispatch, xScale, yScale} = this.props;
     let {duration, showTopN} = this.state;
 
-    let barNodes = Object.keys(mounted).map(key => {
-      let node = mounted[key];
-      return (
-        <Bar 
-          key={key}
-          node={node}
-          xScale={xScale}
-          yScale={yScale}
-          duration={duration}
-          removeNode={this.removeItem.bind(this)}
-        />
-      );
-    });
+    let barNodes = null // Object.keys(mounted).map(key => {
+    //   let node = mounted[key];
+    //   return (
+    //     <Bar 
+    //       key={key}
+    //       node={node}
+    //       xScale={xScale}
+    //       yScale={yScale}
+    //       duration={duration}
+    //       removeNode={this.removeItem.bind(this)}
+    //     />
+    //   );
+    // });
 
-    let tableRows = ages.map(age => {
+    let tableRows = names.map(fruit => {
       return (
         <TableRow
-          key={age}
-          selected={sortKey === age} 
+          key={fruit.name}
+          selected={fruit.show === true} 
           style={{cursor: 'pointer'}}
         >
-          <TableRowColumn>{age}</TableRowColumn>
+          <TableRowColumn>{fruit.name}</TableRowColumn>
         </TableRow>
       );
     });
@@ -109,7 +96,7 @@ export class Example extends Component {
               style={{margin: '5px 0px'}}
               defaultValue={0.5}
               onChange={this.setShowTopN.bind(this)}
-              onDragStop={() => dispatch(updateTopCount(showTopN))}
+              onDragStop={() => dispatch(toggledName(showTopN))}
             />
           </div>
           <div className='col-md-6'>
@@ -130,15 +117,18 @@ export class Example extends Component {
         <div className='row'>
           <div className='col-md-3'>
             <Table
-              wrapperStyle={{width: '100%'}} 
-              onCellClick={d => dispatch(updateSortOrder(ages[d]))}
+              multiSelectable={true}
+              wrapperStyle={{width: '100%'}}
+              onCellClick={d => dispatch(toggledName(d))}
             >
-              <TableBody deselectOnClickaway={false}>
+              <TableBody
+                deselectOnClickaway={false}
+              >
                 {tableRows}
               </TableBody>
             </Table>
           </div>
-          <div className='col-md-9' style={{padding: 0}}>
+          <div className='col-md-8' style={{padding: 0}}>
             <Chart view={view} trbl={trbl}>
               {barNodes}
               <Axis
@@ -179,9 +169,10 @@ export class Example extends Component {
 Example.propTypes = {
   view: PropTypes.array.isRequired,
   trbl: PropTypes.array.isRequired,
+  names: PropTypes.array.isRequired,
+  dates: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
-  sortKey: PropTypes.string.isRequired,
   mounted: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
@@ -192,9 +183,10 @@ function mapStateToProps(state) {
   return {
     view: example.view,
     trbl: example.trbl,
+    names: example.names,
+    dates: example.dates,
     xScale: example.xScale,
     yScale: example.yScale,
-    sortKey: example.sortKey,
     mounted: example.mounted
   };
 }
