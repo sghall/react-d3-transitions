@@ -37,33 +37,47 @@ function genRandomSeries(m) {
   return a.map(d => +Math.max(0, d).toFixed(5));
 }
 
-export function getData(m, dims) {
+export function getData(days) {
   let timeNow = moment();
-  let dataSet = [];
-  let xDomain = {}; // Dates
-  let zDomain = {}; // Series
+  
+  let dates = {};
+  let names = {};
 
-  for (let i = 0; i < m; i++) {
-    let date = timeNow.subtract(i, 'days').toISOString();
-    xDomain[date] = true;
-
-    let item = {date};
-    let vals = genRandomSeries(data.length);
-    
-    for (let j = 0; j < data.length; j++) {
-      let name = data[j].name;
-      zDomain[name] = true;
-      item[name] = Math.floor(vals[j] * 10000);
-    }
-
-    dataSet.push(item);
+  for (let i = 0; i < data.length; i++) {
+    let name = data[i].name;
+    names[name] = genRandomSeries(days);
   }
 
-  xDomain = Object.keys(xDomain);
-  zDomain = Object.keys(zDomain);
+  let items = [];
+
+  for (let i = 0; i < days; i++) {
+    let date = timeNow.clone().subtract(i, 'days').toISOString();
+    dates[date] = true;
+
+    let item = {date};
+
+    for (let j = 0; j < data.length; j++) {
+      let name = data[j].name;
+      item[name] = Math.floor(names[name][i] * 100000);
+    }
+
+    items.push(item);
+  }
+
+  return [items, Object.keys(dates).sort(), Object.keys(names).sort()];
+}
+
+function getPath(xScale, yScale, xDomain, layout) {
+  return area()
+    .x(d => xScale(d))
+    .y1((d, i) => yScale(layout[i][1]))
+    .y0((d, i) => yScale(layout[i][0]))(xDomain);
+}
+
+export function getNodePaths(dataSet, series, xDomain) {
 
   let layout = stack()
-    .keys(zDomain)
+    .keys(series)
     .value((d, key) => d[key])
     .offset(stackOffsetSilhouette)(dataSet);
 
@@ -75,20 +89,16 @@ export function getData(m, dims) {
     .range([0, dims[1]])
     .domain(extent(merge(merge(layout))));
 
-  let result = [];
+  let values = [];
 
-  for (let k = 0; k < zDomain.length; k++) {
-    let series = {};
-
-    series.path = area()
-      .x(d => xScale(d))
-      .y1((d, i) => yScale(layout[k][i][1]))
-      .y0((d, i) => yScale(layout[k][i][0]))(xDomain);
-
-    series.name = zDomain[k];
-
-    result.push(series);
+  for (let k = 0; k < series.length; k++) {
+    values.push({
+      path: getPath(xScale, yScale, xDomain, layout[k]),
+      name: series[k]
+    });
   }
-  console.log(result);
+
   return [];
 }
+
+
