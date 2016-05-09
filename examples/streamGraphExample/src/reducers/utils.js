@@ -1,17 +1,11 @@
 import moment from 'moment';
 import { area, stack, stackOffsetSilhouette } from 'd3-shape';
-import { extent, merge, range, shuffle } from 'd3-array';
-import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
+import { extent, merge, shuffle } from 'd3-array';
+import { scaleBand, scaleLinear } from 'd3-scale';
 import { fruits } from '../data/';
 
 const data = shuffle(fruits).slice(0, 20);
 
-export let colors = scaleOrdinal()
-  .range(range(100).map(() => {
-    return `rgb(0,${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`;
-  }));
-
-// Adapted from https://bl.ocks.org/mbostock/4060954
 function genRandomSeries(m) {
 
   function bump(a) {
@@ -67,25 +61,25 @@ export function getData(days) {
   return [items, Object.keys(dates).sort(), Object.keys(names).sort()];
 }
 
-function getPath(xScale, yScale, xDomain, layout) {
-  return area()
-    .x(d => xScale(d))
-    .y1((d, i) => yScale(layout[i][1]))
-    .y0((d, i) => yScale(layout[i][0]))(xDomain);
-}
+export function getNodePaths(dataSet, series, dates) {
 
-export function getNodePaths(dataSet, series, xDomain) {
+  function getPath(x, y, layout) {
+    return area()
+      .x(d => x(d))
+      .y1((d, i) => y(layout[i][1]))
+      .y0((d, i) => y(layout[i][0]))(dates);
+  }
 
   let layout = stack()
     .keys(series)
     .value((d, key) => d[key])
     .offset(stackOffsetSilhouette)(dataSet);
 
-  let xScale = scaleBand()
+  let x = scaleBand()
     .range([0, dims[0]])
-    .domain(xDomain);
+    .domain([dates[0], dates[dates.length - 1]]);
 
-  let yScale = scaleLinear()
+  let y = scaleLinear()
     .range([0, dims[1]])
     .domain(extent(merge(merge(layout))));
 
@@ -93,12 +87,12 @@ export function getNodePaths(dataSet, series, xDomain) {
 
   for (let k = 0; k < series.length; k++) {
     values.push({
-      path: getPath(xScale, yScale, xDomain, layout[k]),
+      path: getPath(x, y, layout[k]),
       name: series[k]
     });
   }
 
-  return [];
+  return values;
 }
 
 
