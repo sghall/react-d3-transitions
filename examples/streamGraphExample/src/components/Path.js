@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { timer } from 'd3-timer';
-import { interpolateNumber } from 'd3-interpolate';
+import { interpolateNumber, interpolateString } from 'd3-interpolate';
 
 export class Path extends Component {
 
@@ -25,65 +25,73 @@ export class Path extends Component {
     });
   }
 
-  // isUpating(props, next, refs) {
-  //   let {yScale, node: {xVal, yVal}, duration} = props;
+  isUpating(props, next, refs) {
+    let {node} = refs;
+    let {node: {path}, duration} = next;
 
-  //   let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.node.yVal})`);
+    node.setAttribute('opacity', 1);
 
-  //   let begVals = {w: xVal, h: yScale.bandwidth(), x: xVal - 3};
-  //   let endVals = {w: next.node.xVal, h: next.yScale.bandwidth(), x: next.node.xVal - 3};
-  //   let interp1 = interpolateObject(begVals, endVals);
+    let interp1 = interpolateString(node.getAttribute('d'), path);
 
-  //   refs.node.setAttribute('opacity', 1);
+    this.transition = timer(elapsed => {
+      let t = elapsed < duration ? (elapsed / duration): 1;
+      node.setAttribute('d', interp1(t));
+      if (t === 1) {
+        this.transition.stop();
+      }
+    });
+  }
 
-  //   this.transition = timer(elapsed => {
-  //     let t = elapsed < duration ? (elapsed / duration): 1;
-  //     refs.node.setAttribute('transform', interp0(t));
+  isRemoving(props, refs) {
+    let {node} = refs;
+    let {node: {path}, duration} = props;
 
-  //     let {w, h, x} = interp1(t);
-  //     refs.rect.setAttribute('width', w);
-  //     refs.rect.setAttribute('height', h);
-  //     refs.text.setAttribute('x', x);
-  //     if (t === 1) {
-  //       this.transition.stop();
-  //     }
-  //   });
-  // }
+    node.setAttribute('opacity', 0);
 
-  // isRemoving(props, refs) {
-  //   let {node: {yVal, udid}, removeNode, duration} = props;
+    // let interp1 = interpolateString(node.getAttribute('d', path);
 
-  //   let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, 'translate(0,500)');
-  //   let interp1 = interpolateNumber(1, 1e-6);
+    // this.transition = timer(elapsed => {
+    //   let t = elapsed < duration ? (elapsed / duration): 1;
+    //   node.setAttribute('d', interp1(t));
+    //   if (t === 1) {
+    //     this.transition.stop();
+    //   }
+    // });
 
-  //   this.transition = timer(elapsed => {
-  //     let t = elapsed < duration ? (elapsed / duration): 1;
-  //     refs.node.setAttribute('transform', interp0(t));
-  //     refs.node.setAttribute('opacity', interp1(t));
-  //     if (t === 1) {
-  //       this.transition.stop();
-  //       removeNode(udid);
-  //     }
-  //   });
-  // }
 
-  // componentWillReceiveProps(next) {
-  //   let { props, refs } = this;
+    // let {node: {yVal, udid}, removeNode, duration} = props;
 
-  //   if (props.node !== next.node) {
-  //     this.transition.stop();
+    // let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, 'translate(0,500)');
+    // let interp1 = interpolateNumber(1, 1e-6);
 
-  //     if (next.node.type === 'MOUNTING') {
-  //       this.isMounting(next, refs);
-  //     } else if (next.node.type === 'UPDATING') {
-  //       this.isUpating(props, next, refs);
-  //     } else if (next.node.type === 'REMOVING') {
-  //       this.isRemoving(props, refs);
-  //     } else {
-  //       throw new Error('Invalid Node Type');
-  //     }  
-  //   }
-  // }
+    // this.transition = timer(elapsed => {
+    //   let t = elapsed < duration ? (elapsed / duration): 1;
+    //   refs.node.setAttribute('transform', interp0(t));
+    //   refs.node.setAttribute('opacity', interp1(t));
+    //   if (t === 1) {
+        // this.transition.stop();
+        // removeNode(udid);
+      // }
+    // });
+  }
+
+  componentWillReceiveProps(next) {
+    let { props, refs } = this;
+
+    if (props.node !== next.node) {
+      this.transition.stop();
+
+      if (next.node.type === 'MOUNTING') {
+        this.isMounting(next, refs);
+      } else if (next.node.type === 'UPDATING') {
+        this.isUpating(props, next, refs);
+      } else if (next.node.type === 'REMOVING') {
+        this.isRemoving(props, refs);
+      } else {
+        throw new Error('Invalid Node Type');
+      }  
+    }
+  }
 
   componentWillUnmount() {
     this.transition.stop();
@@ -96,7 +104,7 @@ export class Path extends Component {
       <path
         ref='node'
         className='node-path'
-        stroke={'#fff'}
+        stroke={'rgba(255,255,255,0.3)'}
         strokeWidth={'0.5px'}
         fill={fill}
       />
