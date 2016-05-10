@@ -13,8 +13,10 @@ export class Path extends Component {
     let {node: {path}, duration} = props;
 
     node.setAttribute('d', path);
+    node.style['cursor'] = 'pointer';
+    node.style['pointer-events'] = 'all';
 
-    let interp1 = interpolateNumber(1e-6, 1);
+    let interp1 = interpolateNumber(1e-6, 0.8);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
@@ -29,7 +31,7 @@ export class Path extends Component {
     let {node} = refs;
     let {node: {path}, duration} = next;
 
-    node.setAttribute('opacity', 1);
+    node.setAttribute('opacity', 0.8);
 
     let interp1 = interpolateString(node.getAttribute('d'), path);
 
@@ -44,35 +46,14 @@ export class Path extends Component {
 
   isRemoving(props, refs) {
     let {node} = refs;
-    let {node: {path}, duration} = props;
+    let {node: {udid}, removeNode} = props;
 
-    node.setAttribute('opacity', 0);
+    node.setAttribute('opacity', 1e-6);
+    node.style['pointer-events'] = 'none';
 
-    // let interp1 = interpolateString(node.getAttribute('d', path);
+    this.transition.stop();
+    removeNode(udid);
 
-    // this.transition = timer(elapsed => {
-    //   let t = elapsed < duration ? (elapsed / duration): 1;
-    //   node.setAttribute('d', interp1(t));
-    //   if (t === 1) {
-    //     this.transition.stop();
-    //   }
-    // });
-
-
-    // let {node: {yVal, udid}, removeNode, duration} = props;
-
-    // let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, 'translate(0,500)');
-    // let interp1 = interpolateNumber(1, 1e-6);
-
-    // this.transition = timer(elapsed => {
-    //   let t = elapsed < duration ? (elapsed / duration): 1;
-    //   refs.node.setAttribute('transform', interp0(t));
-    //   refs.node.setAttribute('opacity', interp1(t));
-    //   if (t === 1) {
-        // this.transition.stop();
-        // removeNode(udid);
-      // }
-    // });
   }
 
   componentWillReceiveProps(next) {
@@ -104,8 +85,6 @@ export class Path extends Component {
       <path
         ref='node'
         className='node-path'
-        stroke={'rgba(255,255,255,0.3)'}
-        strokeWidth={'0.5px'}
         fill={fill}
       />
     );
