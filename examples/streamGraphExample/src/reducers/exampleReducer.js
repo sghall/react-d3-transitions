@@ -4,11 +4,9 @@ import {
   EXAMPLE_UPDATE_PATHS
 } from '../actions';
 
-import { scaleLinear, scaleBand } from 'd3-scale';
 import { getInitialValues, getPathsAndScales } from './utils';
 
 let [data, names, dates] = getInitialValues(200);
-console.log('data: ', data, 'names: ', 'Dates: ', dates);
 
 let initialState = {
   data: data,
@@ -21,21 +19,6 @@ let initialState = {
   mounted: {},              // Currently Mounted Nodes
   removed: {}               // Nodes removed since last update
 };
-
-// function sortByKey(key, ascending) {
-//   return function (a, b) {
-//     let result = 0;
-  
-//     if (a[key] > b[key]) {
-//       result = ascending ? 1: -1;
-//     }
-//     if (a[key] < b[key]) {
-//       result = ascending ? -1: 1;
-//     }
-
-//     return result;
-//   };
-// }
 
 function updateNodes({view, trbl, data, dates, mounted, removed}, names) {
   let nodes = {};
@@ -73,12 +56,14 @@ function updateNodes({view, trbl, data, dates, mounted, removed}, names) {
   return {
     mounted: nodes,
     removed: {},
+    names: names,
+    dates: dates,
     xScale: x,
     yScale: y
   };
 }
 
-function update(state, action) {
+function toggleNode(state, action) {
   let {index} = action;
 
   let names = [
@@ -87,7 +72,7 @@ function update(state, action) {
     ...state.names.slice(index + 1)
   ];
 
-  return {names};
+  return updateNodes(state, names);
 }
 
 
@@ -103,7 +88,7 @@ export function exampleReducer(state = initialState, action) {
   switch (action.type) {
 
   case EXAMPLE_TOGGLED_NAME:
-    return Object.assign({}, state, update(state, action));
+    return Object.assign({}, state, toggleNode(state, action));
 
   case EXAMPLE_REMOVED_NODE:
     return Object.assign({}, state, {
