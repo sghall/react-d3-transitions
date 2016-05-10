@@ -17,6 +17,8 @@ import {Card,
  CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+
 
 // Local Example Components
 import { Chart } from './Chart';
@@ -101,24 +103,9 @@ export class Example extends Component {
     });
   }
 
-  setShowTopN(e,
-   value) {
-    this.setState({
-      showTopN: Math.floor(value * 20) + 5
-    });
-  }
-
   render() {
-    let {view,
-     trbl,
-     names,
-     mounted,
-     dispatch,
-     xScale,
-     yScale} = this.props;
-    let {duration,
-     showTopN,
-     colorMap} = this.state;
+    let {view, trbl, names, mounted, dispatch, xScale, yScale} = this.props;
+    let {duration, colorMap} = this.state;
 
     let pathNodes =Object.keys(mounted).map(key => {
       let node = mounted[key];
@@ -157,16 +144,23 @@ export class Example extends Component {
           actAsExpander={false}
           showExpandableButton={false}
         />
-        <div className='row' style={{marginLeft: 0,
-         marginRight: 0}}>
-          <div className='col-md-6'>
-            <span>Show Top {showTopN} States:</span>
-            <Slider
-              style={{margin: '5px 0px'}}
-              defaultValue={0.5}
-              onChange={this.setShowTopN.bind(this)}
-              onDragStop={() => dispatch(toggledName(showTopN))}
-            />
+        <div className='row' style={{marginLeft: 0, marginRight: 0}}>
+          <div className='col-md-6'style={{paddingLeft: 20}}>
+            <span>Chart Offset:</span>
+            <RadioButtonGroup valueSelected='stacked'>
+              <RadioButton
+                value="stacked"
+                label="Stacked"
+              />
+              <RadioButton
+                value="stream"
+                label="Stream"
+              />
+              <RadioButton
+                value="expanded"
+                label="Expanded"
+              />
+            </RadioButtonGroup>
           </div>
           <div className='col-md-6'>
             <span>Transition Duration: {(duration / 1000).toFixed(1)} Seconds</span>
@@ -177,16 +171,10 @@ export class Example extends Component {
             />
           </div>
         </div>
-        <div className='row' style={{margin: '20px 0px'}}>
-          <div className='col-md-12'>
-            <h4>Top States by Age Bracket,
-             2008</h4>
-            <p>The bar chart shows the top states for the selected age bracket sorted by population percentage.</p>
-          </div>
-        </div>
-        <div className='row'>
+        <div className='row' style={{marginTop: 10}}>
           <div className='col-md-3'>
             <Table
+              height={'500px'}
               multiSelectable={true}
               wrapperStyle={{width: '100%'}}
               onCellClick={d => dispatch(toggledName(d))}
