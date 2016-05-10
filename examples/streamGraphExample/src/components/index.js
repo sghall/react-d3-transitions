@@ -15,8 +15,8 @@ import { Chart } from './Chart';
 import { Axis } from './Axis';
 import { Bar } from './Bar';
 
-import { format } from 'd3-format';
-const percentFormat = format('.1%');
+import { utcFormat } from 'd3-time-format';
+const parseDate = utcFormat('%-d/%-m/%Y');
 
 export class Example extends Component {
 
@@ -29,10 +29,10 @@ export class Example extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   let { dispatch } = this.props;
-  //   dispatch(updatePaths());
-  // }
+  componentDidMount() {
+    let { dispatch } = this.props;
+    dispatch(updatePaths());
+  }
 
   removeItem(key) {
     let {dispatch} = this.props;
@@ -134,7 +134,7 @@ export class Example extends Component {
               <Axis
                 xScale={xScale}
                 yScale={yScale}
-                format={percentFormat}
+                format={parseDate}
                 duration={duration}
               />
             </Chart>

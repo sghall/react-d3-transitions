@@ -45,7 +45,7 @@ export class Axis extends Component {
         nodes[key].text = mounted[key].text,
         nodes[key].type = 'UPDATING';
       } else {
-        nodes[key].text = format(val),
+        nodes[key].text = format(val);
         nodes[key].type = 'MOUNTING';
       }
     }
@@ -81,8 +81,7 @@ export class Axis extends Component {
       let tick = mounted[key];
       return (
         <AxisTick
-          key={key}
-          tick={tick}
+          key={key} tick={tick}
           xScale={xScale}
           yScale={yScale}
           duration={duration}

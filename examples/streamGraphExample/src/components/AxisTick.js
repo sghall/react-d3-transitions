@@ -119,7 +119,7 @@ AxisTick.propTypes = {
     udid: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     xVal: React.PropTypes.number.isRequired,
-    data: React.PropTypes.number.isRequired,
+    data: React.PropTypes.object.isRequired,
     text: React.PropTypes.string.isRequired
   }).isRequired,
   xScale: PropTypes.func.isRequired,
