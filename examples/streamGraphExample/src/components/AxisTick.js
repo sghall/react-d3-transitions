@@ -98,6 +98,7 @@ export class AxisTick extends Component {
     return (
       <g ref='tick' opacity={1e-6}>
         <line
+          style={{pointerEvents: 'none'}}
           x1={0} y1={yRange[0]}
           x2={0} y2={yRange[1]}
           opacity={0.2}
