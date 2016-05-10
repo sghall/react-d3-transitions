@@ -20,15 +20,17 @@
     "d3-format": "0.5.1",
     "d3-interpolate": "0.7.0",
     "d3-scale": "0.6.4",
-    "d3-shape": "^0.6.0",
+    "d3-shape": "0.6.0",
+    "d3-time-format": "0.3.2",
     "d3-timer": "0.4.1",
     "material-ui": "0.15.0-beta.2",
-    "moment": "^2.13.0",
+    "moment": "2.13.0",
     "react": "15.0.2",
     "react-dom": "15.0.2",
     "react-redux": "4.4.4",
     "react-tap-event-plugin": "1.0.0",
-    "redux": "3.4.0"
+    "redux": "3.4.0",
+    "redux-logger": "2.6.1"
   },
   "devDependencies": {
     "babel-core": "6.7.6",
