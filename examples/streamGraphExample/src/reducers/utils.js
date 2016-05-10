@@ -1,7 +1,8 @@
 import moment from 'moment';
 import { area, stack, stackOffsetSilhouette } from 'd3-shape';
 import { extent, merge, shuffle } from 'd3-array';
-import { scaleBand, scaleLinear } from 'd3-scale';
+import { scaleUtc, scaleLinear } from 'd3-scale';
+import { utcParse } from 'd3-time-format';
 import { fruits } from '../data/';
 
 const data = shuffle(fruits).slice(0, 20);
@@ -77,12 +78,15 @@ function getPath(x, y, yVals, dates) {
 
 export function getPathsAndScales(dims, data, names, dates) {
 
+  names = names.filter(d => d.show === true).map(d => d.name);
+  dates = dates.map(d => utcParse('%Y-%m-%dT%H:%M:%S.%LZ')(d));
+
   let layout = stack()
     .keys(names)
     .value((d, key) => d[key])
     .offset(stackOffsetSilhouette)(data);
 
-  let x = scaleBand()
+  let x = scaleUtc()
     .range([0, dims[0]])
     .domain([dates[0], dates[dates.length - 1]]);
 
