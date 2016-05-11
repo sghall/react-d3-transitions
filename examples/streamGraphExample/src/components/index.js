@@ -152,7 +152,7 @@ export class Example extends Component {
           </div>
           <div className='col-md-6 col-sm-7'>
             <h4 style={{margin: 0}}>Random Counts of Fruits Over Time</h4>
-            <p>This data is completely fictitious.  It's creating random series of data for 20 randomly chosen fruit names. It uses the same data generator used in Mike Bostock's <a href='https://bl.ocks.org/mbostock/4060954'>example</a> of creating stream graphs.</p>
+            <p>This data is completely fictitious.  It's creating random series of data for 20 randomly chosen fruit names. It uses the same data generator used in Mike Bostock's <a href='https://bl.ocks.org/mbostock/4060954'>stream graph example</a>.</p>
           </div>
         </div>
         <div className='row' style={{marginTop: 10}}>
