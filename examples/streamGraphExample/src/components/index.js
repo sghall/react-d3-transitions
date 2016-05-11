@@ -11,6 +11,7 @@ import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import {Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 // Local Example Components
@@ -29,48 +30,7 @@ export class Example extends Component {
 
     let colors = scaleOrdinal()
       .domain(this.props.names.map(d => d.name))
-      .range([
-        '#9C6744',
-        '#C9BEB9',
-        '#CFA07E',
-        '#C4BAA1',
-        '#C2B6BF',
-        '#8FB5AA',
-        '#85889E',
-        '#9C7989',
-        '#91919C',
-        '#99677B',
-        '#918A59',
-        '#6E676C',
-        '#6E4752',
-        '#6B4A2F',
-        '#998476',
-        '#8A968D',
-        '#968D8A',
-        '#968D96',
-        '#CC855C',
-        '#967860',
-        '#929488',
-        '#949278',
-        '#A0A3BD',
-        '#BD93A1',
-        '#65666B',
-        '#6B5745',
-        '#6B6664',
-        '#695C52',
-        '#56695E',
-        '#69545C',
-        '#565A69',
-        '#696043',
-        '#63635C',
-        '#636150',
-        '#333131',
-        '#332820',
-        '#302D30',
-        '#302D1F',
-        '#2D302F',
-        '#CFB6A3'
-      ]);
+      .range(['#9C6744', '#C9BEB9', '#CFA07E', '#C4BAA1', '#C2B6BF', '#8FB5AA', '#85889E', '#9C7989', '#91919C', '#99677B', '#918A59', '#6E676C', '#6E4752', '#6B4A2F', '#998476', '#8A968D', '#968D8A', '#968D96', '#CC855C', '#967860', '#929488', '#949278', '#A0A3BD', '#BD93A1', '#65666B', '#6B5745', '#6B6664', '#695C52', '#56695E', '#69545C', '#565A69', '#696043', '#63635C', '#636150', '#333131', '#332820', '#302D30', '#302D1F', '#2D302F', '#CFB6A3']);
 
     this.state ={
       duration: 1000,
@@ -150,39 +110,61 @@ export class Example extends Component {
           showExpandableButton={false}
         />
         <div className='row' style={{marginLeft: 0, marginRight: 0}}>
-          <div className='col-md-6'style={{paddingLeft: 20}}>
-            <span>Chart Offset:</span>
-            <RadioButtonGroup 
-              name='offsets'
-              valueSelected={offset}
-              onChange={(e, d) => dispatch(alterOffset(d))}
-            >
-              <RadioButton
-                value="stacked"
-                label="Stacked"
-              />
-              <RadioButton
-                value="stream"
-                label="Stream"
-              />
-              <RadioButton
-                value="expand"
-                label="Expand"
-              />
-            </RadioButtonGroup>
+          <div className='col-md-5 col-sm-5'>
+            <div className='row'>
+              <div className='col-md-5 col-sm-5'style={{paddingLeft: 20}}>
+                <span>Chart Offset:</span>
+                <RadioButtonGroup 
+                  name='offsets'
+                  valueSelected={offset}
+                  onChange={(e, d) => dispatch(alterOffset(d))}
+                >
+                  <RadioButton
+                    value="stacked"
+                    label="Stacked"
+                  />
+                  <RadioButton
+                    value="stream"
+                    label="Stream"
+                  />
+                  <RadioButton
+                    value="expand"
+                    label="Expand"
+                  />
+                </RadioButtonGroup>
+              </div>
+              <div className='col-md-7 col-sm-7'>
+                <div className='row'>
+                  <div className='col-md-12 col-sm-12'>
+                    <span>Transition Duration: {(duration / 1000).toFixed(1)}</span>
+                    <Slider
+                      style={{margin: '10px 0px'}}
+                      defaultValue={0.1}
+                      onChange={this.setDuration.bind(this)}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className='col-md-12 col-sm-12'>
+                    <RaisedButton
+                      primary={true}
+                      label='Reload'
+                      onClick={() => location.reload()}
+                      style={{width: '100%'}}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className='col-md-6'>
-            <span>Transition Duration: {(duration / 1000).toFixed(1)} Seconds</span>
-            <Slider
-              style={{margin: '5px 0px'}}
-              defaultValue={0.1}
-              onChange={this.setDuration.bind(this)}
-            />
+          <div className='col-md-6 col-sm-7'>
+            <h4 style={{margin: 0}}>Random Counts of Fruits Over Time</h4>
+            <p>This data is completely fictitious.  It's creating random series of data for 20 randomly chosen fruit names. It uses the same data generator used in Mike Bostock's <a href='https://bl.ocks.org/mbostock/4060954'>example</a> of creating stream graphs.</p>
           </div>
         </div>
         <div className='row' style={{marginTop: 10}}>
           <div
-            className='col-md-3'
+            className='col-md-3 col-sm-3'
             onMouseLeave={this.setActiveName.bind(this, '')}
           >
             <Table
@@ -199,7 +181,7 @@ export class Example extends Component {
             </Table>
           </div>
           <div
-            className='col-md-8'
+            className='col-md-8 col-sm-8'
             style={{padding: 0}}
             onMouseLeave={this.setActiveName.bind(this, '')} 
           >
