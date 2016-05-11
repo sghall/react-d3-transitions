@@ -4,17 +4,11 @@ import React,
 import { connect } from 'react-redux';
 
 // Action Creator Functions
-import { updatePaths,
- toggledName,
- removedNode } from '../actions';
+import { updatePaths, toggledName, removedNode, alterOffset } from '../actions';
 
 // Material UI Components
-import { Table,
- TableRow,
- TableRowColumn,
- TableBody } from 'material-ui/table';
-import {Card,
- CardHeader } from 'material-ui/Card';
+import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
+import {Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
@@ -104,7 +98,7 @@ export class Example extends Component {
   }
 
   render() {
-    let {view, trbl, names, mounted, dispatch, xScale, yScale} = this.props;
+    let {view, trbl, names, mounted, dispatch, offset, xScale, yScale} = this.props;
     let {duration, colorMap} = this.state;
 
     let pathNodes =Object.keys(mounted).map(key => {
@@ -147,7 +141,11 @@ export class Example extends Component {
         <div className='row' style={{marginLeft: 0, marginRight: 0}}>
           <div className='col-md-6'style={{paddingLeft: 20}}>
             <span>Chart Offset:</span>
-            <RadioButtonGroup valueSelected='stacked'>
+            <RadioButtonGroup 
+              name='offsets'
+              valueSelected={offset}
+              onChange={(e, d) => dispatch(alterOffset(d))}
+            >
               <RadioButton
                 value="stacked"
                 label="Stacked"
@@ -157,8 +155,8 @@ export class Example extends Component {
                 label="Stream"
               />
               <RadioButton
-                value="expanded"
-                label="Expanded"
+                value="expand"
+                label="Expand"
               />
             </RadioButtonGroup>
           </div>
@@ -229,6 +227,7 @@ Example.propTypes = {
   trbl: PropTypes.array.isRequired,
   names: PropTypes.array.isRequired,
   dates: PropTypes.array.isRequired,
+  offset: PropTypes.string.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   mounted: PropTypes.object.isRequired,
@@ -243,6 +242,7 @@ function mapStateToProps(state) {
     trbl: example.trbl,
     names: example.names,
     dates: example.dates,
+    offset: example.offset,
     xScale: example.xScale,
     yScale: example.yScale,
     mounted: example.mounted

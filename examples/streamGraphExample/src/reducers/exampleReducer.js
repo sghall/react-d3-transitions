@@ -1,12 +1,13 @@
 import {
   EXAMPLE_REMOVED_NODE,
   EXAMPLE_TOGGLED_NAME,
-  EXAMPLE_UPDATE_PATHS
+  EXAMPLE_UPDATE_PATHS,
+  EXAMPLE_ALTER_OFFSET
 } from '../actions';
 
 import { getInitialValues, getPathsAndScales } from './utils';
 
-let [data, names, dates] = getInitialValues(200);
+let [data, names, dates] = getInitialValues(150);
 
 let initialState = {
   data: data,
@@ -14,13 +15,16 @@ let initialState = {
   trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
   names: names,
   dates: dates,
+  offset: 'stacked',
   yScale: () => {},         // Ordinal y-scale
   xScale: () => {},         // Linear x-scale
   mounted: {},              // Currently Mounted Nodes
   removed: {}               // Nodes removed since last update
 };
 
-function updateNodes({view, trbl, data, dates, mounted, removed}, names) {
+function updateNodes(state, names, offset) {
+  let {view, trbl, data, dates, mounted, removed} = state;
+
   let nodes = {};
 
   let dims = [
@@ -28,7 +32,7 @@ function updateNodes({view, trbl, data, dates, mounted, removed}, names) {
     view[1] - trbl[0] - trbl[2]
   ];
 
-  let [paths, x, y] = getPathsAndScales(dims, data, names, dates);
+  let [paths, x, y] = getPathsAndScales(dims, data, names, dates, offset);
 
   for (let key in paths) {
     nodes[key] = {
@@ -58,6 +62,7 @@ function updateNodes({view, trbl, data, dates, mounted, removed}, names) {
     removed: {},
     names: names,
     dates: dates,
+    offset: offset,
     xScale: x,
     yScale: y
   };
@@ -72,7 +77,7 @@ function toggleNode(state, action) {
     ...state.names.slice(index + 1)
   ];
 
-  return updateNodes(state, names);
+  return updateNodes(state, names, state.offset);
 }
 
 
@@ -96,7 +101,11 @@ export function exampleReducer(state = initialState, action) {
     });
 
   case EXAMPLE_UPDATE_PATHS:
-    return Object.assign({}, state, updateNodes(state, state.names));
+    let { names, offset } = state;
+    return Object.assign({}, state, updateNodes(state, names, offset));
+
+  case EXAMPLE_ALTER_OFFSET:
+    return Object.assign({}, state, updateNodes(state, state.names, action.name));
 
   default:
     return state;

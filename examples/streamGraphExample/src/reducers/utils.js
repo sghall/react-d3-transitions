@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { area, stack, stackOffsetSilhouette } from 'd3-shape';
+import { area, stack, stackOffsetNone, stackOffsetSilhouette, stackOffsetExpand } from 'd3-shape';
 import { extent, merge, shuffle } from 'd3-array';
 import { scaleUtc, scaleLinear } from 'd3-scale';
 import { utcParse } from 'd3-time-format';
@@ -76,22 +76,31 @@ function getPath(x, y, yVals, dates) {
     .y1((d, i) => y(yVals[i][1]))(dates);
 }
 
-export function getPathsAndScales(dims, data, names, dates) {
+export function getPathsAndScales(dims, data, names, dates, offset) {
 
   names = names.filter(d => d.show === true).map(d => d.name);
   dates = dates.map(d => utcParse('%Y-%m-%dT%H:%M:%S.%LZ')(d));
 
+
+  let layoutOffset = stackOffsetNone;
+
+  if (offset === 'stream') {
+    layoutOffset = stackOffsetSilhouette;
+  } else if (offset === 'expand') {
+    layoutOffset = stackOffsetExpand;
+  }
+
   let layout = stack()
     .keys(names)
     .value((d, key) => d[key])
-    .offset(stackOffsetSilhouette)(data);
+    .offset(layoutOffset)(data);
 
   let x = scaleUtc()
     .range([0, dims[0]])
     .domain([dates[0], dates[dates.length - 1]]);
 
   let y = scaleLinear()
-    .range([0, dims[1]])
+    .range([dims[1], 0])
     .domain(extent(merge(merge(layout))));
 
   let paths = {};
