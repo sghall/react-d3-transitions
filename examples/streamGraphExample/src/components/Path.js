@@ -12,6 +12,7 @@ export class Path extends Component {
     let {node} = refs;
     let {node: {path}, duration} = props;
 
+    node.setAttribute('opacity', 1e-6);
     node.setAttribute('d', path);
     node.style['cursor'] = 'pointer';
     node.style['pointer-events'] = 'all';
@@ -83,7 +84,6 @@ export class Path extends Component {
 
     return (
       <path
-        opacity={1e-6}
         ref='node'
         className='node-path'
         fill={fill}
