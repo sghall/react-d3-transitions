@@ -7,7 +7,7 @@ import {
 
 import { getInitialValues, getPathsAndScales } from './utils';
 
-let [data, names, dates] = getInitialValues(100);
+let [data, names, dates] = getInitialValues(150);
 
 let initialState = {
   data: data,

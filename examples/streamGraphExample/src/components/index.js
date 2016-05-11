@@ -13,7 +13,6 @@ import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
-
 // Local Example Components
 import { Chart } from './Chart';
 import { Axis } from './Axis';
@@ -75,7 +74,8 @@ export class Example extends Component {
 
     this.state ={
       duration: 1000,
-      colorMap: colors
+      colorMap: colors,
+      activeName: ''
     };
   }
 
@@ -89,10 +89,15 @@ export class Example extends Component {
     dispatch(removedNode(key));
   }
 
-  setDuration(e,
-   value) {
+  setDuration(e, value) {
     this.setState({
       duration: Math.floor(value * 10000)
+    });
+  }
+
+  setActiveName(name) {
+    this.setState({
+      activeName: name
     });
   }
 
@@ -110,21 +115,26 @@ export class Example extends Component {
       return (
         <Path 
           key={key} node={node} duration={duration}
-          fill={key === activeName ? 'red': colorMap(key)}
+          fill={key === activeName ? '#FF4C4C': colorMap(key)}
           xScale={xScale} yScale={yScale}
           removeNode={this.removeItem.bind(this)}
+          makeActive={this.setActiveName.bind(this, key)}
         />
       );
     });
 
-    let tableRows = names.map(fruit => {
+    let tableRows = names.map(item => {
       return (
         <TableRow
-          key={fruit.name}
-          selected={fruit.show === true} 
-          style={{cursor: 'pointer'}}
+          key={item.name}
+          selected={item.show === true}
+          onMouseOver={this.setActiveName.bind(this, item.name)} 
+          style={{
+            cursor: 'pointer', 
+            backgroundColor: item.name === activeName ? 'red': 'rgba(0,0,0,0)'
+          }}
         >
-          <TableRowColumn>{fruit.name}</TableRowColumn>
+          <TableRowColumn>{item.name}</TableRowColumn>
         </TableRow>
       );
     });
@@ -171,9 +181,12 @@ export class Example extends Component {
           </div>
         </div>
         <div className='row' style={{marginTop: 10}}>
-          <div className='col-md-3'>
+          <div
+            className='col-md-3'
+            onMouseLeave={this.setActiveName.bind(this, '')}
+          >
             <Table
-              height={'500px'}
+              height={'550px'}
               multiSelectable={true}
               wrapperStyle={{width: '100%'}}
               onCellClick={d => this.toggleName(d)}
@@ -185,7 +198,11 @@ export class Example extends Component {
               </TableBody>
             </Table>
           </div>
-          <div className='col-md-8' style={{padding: 0}}>
+          <div
+            className='col-md-8'
+            style={{padding: 0}}
+            onMouseLeave={this.setActiveName.bind(this, '')} 
+          >
             <Chart view={view} trbl={trbl}>
               {pathNodes}
               <Axis

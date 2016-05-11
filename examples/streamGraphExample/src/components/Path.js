@@ -79,12 +79,17 @@ export class Path extends Component {
     this.transition.stop();
   }
 
+  shouldComponentUpdate(next) {
+    return next.fill !== this.props.fill;
+  }
+
   render() {
-    let {fill} = this.props;
+    let {fill, makeActive} = this.props;
 
     return (
       <path
         ref='node'
+        onMouseOver={makeActive}
         className='node-path'
         fill={fill}
       />
@@ -102,5 +107,6 @@ Path.propTypes = {
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   duration: PropTypes.number.isRequired,
-  removeNode: PropTypes.func.isRequired
+  removeNode: PropTypes.func.isRequired,
+  makeActive: PropTypes.func.isRequired
 };
