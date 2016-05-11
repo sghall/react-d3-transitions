@@ -1,6 +1,4 @@
-import React,
- { Component,
- PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 // Action Creator Functions
@@ -21,6 +19,7 @@ import { Path } from './Path';
 
 import { utcFormat } from 'd3-time-format';
 const parseDate = utcFormat('%-d/%-m/%Y');
+
 import { scaleOrdinal } from 'd3-scale';
 
 export class Example extends Component {
@@ -32,11 +31,7 @@ export class Example extends Component {
       .domain(this.props.names.map(d => d.name))
       .range(['#9C6744', '#C9BEB9', '#CFA07E', '#C4BAA1', '#C2B6BF', '#8FB5AA', '#85889E', '#9C7989', '#91919C', '#99677B', '#918A59', '#6E676C', '#6E4752', '#6B4A2F', '#998476', '#8A968D', '#968D8A', '#968D96', '#CC855C', '#967860', '#929488', '#949278', '#A0A3BD', '#BD93A1', '#65666B', '#6B5745', '#6B6664', '#695C52', '#56695E', '#69545C', '#565A69', '#696043', '#63635C', '#636150', '#333131', '#332820', '#302D30', '#302D1F', '#2D302F', '#CFB6A3']);
 
-    this.state ={
-      duration: 1000,
-      colorMap: colors,
-      activeName: ''
-    };
+    this.state = {duration: 1000, colorMap: colors, activeName: ''};
   }
 
   componentDidMount() {
@@ -103,9 +98,7 @@ export class Example extends Component {
       <Card>
         <CardHeader
           title='React Chart Transitions'
-          subtitle='Enter,
-           update and exit pattern using React 15.0,
-           D3 4.0 and Redux'
+          subtitle='Enter, update and exit pattern using React 15.0, D3 4.0 and Redux'
           actAsExpander={false}
           showExpandableButton={false}
         />
