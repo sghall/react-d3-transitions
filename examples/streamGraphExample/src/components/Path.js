@@ -83,6 +83,7 @@ export class Path extends Component {
 
     return (
       <path
+        opacity={1e-6}
         ref='node'
         className='node-path'
         fill={fill}

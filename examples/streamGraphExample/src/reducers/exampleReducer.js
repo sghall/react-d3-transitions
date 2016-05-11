@@ -7,7 +7,7 @@ import {
 
 import { getInitialValues, getPathsAndScales } from './utils';
 
-let [data, names, dates] = getInitialValues(150);
+let [data, names, dates] = getInitialValues(100);
 
 let initialState = {
   data: data,
@@ -15,7 +15,7 @@ let initialState = {
   trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
   names: names,
   dates: dates,
-  offset: 'stacked',
+  offset: 'stream',
   yScale: () => {},         // Ordinal y-scale
   xScale: () => {},         // Linear x-scale
   mounted: {},              // Currently Mounted Nodes

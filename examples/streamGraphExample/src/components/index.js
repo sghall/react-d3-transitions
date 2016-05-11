@@ -75,7 +75,6 @@ export class Example extends Component {
 
     this.state ={
       duration: 1000,
-      showTopN: 15,
       colorMap: colors
     };
   }
@@ -97,20 +96,22 @@ export class Example extends Component {
     });
   }
 
+  toggleName(index) {
+    let { dispatch } = this.props;
+    dispatch(toggledName(index));
+  }
+
   render() {
     let {view, trbl, names, mounted, dispatch, offset, xScale, yScale} = this.props;
-    let {duration, colorMap} = this.state;
+    let {duration, colorMap, activeName} = this.state;
 
     let pathNodes =Object.keys(mounted).map(key => {
       let node = mounted[key];
       return (
         <Path 
-          key={key}
-          node={node}
-          fill={colorMap(key)}
-          xScale={xScale}
-          yScale={yScale}
-          duration={duration}
+          key={key} node={node} duration={duration}
+          fill={key === activeName ? 'red': colorMap(key)}
+          xScale={xScale} yScale={yScale}
           removeNode={this.removeItem.bind(this)}
         />
       );
@@ -175,7 +176,7 @@ export class Example extends Component {
               height={'500px'}
               multiSelectable={true}
               wrapperStyle={{width: '100%'}}
-              onCellClick={d => dispatch(toggledName(d))}
+              onCellClick={d => this.toggleName(d)}
             >
               <TableBody
                 deselectOnClickaway={false}
@@ -193,6 +194,11 @@ export class Example extends Component {
                 format={parseDate}
                 duration={duration}
               />
+              <text
+                x={5} y={15} 
+                fill='#fff'
+                style={{pointerEvents: 'none'}}
+              >{activeName}</text>
             </Chart>
           </div>
         </div>
