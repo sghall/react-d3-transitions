@@ -1,18 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
-// Action Creator Functions
 import { updatePaths, toggledName, removedNode, alterOffset } from '../actions';
-
-// Material UI Components
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
-import {Card, CardHeader } from 'material-ui/Card';
+import { Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-
-// Local Example Components
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Chart } from '../components/Chart';
 import { Axis } from '../components/Axis';
 import { Path } from '../components/Path';
@@ -65,11 +59,7 @@ export class Example extends Component {
     let {view, trbl, names, mounted, dispatch, offset, xScale, yScale} = this.props;
     let {duration, colorMap, activeName} = this.state;
 
-    if (yScale.domain) {
-      console.log('yScale', yScale.domain());
-    }
-
-    let pathNodes =Object.keys(mounted).map(key => {
+    let pathNodes = Object.keys(mounted).map(key => {
       let node = mounted[key];
       return (
         <Path 
