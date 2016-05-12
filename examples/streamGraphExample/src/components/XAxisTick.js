@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { timer } from 'd3-timer';
 import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
 
-export class AxisTick extends Component {
+export class XAxisTick extends Component {
 
   componentDidMount() {
     this.isMounting(this.props, null, this.refs);
@@ -115,7 +115,7 @@ export class AxisTick extends Component {
   }
 }
 
-AxisTick.propTypes = {
+XAxisTick.propTypes = {
   tick: PropTypes.shape({
     udid: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,

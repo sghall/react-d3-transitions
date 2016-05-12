@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Chart } from '../components/Chart';
-import { Axis } from '../components/Axis';
+import { XAxis } from '../components/XAxis';
 import { Path } from '../components/Path';
 
 import { utcFormat } from 'd3-time-format';
@@ -174,7 +174,7 @@ export class Example extends Component {
           >
             <Chart view={view} trbl={trbl}>
               {pathNodes}
-              <Axis
+              <XAxis
                 xScale={xScale}
                 yScale={yScale}
                 format={parseDate}

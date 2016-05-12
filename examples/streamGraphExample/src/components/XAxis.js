@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { AxisTick } from './AxisTick';
+import { XAxisTick } from './XAxisTick';
 
-export class Axis extends Component {
+export class XAxis extends Component {
 
   constructor(props) {
     super(props);
@@ -80,7 +80,7 @@ export class Axis extends Component {
     let ticks = Object.keys(mounted).map(key => {
       let tick = mounted[key];
       return (
-        <AxisTick
+        <XAxisTick
           key={key} tick={tick}
           xScale={xScale}
           yScale={yScale}
@@ -96,7 +96,7 @@ export class Axis extends Component {
   }
 }
 
-Axis.propTypes = {
+XAxis.propTypes = {
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   format: PropTypes.func.isRequired,
