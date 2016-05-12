@@ -228,7 +228,6 @@ Example.propTypes = {
   view: PropTypes.array.isRequired,
   trbl: PropTypes.array.isRequired,
   names: PropTypes.array.isRequired,
-  dates: PropTypes.array.isRequired,
   offset: PropTypes.string.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
@@ -237,18 +236,8 @@ Example.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const {example} = state;
-
-  return {
-    view: example.view,
-    trbl: example.trbl,
-    names: example.names,
-    dates: example.dates,
-    offset: example.offset,
-    xScale: example.xScale,
-    yScale: example.yScale,
-    mounted: example.mounted
-  };
+  let {view, trbl, names, mounted, offset, xScale, yScale} = state;
+  return {view, trbl, names, mounted, offset, xScale, yScale};
 }
 
 export default connect(mapStateToProps)(Example);
