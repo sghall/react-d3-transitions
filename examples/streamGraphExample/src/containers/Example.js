@@ -9,10 +9,16 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Chart } from '../components/Chart';
 import { XAxis } from '../components/XAxis';
+import { YAxis } from '../components/YAxis';
+
 import { Path } from '../components/Path';
 
 import { utcFormat } from 'd3-time-format';
-const parseDate = utcFormat('%-d/%-m/%Y');
+const dateFormat = utcFormat('%-d/%-m/%Y');
+
+import { format } from 'd3-format';
+const numberFormat = format(',');
+const percentFormat = format('.1p');
 
 import { scaleOrdinal } from 'd3-scale';
 
@@ -177,7 +183,13 @@ export class Example extends Component {
               <XAxis
                 xScale={xScale}
                 yScale={yScale}
-                format={parseDate}
+                format={dateFormat}
+                duration={duration}
+              />
+              <YAxis
+                xScale={xScale}
+                yScale={yScale}
+                format={offset === 'expand' ? percentFormat: numberFormat}
                 duration={duration}
               />
               <text

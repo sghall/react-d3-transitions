@@ -30,7 +30,7 @@ function genRandomSeries(m) {
     bump(a);
   }
 
-  return a.map(d => +Math.max(0, d).toFixed(5));
+  return a.map(d => +Math.max(0, d).toFixed(3));
 }
 
 export function getInitialValues(days) {
@@ -55,7 +55,7 @@ export function getInitialValues(days) {
 
     for (let j = 0; j < data.length; j++) {
       let label = data[j].name;
-      let value = Math.floor(names[label][i] * 100000); 
+      let value = Math.floor(names[label][i] * 1000); 
       item[label] = value;
       item.total += value;
     }

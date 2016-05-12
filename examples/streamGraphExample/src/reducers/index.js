@@ -12,10 +12,10 @@ let [data, names, dates] = getInitialValues(150);
 let initialState = {
   data: data,
   view: [500, 325],         // ViewBox: Width, Height
-  trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
+  trbl: [15, 10, 10, 40],   // Margins: Top, Right, Bottom, Left
   names: names,
   dates: dates,
-  offset: 'stream',
+  offset: 'stacked',
   yScale: () => {},         // Ordinal y-scale
   xScale: () => {},         // Linear x-scale
   mounted: {},              // Currently Mounted Nodes
