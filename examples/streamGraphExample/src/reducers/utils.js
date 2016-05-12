@@ -28,15 +28,16 @@ function genRandomSeries(m) {
   
   for (let i = 0; i < 5; ++i) {
     bump(a);
-  } 
+  }
+
   return a.map(d => +Math.max(0, d).toFixed(5));
 }
 
 export function getInitialValues(days) {
   let timeNow = moment();
   
-  let dates = {}; // All dates in utc format
-  let names = {}; // All fruit names in data
+  let dates = {};
+  let names = {};
 
   for (let i = 0; i < data.length; i++) {
     let name = data[i].name;
@@ -80,7 +81,6 @@ export function getPathsAndScales(dims, data, names, dates, offset) {
 
   names = names.filter(d => d.show === true).map(d => d.name);
   dates = dates.map(d => utcParse('%Y-%m-%dT%H:%M:%S.%LZ')(d));
-
 
   let layoutOffset = stackOffsetNone;
 
