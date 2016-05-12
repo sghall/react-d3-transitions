@@ -8,6 +8,25 @@ export class XAxisTick extends Component {
     this.isMounting(this.props, null, this.refs);
   }
 
+  componentWillReceiveProps(next) {
+    let {props, refs} = this;
+
+    if (props.tick !== next.tick) {
+      this.transition.stop();
+
+      switch (next.tick.type) {
+      case 'MOUNTING':
+        return this.isMounting(props, next, refs);
+      case 'UPDATING':
+        return this.isUpating(props, next, refs);
+      case 'REMOVING':
+        return this.isRemoving(props, next, refs);
+      default:
+        throw new Error('Invalid tick Type');
+      } 
+    }
+  }
+
   isMounting(props, next, refs) {
     let {tick} = refs;
     let {xScale, tick: {data}, duration} = props;
@@ -66,24 +85,6 @@ export class XAxisTick extends Component {
         this.transition.stop();
       }
     });
-  }
-
-  componentWillReceiveProps(next) {
-    let {props, refs} = this;
-
-    if (props.tick !== next.tick) {
-      this.transition.stop();
-
-      if (next.tick.type === 'MOUNTING') {
-        this.isMounting(props, next, refs);
-      } else if (next.tick.type === 'UPDATING') {
-        this.isUpating(props, next, refs);
-      } else if (next.tick.type === 'REMOVING') {
-        this.isRemoving(props, next, refs);
-      } else {
-        throw new Error('Invalid tick Type');
-      }  
-    }
   }
 
   componentWillUnmount() {
