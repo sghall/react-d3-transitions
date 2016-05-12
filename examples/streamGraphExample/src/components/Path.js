@@ -8,71 +8,65 @@ export class Path extends Component {
     this.isMounting(this.props, this.refs);
   }
 
-  isMounting(props, refs) {
-    let {node} = refs;
-    let {node: {path}, duration} = props;
+  componentWillReceiveProps(next) {
+    let {props, refs} = this;
+
+    if (props.node !== next.node) {
+      this.transition.stop();
+
+      switch (next.node.type) {
+      case 'MOUNTING':
+        return this.isMounting(next, refs);
+      case 'UPDATING':
+        return this.isUpating(next, refs);
+      case 'REMOVING':
+        return this.isRemoving(props, refs);
+      default:
+        throw new Error('Invalid Node Type!');
+      }
+    }
+  }
+
+  isMounting({node: {path}, duration}, {node}) {
 
     node.setAttribute('opacity', 1e-6);
     node.setAttribute('d', path);
     node.style['cursor'] = 'pointer';
     node.style['pointer-events'] = 'all';
 
-    let interp1 = interpolateNumber(1e-6, 0.8);
+    let interp = interpolateNumber(1e-6, 0.8);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
-      node.setAttribute('opacity', interp1(t));
+      node.setAttribute('opacity', interp(t));
       if (t === 1) {
         this.transition.stop();
       }
     });
   }
 
-  isUpating(props, next, refs) {
-    let {node} = refs;
-    let {node: {path}, duration} = next;
+  isUpating({node: {path}, duration}, {node}) {
 
     node.setAttribute('opacity', 0.8);
 
-    let interp1 = interpolateString(node.getAttribute('d'), path);
+    let interp = interpolateString(node.getAttribute('d'), path);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
-      node.setAttribute('d', interp1(t));
+      node.setAttribute('d', interp(t));
       if (t === 1) {
         this.transition.stop();
       }
     });
   }
 
-  isRemoving(props, refs) {
-    let {node} = refs;
-    let {node: {udid}, removeNode} = props;
+  isRemoving({node: {udid}, removeNode}, {node}) {
 
     node.setAttribute('opacity', 1e-6);
     node.style['pointer-events'] = 'none';
 
     this.transition.stop();
     removeNode(udid);
-
-  }
-
-  componentWillReceiveProps(next) {
-    let { props, refs } = this;
-
-    if (props.node !== next.node) {
-      this.transition.stop();
-
-      if (next.node.type === 'MOUNTING') {
-        this.isMounting(next, refs);
-      } else if (next.node.type === 'UPDATING') {
-        this.isUpating(props, next, refs);
-      } else if (next.node.type === 'REMOVING') {
-        this.isRemoving(props, refs);
-      } else {
-        throw new Error('Invalid Node Type');
-      }  
-    }
   }
 
   componentWillUnmount() {
