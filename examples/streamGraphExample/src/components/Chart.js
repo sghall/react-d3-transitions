@@ -17,7 +17,7 @@ export class Chart extends Component {
           style={{position: 'absolute', top: 0, left: 0}}
           viewBox={`0 0 ${view[0]} ${view[1]}`}
         >
-          <g transform={`translate(${trbl[3]} ,${trbl[0]})`}>
+          <g transform={`translate(${trbl[3]},${trbl[0]})`}>
             {children}
           </g>
         </svg>
