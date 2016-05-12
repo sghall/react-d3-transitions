@@ -13,9 +13,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 // Local Example Components
-import { Chart } from './Chart';
-import { Axis } from './Axis';
-import { Path } from './Path';
+import { Chart } from '../components/Chart';
+import { Axis } from '../components/Axis';
+import { Path } from '../components/Path';
 
 import { utcFormat } from 'd3-time-format';
 const parseDate = utcFormat('%-d/%-m/%Y');
@@ -64,6 +64,10 @@ export class Example extends Component {
   render() {
     let {view, trbl, names, mounted, dispatch, offset, xScale, yScale} = this.props;
     let {duration, colorMap, activeName} = this.state;
+
+    if (yScale.domain) {
+      console.log('yScale', yScale.domain());
+    }
 
     let pathNodes =Object.keys(mounted).map(key => {
       let node = mounted[key];
