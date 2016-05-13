@@ -82,8 +82,7 @@ export class XAxis extends Component {
       return (
         <XAxisTick
           key={key} tick={tick}
-          xScale={xScale}
-          yScale={yScale}
+          xScale={xScale} yScale={yScale}
           duration={duration}
           removeTick={this.removeTick.bind(this)}
         />

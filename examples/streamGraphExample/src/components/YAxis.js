@@ -81,10 +81,8 @@ export class YAxis extends Component {
       let tick = mounted[key];
       return (
         <YAxisTick
-          key={key}
-          tick={tick}
-          xScale={xScale}
-          yScale={yScale}
+          key={key} tick={tick}
+          xScale={xScale} yScale={yScale}
           duration={duration}
           removeTick={this.removeTick.bind(this)}
         />

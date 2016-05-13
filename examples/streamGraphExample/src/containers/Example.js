@@ -5,7 +5,6 @@ import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import { Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Chart } from '../components/Chart';
 import { XAxis } from '../components/XAxis';
