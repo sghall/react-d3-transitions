@@ -10,7 +10,7 @@ import { getInitialValues, getPathsAndScales } from './utils';
 let [data, names, dates] = getInitialValues(150);
 
 let initialState = {
-  data: data,
+  data: data,               // The raw dataset with all names and dates
   view: [500, 325],         // ViewBox: Width, Height
   trbl: [15, 10, 10, 40],   // Margins: Top, Right, Bottom, Left
   names: names,             // An object with fruti names and active flag
