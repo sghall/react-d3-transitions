@@ -127,32 +127,18 @@ export class Example extends Component {
                 </RadioButtonGroup>
               </div>
               <div className='col-md-7 col-sm-7'>
-                <div className='row'>
-                  <div className='col-md-12 col-sm-12'>
-                    <span>Transition Duration: {(duration / 1000).toFixed(1)}</span>
-                    <Slider
-                      style={{margin: '10px 0px'}}
-                      defaultValue={0.1}
-                      onChange={this.setDuration.bind(this)}
-                    />
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='col-md-12 col-sm-12'>
-                    <RaisedButton
-                      primary={true}
-                      label='Reload'
-                      onClick={() => location.reload()}
-                      style={{width: '100%'}}
-                    />
-                  </div>
-                </div>
+                <span>Transition Duration: {(duration / 1000).toFixed(1)} Sec</span>
+                <Slider
+                  style={{marginTop: 10, marginBottom: 10}}
+                  defaultValue={0.1}
+                  onChange={this.setDuration.bind(this)}
+                />
               </div>
             </div>
           </div>
           <div className='col-md-6 col-sm-7'>
             <h4 style={{margin: 0}}>Random Counts of Fruits Over Time</h4>
-            <p>This data is completely fictitious.  It's creating random series of data for 20 randomly chosen fruit names. It uses the same data generator used in Mike Bostock's <a href='https://bl.ocks.org/mbostock/4060954'>stream graph example</a>.</p>
+            <p>This data is completely fictitious.  It's creating random series of data for 20 randomly chosen fruit names. It uses the same data generator used in Mike Bostock's <a href='https://bl.ocks.org/mbostock/4060954'>stream graph example</a>.  If you refresh the page you will get a new random dataset.</p>
           </div>
         </div>
         <div className='row' style={{marginTop: 10}}>
