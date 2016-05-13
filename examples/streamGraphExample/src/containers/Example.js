@@ -4,7 +4,6 @@ import { updatePaths, toggledName, removedNode, alterOffset } from '../actions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import { Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
-import FlatButton from 'material-ui/FlatButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Chart } from '../components/Chart';
 import { XAxis } from '../components/XAxis';
@@ -140,7 +139,7 @@ export class Example extends Component {
             <p>This data is completely fictitious.  It's creating random series of data for 20 randomly chosen fruit names. It uses the same data generator used in Mike Bostock's <a href='https://bl.ocks.org/mbostock/4060954'>stream graph example</a>.  If you refresh the page you will get a new random dataset.</p>
           </div>
         </div>
-        <div className='row' style={{marginTop: 10}}>
+        <div className='row' style={{marginTop: 10, marginBottom: 50}}>
           <div
             className='col-md-3 col-sm-3'
             onMouseLeave={this.setActiveName.bind(this, '')}
@@ -183,27 +182,6 @@ export class Example extends Component {
                 style={{pointerEvents: 'none'}}
               >{activeName}</text>
             </Chart>
-          </div>
-        </div>
-        <hr />
-        <div className='row'>
-          <div className='col-md-12'>
-            <div className='pull-left'>
-              <FlatButton
-                linkButton={true}
-                label='Mike Bostock Original'
-                href='https://bost.ocks.org/mike/constancy/'
-                target='_blank'
-              />
-            </div>
-            <div className='pull-right'>
-              <FlatButton
-                linkButton={true}
-                label='GitHub Link'
-                href='https://github.com/callemall/material-ui'
-                target='_blank'
-              />
-            </div>
           </div>
         </div>
       </Card>
