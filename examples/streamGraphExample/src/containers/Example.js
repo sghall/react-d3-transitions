@@ -127,7 +127,7 @@ export class Example extends Component {
                 </RadioButtonGroup>
               </div>
               <div className='col-md-7 col-sm-7'>
-                <span>Transition Duration: {(duration / 1000).toFixed(1)} Sec</span>
+                <span>Transition Duration: {(duration / 1000).toFixed(1)}</span>
                 <Slider
                   style={{marginTop: 10, marginBottom: 10}}
                   defaultValue={0.1}
