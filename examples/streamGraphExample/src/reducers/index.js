@@ -13,9 +13,9 @@ let initialState = {
   data: data,
   view: [500, 325],         // ViewBox: Width, Height
   trbl: [15, 10, 10, 40],   // Margins: Top, Right, Bottom, Left
-  names: names,
-  dates: dates,
-  offset: 'stacked',
+  names: names,             // An object with fruti names and active flag
+  dates: dates,             // An array of UTC dates in the data series
+  offset: 'stacked',        // The current offset: stacked, stream or expanded
   yScale: () => {},         // Ordinal y-scale
   xScale: () => {},         // Linear x-scale
   mounted: {},              // Currently Mounted Nodes
