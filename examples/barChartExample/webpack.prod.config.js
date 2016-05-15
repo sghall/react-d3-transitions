@@ -22,7 +22,11 @@ module.exports = {
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({'process.env': {NODE_ENV: '"production"'}}),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
     new webpack.optimize.UglifyJsPlugin({compress: true, comments: false, mangle: true})
   ],
   stats: {
