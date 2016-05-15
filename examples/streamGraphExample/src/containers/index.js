@@ -20,7 +20,7 @@ const percentFormat = format('.1p');
 
 import { scaleOrdinal } from 'd3-scale';
 
-export class Example extends Component {
+export class App extends Component {
 
   constructor(props) {
     super(props);
@@ -189,7 +189,7 @@ export class Example extends Component {
   }
 }
 
-Example.propTypes = {
+App.propTypes = {
   view: PropTypes.array.isRequired,
   trbl: PropTypes.array.isRequired,
   names: PropTypes.array.isRequired,
@@ -205,4 +205,4 @@ function mapStateToProps(state) {
   return {view, trbl, names, mounted, offset, xScale, yScale};
 }
 
-export default connect(mapStateToProps)(Example);
+export default connect(mapStateToProps)(App);

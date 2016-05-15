@@ -1,24 +1,24 @@
-export const EXAMPLE_REMOVED_NODE = 'EXAMPLE_REMOVED_NODE';
-export const EXAMPLE_UPDATE_ORDER = 'EXAMPLE_UPDATE_ORDER';
-export const EXAMPLE_UPDATE_COUNT = 'EXAMPLE_UPDATE_COUNT';
-
-export function removedNode(udid) {
-  return {
-    type: EXAMPLE_REMOVED_NODE,
-    udid: udid
-  };
-}
+export const APP_UPDATE_ORDER = 'APP_UPDATE_ORDER';
+export const APP_UPDATE_COUNT = 'APP_UPDATE_COUNT';
+export const APP_REMOVE_NODE = 'APP_REMOVE_NODE';
 
 export function updateSortOrder(sortKey) {
   return {
-    type: EXAMPLE_UPDATE_ORDER,
+    type: APP_UPDATE_ORDER,
     sortKey: sortKey
   };
 }
 
 export function updateTopCount(topN) {
   return {
-    type: EXAMPLE_UPDATE_COUNT,
+    type: APP_UPDATE_COUNT,
     topN: topN
+  };
+}
+
+export function removedNode(udid) {
+  return {
+    type: APP_REMOVE_NODE,
+    udid: udid
   };
 }

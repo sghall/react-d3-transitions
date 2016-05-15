@@ -1,9 +1,4 @@
-import {
-  EXAMPLE_REMOVED_NODE,
-  EXAMPLE_UPDATE_ORDER,
-  EXAMPLE_UPDATE_COUNT
-} from '../actions';
-
+import { APP_REMOVE_NODE, APP_UPDATE_ORDER, APP_UPDATE_COUNT } from '../actions';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { data } from '../data';
 
@@ -95,7 +90,7 @@ function getUpdateHandler(keyFunc) {
 
 let update = getUpdateHandler(d => d.State);
 
-function removedNode(state, udid) {
+function removeNode(state, udid) {
   let removed = {};
   removed[udid] = true;
 
@@ -107,17 +102,17 @@ export function reducer(state = initialState, action) {
 
   switch (action.type) {
 
-  case EXAMPLE_UPDATE_ORDER:
+  case APP_UPDATE_ORDER:
     data = state.data.sort(sortByKey(action.sortKey)).slice(0, state.showTop);
     return Object.assign({}, state, update(state, action.sortKey, data));
 
-  case EXAMPLE_UPDATE_COUNT:
+  case APP_UPDATE_COUNT:
     data = state.data.sort(sortByKey(state.sortKey)).slice(0, action.topN);
     return Object.assign({}, state, update(state, state.sortKey, data), {showTop: action.topN});
 
-  case EXAMPLE_REMOVED_NODE:
+  case APP_REMOVE_NODE:
     return Object.assign({}, state, {
-      removed: removedNode(state, action.udid)
+      removed: removeNode(state, action.udid)
     });
 
   default:

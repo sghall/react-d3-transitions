@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import Example from './containers/Example';
+import App from './containers';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
@@ -17,7 +17,7 @@ let store = configureStore();
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-      <Example />
+      <App />
     </MuiThemeProvider>
 	</Provider>, document.getElementById('content')
 );

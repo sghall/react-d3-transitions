@@ -25,7 +25,7 @@ const ages = [
   '85 Years and Over'
 ];
 
-export class Example extends Component {
+export class App extends Component {
 
   constructor(props) {
     super(props);
@@ -144,33 +144,12 @@ export class Example extends Component {
             </Chart>
           </div>
         </div>
-        <hr />
-        <div className='row'>
-          <div className='col-md-12'>
-            <div className='pull-left'>
-              <FlatButton
-                linkButton={true}
-                label='Mike Bostock Original'
-                href='https://bost.ocks.org/mike/constancy/'
-                target='_blank'
-              />
-            </div>
-            <div className='pull-right'>
-              <FlatButton
-                linkButton={true}
-                label='GitHub Link'
-                href='https://github.com/callemall/material-ui'
-                target='_blank'
-              />
-            </div>
-          </div>
-        </div>
       </Card>
     );
   }
 }
 
-Example.propTypes = {
+App.propTypes = {
   view: PropTypes.array.isRequired,
   trbl: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
@@ -185,4 +164,4 @@ function mapStateToProps(state) {
   return {view, trbl, xScale, yScale, sortKey, mounted};
 }
 
-export default connect(mapStateToProps)(Example);
+export default connect(mapStateToProps)(App);
