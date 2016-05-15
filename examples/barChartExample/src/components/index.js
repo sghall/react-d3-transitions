@@ -123,7 +123,7 @@ export class Example extends Component {
         </div>
         <div className='row' style={{margin: '20px 0px'}}>
           <div className='col-md-12'>
-            <h4>Top States by Age Bracket, 2008</h4>
+            <h4 style={{marginTop: -45, marginBottom: -10}}>Top States by Age Bracket, 2008</h4>
             <p>The bar chart shows the top states for the selected age bracket sorted by population percentage.</p>
           </div>
         </div>
