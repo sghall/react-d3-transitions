@@ -181,16 +181,8 @@ Example.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const {example} = state;
-
-  return {
-    view: example.view,
-    trbl: example.trbl,
-    xScale: example.xScale,
-    yScale: example.yScale,
-    sortKey: example.sortKey,
-    mounted: example.mounted
-  };
+  let {view, trbl, xScale, yScale, sortKey, mounted} = state;
+  return {view, trbl, xScale, yScale, sortKey, mounted};
 }
 
 export default connect(mapStateToProps)(Example);
