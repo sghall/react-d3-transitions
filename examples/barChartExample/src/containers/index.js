@@ -1,19 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
-// Action Creator Functions
 import { updateSortOrder, updateTopCount, removedNode } from '../actions';
-
-// Material UI Components
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import {Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import FlatButton from 'material-ui/FlatButton';
-
-// Local Example Components
-import { Chart } from './Chart';
-import { Axis } from './Axis';
-import { Bar } from './Bar';
+import { Chart } from '../components/Chart';
+import { Axis } from '../components/Axis';
+import { Bar } from '../components/Bar';
 
 import { format } from 'd3-format';
 const percentFormat = format('.1%');
