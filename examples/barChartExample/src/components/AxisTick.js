@@ -5,10 +5,29 @@ import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
 export class AxisTick extends Component {
 
   componentDidMount() {
-    this.isMounting(this.props, this.refs);
+    this.isEntering(this.props, this.refs);
   }
 
-  isMounting({xScale0, xScale1, tick: {data}, duration}, {tick}) {
+  componentWillReceiveProps(next) {
+    let {props, refs} = this;
+
+    if (props.tick !== next.tick) {
+      this.transition.stop();
+
+      switch (next.tick.type) {
+      case 'ENTERING':
+        return this.isEntering(next, refs);
+      case 'UPDATING':
+        return this.isUpating(next, refs);
+      case 'EXITING':
+        return this.isExiting(next, refs);
+      default:
+        throw new Error('Invalid Node Type!');
+      }
+    }
+  }
+
+  isEntering({xScale0, xScale1, tick: {data}, duration}, {tick}) {
     let beg = `translate(${xScale0(data)},0)`;
     let end = `translate(${xScale1(data)},0)`;
 
@@ -45,7 +64,7 @@ export class AxisTick extends Component {
     });
   }
 
-  isRemoving(props, refs) {
+  isExiting(props, refs) {
     let {tick} = refs;
     let {xScale0, xScale1, tick: {data}, duration} = props;
 
@@ -63,24 +82,6 @@ export class AxisTick extends Component {
         this.transition.stop();
       }
     });
-  }
-
-  componentWillReceiveProps(next) {
-    let {props, refs} = this;
-
-    if (props.tick !== next.tick) {
-      this.transition.stop();
-
-      if (next.tick.type === 'MOUNTING') {
-        this.isMounting(next, refs);
-      } else if (next.tick.type === 'UPDATING') {
-        this.isUpating(next, refs);
-      } else if (next.tick.type === 'REMOVING') {
-        this.isRemoving(next, refs);
-      } else {
-        throw new Error('Invalid tick Type');
-      }  
-    }
   }
 
   componentWillUnmount() {

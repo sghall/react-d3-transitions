@@ -50,7 +50,7 @@ export class Axis extends Component {
         nodes[key].type = 'UPDATING';
       } else {
         nodes[key].text = format(val),
-        nodes[key].type = 'MOUNTING';
+        nodes[key].type = 'ENTERING';
       }
     }
 
@@ -61,7 +61,7 @@ export class Axis extends Component {
           data: mounted[key].data,
           text: mounted[key].text,
           xVal: mounted[key].xVal,
-          type: 'REMOVING'
+          type: 'EXITING'
         };
       }
     }
