@@ -5,15 +5,12 @@ import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
 export class AxisTick extends Component {
 
   componentDidMount() {
-    this.isMounting(this.props, null, this.refs);
+    this.isMounting(this.props, this.refs);
   }
 
-  isMounting(props, next, refs) {
-    let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
-
-    let beg = next ? `translate(${xScale(data)},0)`: 'translate(0,0)';
-    let end = next ? `translate(${next.xScale(next.tick.data)},0)`: `translate(${xScale(data)},0)`;
+  isMounting({xScale0, xScale1, tick: {data}, duration}, {tick}) {
+    let beg = `translate(${xScale0(data)},0)`;
+    let end = `translate(${xScale1(data)},0)`;
 
     let interp0 = interpolateTransformSvg(beg, end);
     let interp1 = interpolateNumber(1e-6, 1);
@@ -28,12 +25,12 @@ export class AxisTick extends Component {
     });
   }
 
-  isUpating(props, next, refs) {
+  isUpating(props, refs) {
     let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
+    let {xScale0, xScale1, tick: {data}, duration} = props;
 
-    let beg = `translate(${xScale(data)},0)`;
-    let end = `translate(${next.xScale(next.tick.data)},0)`;
+    let beg = `translate(${xScale0(data)},0)`;
+    let end = `translate(${xScale1(data)},0)`;
 
     let interp0 = interpolateTransformSvg(beg, end);
     let interp1 = interpolateNumber(tick.getAttribute('opacity'), 1);
@@ -48,12 +45,12 @@ export class AxisTick extends Component {
     });
   }
 
-  isRemoving(props, next, refs) {
+  isRemoving(props, refs) {
     let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
+    let {xScale0, xScale1, tick: {data}, duration} = props;
 
-    let beg = `translate(${xScale(data)},0)`;
-    let end = `translate(${next.xScale(next.tick.data)},0)`;
+    let beg = `translate(${xScale0(data)},0)`;
+    let end = `translate(${xScale1(data)},0)`;
 
     let interp0 = interpolateTransformSvg(beg, end);
     let interp1 = interpolateNumber(tick.getAttribute('opacity'), 1e-6);
@@ -75,11 +72,11 @@ export class AxisTick extends Component {
       this.transition.stop();
 
       if (next.tick.type === 'MOUNTING') {
-        this.isMounting(props, next, refs);
+        this.isMounting(next, refs);
       } else if (next.tick.type === 'UPDATING') {
-        this.isUpating(props, next, refs);
+        this.isUpating(next, refs);
       } else if (next.tick.type === 'REMOVING') {
-        this.isRemoving(props, next, refs);
+        this.isRemoving(next, refs);
       } else {
         throw new Error('Invalid tick Type');
       }  
@@ -91,15 +88,13 @@ export class AxisTick extends Component {
   }
 
   render() {
-    let {yScale, tick: {text}} = this.props;
-
-    let yRange = yScale.range();
+    let {yHeight, tick: {text}} = this.props;
 
     return (
       <g ref='tick' opacity={1e-6}>
         <line
-          x1={0} y1={yRange[0]}
-          x2={0} y2={yRange[1]}
+          x1={0} y1={0}
+          x2={0} y2={yHeight}
           opacity={0.2}
           stroke='#fff'
         />
@@ -118,12 +113,12 @@ AxisTick.propTypes = {
   tick: PropTypes.shape({
     udid: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
-    xVal: React.PropTypes.number.isRequired,
     data: React.PropTypes.number.isRequired,
     text: React.PropTypes.string.isRequired
   }).isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
+  xScale0: PropTypes.func.isRequired,
+  xScale1: PropTypes.func.isRequired,
+  yHeight: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
   removeTick: PropTypes.func.isRequired
 };
