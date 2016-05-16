@@ -6,8 +6,8 @@ let initialState = {
   data: data,
   view: [500, 325],         // ViewBox: Width, Height
   trbl: [15, 10, 10, 30],   // Margins: Top, Right, Bottom, Left
-  yScale: () => {},         // Ordinal y-scale
-  xScale: () => {},         // Linear x-scale
+  yScale: () => {},         // Y-scale default
+  xScale: () => {},         // X-scale default
   mounted: {},              // Currently Mounted Nodes
   removed: {},              // Nodes removed since last update
   showTop: 10,              // Number of bars to show
@@ -40,8 +40,10 @@ function getUpdateHandler(keyFunc) {
 
     let x = scaleLinear()
       .range([0, dims[0]])
-      .domain([0, data.reduce((m, d) => m > d[sortKey] ? m: d[sortKey], 0)]);
-
+      .domain([0, data.reduce((m, d) => {
+        return m > d[sortKey] ? m: d[sortKey];
+      }, 0)]);
+      
     let y = scaleBand()
       .rangeRound([0, dims[1]])
       .padding(0.1)
@@ -53,7 +55,6 @@ function getUpdateHandler(keyFunc) {
 
       nodes[key] = {
         udid: key,
-        data: val,
         yVal: y(key),
         xVal: x(val[sortKey])
       };
@@ -69,7 +70,6 @@ function getUpdateHandler(keyFunc) {
       if (!nodes[key] && !removed[key]) {
         nodes[key] = {
           udid: mounted[key].udid,
-          data: mounted[key].data,
           yVal: mounted[key].yVal,
           xVal: mounted[key].xVal,
           type: 'EXITING'
