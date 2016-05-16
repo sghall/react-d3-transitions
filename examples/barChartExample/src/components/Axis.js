@@ -7,29 +7,33 @@ export class Axis extends Component {
     super(props);
 
     this.state = {
-      mounted: {}
+      mounted: {},
+      xScale0: null,
+      xScale1: null
     };
   }
 
   componentDidMount() {
+    let {props, state} = this; 
     this.removed = {};
-    this.update(this.props, this.state);
+    this.update(props, props, state);
   }
 
   componentWillReceiveProps(next) {
+    let {props, state} = this; 
     if (this.props.xScale !== next.xScale) {
-      this.update(next, this.state);
+      this.update(next, props, state);
     }
   }
 
-  update({xScale, format}, {mounted}) {
+  update({xScale, format}, props, {mounted}) {
 
     if (!xScale.ticks) {
       return;
     }
 
     let nodes = {};
-    let ticks = xScale.ticks(5);
+    let ticks = xScale.ticks();
 
     for (let i = 0; i < ticks.length; i++) {
       let val = ticks[i];
@@ -65,7 +69,9 @@ export class Axis extends Component {
     this.removed = {};
 
     this.setState({
-      mounted: nodes
+      mounted: nodes,
+      xScale0: props.xScale,
+      xScale1: xScale
     });
   }
 
@@ -74,17 +80,17 @@ export class Axis extends Component {
   }
 
   render() {
-    let {mounted} = this.state;
-    let {xScale, yScale, duration} = this.props;
+    let {mounted, xScale0, xScale1} = this.state;
+    let {duration, yScale} = this.props;
 
     let ticks = Object.keys(mounted).map(key => {
       let tick = mounted[key];
       return (
         <AxisTick
-          key={key}
-          tick={tick}
-          xScale={xScale}
-          yScale={yScale}
+          key={key} tick={tick}
+          xScale0={xScale0}
+          xScale1={xScale1}
+          yHeight={yScale.range()[1]}
           duration={duration}
           removeTick={this.removeTick.bind(this)}
         />
