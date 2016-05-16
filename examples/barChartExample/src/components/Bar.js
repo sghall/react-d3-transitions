@@ -8,10 +8,29 @@ const percentFormat = format('.2%');
 export class Bar extends Component {
 
   componentDidMount() {
-    this.isMounting(this.props, this.refs);
+    this.isEntering(this.props, this.refs);
   }
 
-  isMounting(props, refs) {
+  componentWillReceiveProps(next) {
+    let {props, refs} = this;
+
+    if (props.node !== next.node) {
+      this.transition.stop();
+
+      switch (next.node.type) {
+      case 'ENTERING':
+        return this.isEntering(next, refs);
+      case 'UPDATING':
+        return this.isUpating(props, next, refs);
+      case 'EXITING':
+        return this.isExiting(props, refs);
+      default:
+        throw new Error('Invalid Node Type!');
+      }
+    }
+  }
+
+  isEntering(props, refs) {
     let {node, rect, text} = refs;
     let {yScale, node: {xVal, yVal}, duration} = props;
 
@@ -57,7 +76,7 @@ export class Bar extends Component {
     });
   }
 
-  isRemoving(props, refs) {
+  isExiting(props, refs) {
     let {node: {yVal, udid}, removeNode, duration} = props;
 
     let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, 'translate(0,500)');
@@ -72,24 +91,6 @@ export class Bar extends Component {
         removeNode(udid);
       }
     });
-  }
-
-  componentWillReceiveProps(next) {
-    let { props, refs } = this;
-
-    if (props.node !== next.node) {
-      this.transition.stop();
-
-      if (next.node.type === 'MOUNTING') {
-        this.isMounting(next, refs);
-      } else if (next.node.type === 'UPDATING') {
-        this.isUpating(props, next, refs);
-      } else if (next.node.type === 'REMOVING') {
-        this.isRemoving(props, refs);
-      } else {
-        throw new Error('Invalid Node Type');
-      }  
-    }
   }
 
   componentWillUnmount() {

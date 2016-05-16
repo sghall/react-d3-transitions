@@ -61,7 +61,7 @@ function getUpdateHandler(keyFunc) {
       if (mounted[key] && !removed[key]) {
         nodes[key].type = 'UPDATING';
       } else {
-        nodes[key].type = 'MOUNTING';
+        nodes[key].type = 'ENTERING';
       }
     }
 
@@ -72,7 +72,7 @@ function getUpdateHandler(keyFunc) {
           data: mounted[key].data,
           yVal: mounted[key].yVal,
           xVal: mounted[key].xVal,
-          type: 'REMOVING'
+          type: 'EXITING'
         };
       }
     }
