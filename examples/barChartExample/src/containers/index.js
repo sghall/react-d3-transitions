@@ -4,7 +4,6 @@ import { updateSortOrder, updateTopCount, removedNode } from '../actions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import {Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
-import FlatButton from 'material-ui/FlatButton';
 import { Chart } from '../components/Chart';
 import { Axis } from '../components/Axis';
 import { Bar } from '../components/Bar';
@@ -88,6 +87,19 @@ export class App extends Component {
       );
     });
 
+    let axis = null;
+
+    if (xScale.ticks && yScale.range) {
+      axis = (
+        <Axis
+          xScale={xScale}
+          yScale={yScale}
+          format={percentFormat}
+          duration={duration}
+        />
+      );
+    }
+
     return (
       <Card>
         <CardHeader
@@ -134,13 +146,7 @@ export class App extends Component {
           </div>
           <div className='col-md-9' style={{padding: 0}}>
             <Chart view={view} trbl={trbl}>
-              {barNodes}
-              <Axis
-                xScale={xScale}
-                yScale={yScale}
-                format={percentFormat}
-                duration={duration}
-              />
+              {barNodes}{axis}
             </Chart>
           </div>
         </div>
