@@ -31,7 +31,7 @@ export class App extends Component {
 
     this.state ={
       duration: 1000,
-      showTopN: 15
+      showTopN: 10
     };
   }
 
@@ -113,7 +113,7 @@ export class App extends Component {
             <span>Show Top {showTopN} States:</span>
             <Slider
               style={{margin: '5px 0px'}}
-              defaultValue={0.5}
+              defaultValue={0.25}
               onChange={this.setShowTopN.bind(this)}
               onDragStop={() => dispatch(updateTopCount(showTopN))}
             />

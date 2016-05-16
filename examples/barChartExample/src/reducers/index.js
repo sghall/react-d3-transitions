@@ -10,8 +10,8 @@ let initialState = {
   xScale: () => {},         // Linear x-scale
   mounted: {},              // Currently Mounted Nodes
   removed: {},              // Nodes removed since last update
-  showTop: 15,              // Number of bars to show
-  sortKey: 'Under 5 Years'  // The age group currently selected
+  showTop: 10,              // Number of bars to show
+  sortKey: '18 to 24 Years' // The age group currently selected
 };
 
 function sortByKey(key, ascending) {
