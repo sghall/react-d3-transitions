@@ -30,9 +30,7 @@ export class Bar extends Component {
     }
   }
 
-  isEntering(props, refs) {
-    let {node, rect, text} = refs;
-    let {yScale, node: {xVal, yVal}, duration} = props;
+  isEntering({yScale, node: {xVal, yVal}, duration}, {node, rect, text}) {
 
     rect.setAttribute('width', xVal);
     rect.setAttribute('height', yScale.bandwidth());
@@ -51,8 +49,7 @@ export class Bar extends Component {
     });
   }
 
-  isUpating(props, next, refs) {
-    let {yScale, node: {xVal, yVal}, duration} = props;
+  isUpating({yScale, node: {xVal, yVal}, duration}, next, {node, rect, text}) {
 
     let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, `translate(0,${next.node.yVal})`);
 
@@ -60,32 +57,31 @@ export class Bar extends Component {
     let endVals = {w: next.node.xVal, h: next.yScale.bandwidth(), x: next.node.xVal - 3};
     let interp1 = interpolateObject(begVals, endVals);
 
-    refs.node.setAttribute('opacity', 1);
+    node.setAttribute('opacity', 1);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
-      refs.node.setAttribute('transform', interp0(t));
+      node.setAttribute('transform', interp0(t));
 
       let {w, h, x} = interp1(t);
-      refs.rect.setAttribute('width', w);
-      refs.rect.setAttribute('height', h);
-      refs.text.setAttribute('x', x);
+      rect.setAttribute('width', w);
+      rect.setAttribute('height', h);
+      text.setAttribute('x', x);
       if (t === 1) {
         this.transition.stop();
       }
     });
   }
 
-  isExiting(props, refs) {
-    let {node: {yVal, udid}, removeNode, duration} = props;
+  isExiting({node: {yVal, udid}, removeNode, duration}, {node}) {
 
     let interp0 = interpolateTransformSvg(`translate(0,${yVal})`, 'translate(0,500)');
     let interp1 = interpolateNumber(1, 1e-6);
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
-      refs.node.setAttribute('transform', interp0(t));
-      refs.node.setAttribute('opacity', interp1(t));
+      node.setAttribute('transform', interp0(t));
+      node.setAttribute('opacity', interp1(t));
       if (t === 1) {
         this.transition.stop();
         removeNode(udid);
@@ -133,8 +129,7 @@ Bar.propTypes = {
     udid: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     xVal: React.PropTypes.number.isRequired,
-    yVal: React.PropTypes.number.isRequired,
-    data: React.PropTypes.object.isRequired
+    yVal: React.PropTypes.number.isRequired
   }).isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
