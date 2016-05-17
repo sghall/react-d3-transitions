@@ -156,7 +156,7 @@ export class App extends Component {
           </div>
           <div className='col-md-6 col-sm-7'>
             <h4 style={{margin: 0}}>Random Counts of Fruits Over Time</h4>
-            <p>This data is completely fictitious.  It's creating random series of data for 20 randomly chosen fruit names. It uses the same data generator used in Mike Bostock's <a href='https://bl.ocks.org/mbostock/4060954'>stream graph example</a>.  If you refresh the page you will get a new random dataset.</p>
+            <p>This data is completely fictitious.  It's creating random series of data for 10 randomly chosen fruit names (150 points per series). It uses the same data generator used in Mike Bostock's <a href='https://bl.ocks.org/mbostock/4060954'>stream graph example</a>.  If you refresh the page you will get a new random dataset.</p>
           </div>
         </div>
         <div className='row' style={{marginTop: 10, marginBottom: 50}}>

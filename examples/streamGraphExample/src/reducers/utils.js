@@ -5,7 +5,7 @@ import { scaleUtc, scaleLinear } from 'd3-scale';
 import { utcParse } from 'd3-time-format';
 import { fruits } from '../data/';
 
-const data = shuffle(fruits).slice(0, 20);
+const data = shuffle(fruits).slice(0, 10);
 
 function genRandomSeries(m) {
 
