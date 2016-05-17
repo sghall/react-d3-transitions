@@ -5,7 +5,7 @@ import { interpolateNumber, interpolateString } from 'd3-interpolate';
 export class Path extends Component {
 
   componentDidMount() {
-    this.isMounting(this.props, this.refs);
+    this.isEntering(this.props, this.refs);
   }
 
   componentWillReceiveProps(next) {
@@ -16,18 +16,18 @@ export class Path extends Component {
 
       switch (next.node.type) {
       case 'MOUNTING':
-        return this.isMounting(next, refs);
+        return this.isEntering(next, refs);
       case 'UPDATING':
         return this.isUpating(next, refs);
-      case 'REMOVING':
-        return this.isRemoving(props, refs);
+      case 'EXITING':
+        return this.isExiting(props, refs);
       default:
         throw new Error('Invalid Node Type!');
       }
     }
   }
 
-  isMounting({node: {path}, duration}, {node}) {
+  isEntering({node: {path}, duration}, {node}) {
 
     node.setAttribute('opacity', 1e-6);
     node.setAttribute('d', path);
@@ -60,7 +60,7 @@ export class Path extends Component {
     });
   }
 
-  isRemoving({node: {udid}, removeNode}, {node}) {
+  isExiting({node: {udid}, removeNode}, {node}) {
 
     node.setAttribute('opacity', 1e-6);
     node.style['pointer-events'] = 'none';

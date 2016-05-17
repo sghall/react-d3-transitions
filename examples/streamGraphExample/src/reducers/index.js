@@ -43,7 +43,7 @@ function updateNodes(state, names, offset) {
     if (mounted[key] && !removed[key]) {
       nodes[key].type = 'UPDATING';
     } else {
-      nodes[key].type = 'MOUNTING';
+      nodes[key].type = 'ENTERING';
     }
   }
 
@@ -52,7 +52,7 @@ function updateNodes(state, names, offset) {
       nodes[key] = {
         udid: mounted[key].udid,
         path: mounted[key].path, 
-        type: 'REMOVING'
+        type: 'EXITING'
       };
     }
   }
