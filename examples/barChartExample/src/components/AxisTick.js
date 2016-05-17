@@ -22,7 +22,7 @@ export class AxisTick extends Component {
       case 'EXITING':
         return this.isExiting(next, refs);
       default:
-        throw new Error('Invalid Node Type!');
+        throw new Error('Invalid Tick Type!');
       }
     }
   }

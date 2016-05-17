@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updateSortOrder, updateTopCount, removedNode } from '../actions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
-import {Card, CardHeader } from 'material-ui/Card';
+import { Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
 import { Chart } from '../components/Chart';
 import { Axis } from '../components/Axis';
