@@ -7,29 +7,29 @@ export class YAxis extends Component {
     super(props);
 
     this.state = {
-      mounted: {}
+      mounted: {},
+      yScale0: null,
+      yScale1: null
     };
   }
 
   componentDidMount() {
+    let {props, state} = this; 
     this.removed = {};
-    this.update(this.props, this.state);
+    this.update(props, props, state);
   }
 
   componentWillReceiveProps(next) {
-    if (this.props.xScale !== next.xScale) {
-      this.update(next, this.state);
+    let {props, state} = this; 
+    if (this.props.yScale !== next.yScale) {
+      this.update(next, props, state);
     }
   }
 
-  update({yScale, format}, {mounted}) {
-
-    if (!yScale.ticks) {
-      return;
-    }
+  update({yScale, format}, props, {mounted}) {
 
     let nodes = {};
-    let ticks = yScale.ticks(10);
+    let ticks = yScale.ticks();
 
     for (let i = 0; i < ticks.length; i++) {
       let val = ticks[i];
@@ -37,16 +37,15 @@ export class YAxis extends Component {
 
       nodes[key] = {
         udid: key,
-        data: val,
-        xVal: yScale(val)
+        data: val
       };
 
       if (mounted[key] && !this.removed[key]) {
         nodes[key].text = mounted[key].text,
         nodes[key].type = 'UPDATING';
       } else {
-        nodes[key].text = format(Math.abs(val)),
-        nodes[key].type = 'MOUNTING';
+        nodes[key].text = format(val),
+        nodes[key].type = 'ENTERING';
       }
     }
 
@@ -56,8 +55,7 @@ export class YAxis extends Component {
           udid: mounted[key].udid,
           data: mounted[key].data,
           text: mounted[key].text,
-          xVal: mounted[key].xVal,
-          type: 'REMOVING'
+          type: 'EXITING'
         };
       }
     }
@@ -65,7 +63,9 @@ export class YAxis extends Component {
     this.removed = {};
 
     this.setState({
-      mounted: nodes
+      mounted: nodes,
+      yScale0: props.yScale,
+      yScale1: yScale
     });
   }
 
@@ -74,15 +74,15 @@ export class YAxis extends Component {
   }
 
   render() {
-    let {mounted} = this.state;
-    let {xScale, yScale, duration} = this.props;
+    let {state: {mounted, yScale0, yScale1}, props: {duration, xScale}} = this;
 
     let ticks = Object.keys(mounted).map(key => {
       let tick = mounted[key];
       return (
         <YAxisTick
           key={key} tick={tick}
-          xScale={xScale} yScale={yScale}
+          yScale0={yScale0} yScale1={yScale1}
+          xLength={xScale.range()[1]}
           duration={duration}
           removeTick={this.removeTick.bind(this)}
         />

@@ -92,6 +92,19 @@ export class App extends Component {
       );
     });
 
+    let yAxis = null;
+
+    if (yScale.ticks && xScale.range) {
+      yAxis = (
+        <YAxis
+          xScale={xScale}
+          yScale={yScale}
+          format={offset === 'expand' ? percentFormat: numberFormat}
+          duration={duration}
+        />
+      );
+    }
+
     return (
       <Card>
         <CardHeader
@@ -163,17 +176,11 @@ export class App extends Component {
             onMouseLeave={this.setActiveName.bind(this, '')} 
           >
             <Chart view={view} trbl={trbl}>
-              {pathNodes}
+              {pathNodes}{yAxis}
               <XAxis
                 xScale={xScale}
                 yScale={yScale}
                 format={dateFormat}
-                duration={duration}
-              />
-              <YAxis
-                xScale={xScale}
-                yScale={yScale}
-                format={offset === 'expand' ? percentFormat: numberFormat}
                 duration={duration}
               />
               <text
