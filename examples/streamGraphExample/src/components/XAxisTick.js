@@ -92,6 +92,7 @@ export class XAxisTick extends Component {
     return (
       <g ref='tick' opacity={1e-6}>
         <line
+          style={{pointerEvents: 'none'}}
           x1={0} y1={0}
           x2={0} y2={yHeight}
           opacity={0.2}

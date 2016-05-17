@@ -92,6 +92,7 @@ export class YAxisTick extends Component {
     return (
       <g ref='tick' opacity={1e-6}>
         <line
+          style={{pointerEvents: 'none'}}
           x1={0} y1={0}
           x2={xLength} y2={0}
           opacity={0.2}
