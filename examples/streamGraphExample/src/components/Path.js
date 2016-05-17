@@ -15,7 +15,7 @@ export class Path extends Component {
       this.transition.stop();
 
       switch (next.node.type) {
-      case 'MOUNTING':
+      case 'ENTERING':
         return this.isEntering(next, refs);
       case 'UPDATING':
         return this.isUpating(next, refs);
