@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { updatePaths, toggledName, removedNode, alterOffset } from '../actions';
+import { updatePaths, toggledName, removedNode, changeOffset } from '../actions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import { Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
@@ -8,7 +8,6 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Chart } from '../components/Chart';
 import { XAxis } from '../components/XAxis';
 import { YAxis } from '../components/YAxis';
-
 import { Path } from '../components/Path';
 
 import { utcFormat } from 'd3-time-format';
@@ -129,7 +128,7 @@ export class App extends Component {
                 <RadioButtonGroup 
                   name='offsets'
                   valueSelected={offset}
-                  onChange={(e, d) => dispatch(alterOffset(d))}
+                  onChange={(e, d) => dispatch(changeOffset(d))}
                 >
                   <RadioButton
                     value="stacked"

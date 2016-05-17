@@ -1,8 +1,8 @@
 import {
-  EXAMPLE_REMOVED_NODE,
-  EXAMPLE_TOGGLED_NAME,
-  EXAMPLE_UPDATE_PATHS,
-  EXAMPLE_ALTER_OFFSET
+  APP_REMOVED_NODE,
+  APP_TOGGLED_NAME,
+  APP_UPDATE_PATHS,
+  APP_CHANGE_OFFSET
 } from '../actions';
 
 import { getInitialValues, getPathsAndScales } from './utils';
@@ -92,19 +92,19 @@ export function reducer(state = initialState, action) {
 
   switch (action.type) {
 
-  case EXAMPLE_TOGGLED_NAME:
+  case APP_TOGGLED_NAME:
     return Object.assign({}, state, toggleNode(state, action));
 
-  case EXAMPLE_REMOVED_NODE:
+  case APP_REMOVED_NODE:
     return Object.assign({}, state, {
       removed: removedNode(state, action.udid)
     });
 
-  case EXAMPLE_UPDATE_PATHS:
+  case APP_UPDATE_PATHS:
     let { names, offset } = state;
     return Object.assign({}, state, updateNodes(state, names, offset));
 
-  case EXAMPLE_ALTER_OFFSET:
+  case APP_CHANGE_OFFSET:
     return Object.assign({}, state, updateNodes(state, state.names, action.name));
 
   default:

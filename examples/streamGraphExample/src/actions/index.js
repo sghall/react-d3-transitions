@@ -1,31 +1,31 @@
-export const EXAMPLE_REMOVED_NODE = 'EXAMPLE_REMOVED_NODE';
-export const EXAMPLE_TOGGLED_NAME = 'EXAMPLE_TOGGLED_NAME';
-export const EXAMPLE_UPDATE_PATHS = 'EXAMPLE_UPDATE_PATHS';
-export const EXAMPLE_ALTER_OFFSET = 'EXAMPLE_ALTER_OFFSET';
+export const APP_REMOVED_NODE = 'APP_REMOVED_NODE';
+export const APP_TOGGLED_NAME = 'APP_TOGGLED_NAME';
+export const APP_UPDATE_PATHS = 'APP_UPDATE_PATHS';
+export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
 
 export function removedNode(udid) {
   return {
-    type: EXAMPLE_REMOVED_NODE,
+    type: APP_REMOVED_NODE,
     udid: udid
   };
 }
 
 export function toggledName(index) {
   return {
-    type: EXAMPLE_TOGGLED_NAME,
+    type: APP_TOGGLED_NAME,
     index: index
   };
 }
 
 export function updatePaths() {
   return {
-    type: EXAMPLE_UPDATE_PATHS
+    type: APP_UPDATE_PATHS
   };
 }
 
-export function alterOffset(name) {
+export function changeOffset(name) {
   return {
-    type: EXAMPLE_ALTER_OFFSET,
+    type: APP_CHANGE_OFFSET,
     name: name
   };
 }
