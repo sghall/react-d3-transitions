@@ -5,7 +5,7 @@ import { interpolateNumber, interpolateTransformSvg } from 'd3-interpolate';
 export class XAxisTick extends Component {
 
   componentDidMount() {
-    this.isMounting(this.props, null, this.refs);
+    this.isEntering(this.props, this.refs);
   }
 
   componentWillReceiveProps(next) {
@@ -15,24 +15,22 @@ export class XAxisTick extends Component {
       this.transition.stop();
 
       switch (next.tick.type) {
-      case 'MOUNTING':
-        return this.isMounting(props, next, refs);
+      case 'ENTERING':
+        return this.isEntering(next, refs);
       case 'UPDATING':
-        return this.isUpating(props, next, refs);
-      case 'REMOVING':
-        return this.isRemoving(props, next, refs);
+        return this.isUpating(next, refs);
+      case 'EXITING':
+        return this.isExiting(next, refs);
       default:
-        throw new Error('Invalid tick Type');
-      } 
+        throw new Error('Invalid Tick Type!');
+      }
     }
   }
 
-  isMounting(props, next, refs) {
-    let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
+  isEntering({xScale0, xScale1, tick: {data}, duration}, {tick}) {
 
-    let beg = next ? `translate(${xScale(data)},0)`: 'translate(0,0)';
-    let end = next ? `translate(${next.xScale(next.tick.data)},0)`: `translate(${xScale(data)},0)`;
+    let beg = `translate(${xScale0(data)},0)`;
+    let end = `translate(${xScale1(data)},0)`;
 
     let interp0 = interpolateTransformSvg(beg, end);
     let interp1 = interpolateNumber(1e-6, 1);
@@ -47,12 +45,10 @@ export class XAxisTick extends Component {
     });
   }
 
-  isUpating(props, next, refs) {
-    let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
+  isUpating({xScale0, xScale1, tick: {data}, duration}, {tick}) {
 
-    let beg = `translate(${xScale(data)},0)`;
-    let end = `translate(${next.xScale(next.tick.data)},0)`;
+    let beg = `translate(${xScale0(data)},0)`;
+    let end = `translate(${xScale1(data)},0)`;
 
     let interp0 = interpolateTransformSvg(beg, end);
     let interp1 = interpolateNumber(tick.getAttribute('opacity'), 1);
@@ -67,12 +63,10 @@ export class XAxisTick extends Component {
     });
   }
 
-  isRemoving(props, next, refs) {
-    let {tick} = refs;
-    let {xScale, tick: {data}, duration} = props;
+  isExiting({xScale0, xScale1, tick: {udid, data}, removeTick, duration}, {tick}) {
 
-    let beg = `translate(${xScale(data)},0)`;
-    let end = `translate(${next.xScale(next.tick.data)},0)`;
+    let beg = `translate(${xScale0(data)},0)`;
+    let end = `translate(${xScale1(data)},0)`;
 
     let interp0 = interpolateTransformSvg(beg, end);
     let interp1 = interpolateNumber(tick.getAttribute('opacity'), 1e-6);
@@ -83,6 +77,7 @@ export class XAxisTick extends Component {
       tick.setAttribute('opacity', interp1(t));
       if (t === 1) {
         this.transition.stop();
+        removeTick(udid);
       }
     });
   }
@@ -92,16 +87,13 @@ export class XAxisTick extends Component {
   }
 
   render() {
-    let {yScale, tick: {text}} = this.props;
-
-    let yRange = yScale.range();
+    let {yHeight, tick: {text}} = this.props;
 
     return (
       <g ref='tick' opacity={1e-6}>
         <line
-          style={{pointerEvents: 'none'}}
-          x1={0} y1={yRange[0]}
-          x2={0} y2={yRange[1]}
+          x1={0} y1={0}
+          x2={0} y2={yHeight}
           opacity={0.2}
           stroke='#fff'
         />
@@ -120,12 +112,12 @@ XAxisTick.propTypes = {
   tick: PropTypes.shape({
     udid: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
-    xVal: React.PropTypes.number.isRequired,
     data: React.PropTypes.object.isRequired,
     text: React.PropTypes.string.isRequired
   }).isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
+  xScale0: PropTypes.func.isRequired,
+  xScale1: PropTypes.func.isRequired,
+  yHeight: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
   removeTick: PropTypes.func.isRequired
 };

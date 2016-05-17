@@ -11,13 +11,13 @@ let [data, names, dates] = getInitialValues(150);
 
 let initialState = {
   data: data,               // The raw dataset with all names and dates
-  view: [500, 325],         // ViewBox: Width, Height
+  view: [500, 275],         // ViewBox: Width, Height
   trbl: [15, 10, 10, 40],   // Margins: Top, Right, Bottom, Left
   names: names,             // An object with fruti names and active flag
   dates: dates,             // An array of UTC dates in the data series
   offset: 'stacked',        // The current offset: stacked, stream or expanded
-  yScale: () => {},         // Ordinal y-scale
-  xScale: () => {},         // Linear x-scale
+  yScale: () => {},         // y-scale default value
+  xScale: () => {},         // x-scale default value
   mounted: {},              // Currently Mounted Nodes
   removed: {}               // Nodes removed since last update
 };

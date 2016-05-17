@@ -92,9 +92,17 @@ export class App extends Component {
       );
     });
 
-    let yAxis = null;
+    let yAxis = null, xAxis = null;
 
-    if (yScale.ticks && xScale.range) {
+    if (yScale.ticks && xScale.ticks) {
+      xAxis = (
+        <XAxis
+          xScale={xScale}
+          yScale={yScale}
+          format={dateFormat}
+          duration={duration}
+        />
+      );
       yAxis = (
         <YAxis
           xScale={xScale}
@@ -158,7 +166,7 @@ export class App extends Component {
             onMouseLeave={this.setActiveName.bind(this, '')}
           >
             <Table
-              height={'550px'}
+              height={'500px'}
               multiSelectable={true}
               wrapperStyle={{width: '100%'}}
               onCellClick={d => this.toggleName(d)}
@@ -171,18 +179,12 @@ export class App extends Component {
             </Table>
           </div>
           <div
-            className='col-md-8 col-sm-8'
+            className='col-md-9 col-sm-9'
             style={{padding: 0}}
             onMouseLeave={this.setActiveName.bind(this, '')} 
           >
             <Chart view={view} trbl={trbl}>
-              {pathNodes}{yAxis}
-              <XAxis
-                xScale={xScale}
-                yScale={yScale}
-                format={dateFormat}
-                duration={duration}
-              />
+              {pathNodes}{xAxis}{yAxis}
               <text
                 x={5} y={15} 
                 fill='#fff'

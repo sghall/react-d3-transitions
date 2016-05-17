@@ -7,29 +7,29 @@ export class XAxis extends Component {
     super(props);
 
     this.state = {
-      mounted: {}
+      mounted: {},
+      xScale0: null,
+      xScale1: null
     };
   }
 
   componentDidMount() {
+    let {props, state} = this; 
     this.removed = {};
-    this.update(this.props, this.state);
+    this.update(props, props, state);
   }
 
   componentWillReceiveProps(next) {
+    let {props, state} = this; 
     if (this.props.xScale !== next.xScale) {
-      this.update(next, this.state);
+      this.update(next, props, state);
     }
   }
 
-  update({xScale, format}, {mounted}) {
-
-    if (!xScale.ticks) {
-      return;
-    }
+  update({xScale, format}, props, {mounted}) {
 
     let nodes = {};
-    let ticks = xScale.ticks(5);
+    let ticks = xScale.ticks();
 
     for (let i = 0; i < ticks.length; i++) {
       let val = ticks[i];
@@ -37,16 +37,15 @@ export class XAxis extends Component {
 
       nodes[key] = {
         udid: key,
-        data: val,
-        xVal: xScale(val)
+        data: val
       };
 
       if (mounted[key] && !this.removed[key]) {
         nodes[key].text = mounted[key].text,
         nodes[key].type = 'UPDATING';
       } else {
-        nodes[key].text = format(val);
-        nodes[key].type = 'MOUNTING';
+        nodes[key].text = format(val),
+        nodes[key].type = 'ENTERING';
       }
     }
 
@@ -56,8 +55,7 @@ export class XAxis extends Component {
           udid: mounted[key].udid,
           data: mounted[key].data,
           text: mounted[key].text,
-          xVal: mounted[key].xVal,
-          type: 'REMOVING'
+          type: 'EXITING'
         };
       }
     }
@@ -65,7 +63,9 @@ export class XAxis extends Component {
     this.removed = {};
 
     this.setState({
-      mounted: nodes
+      mounted: nodes,
+      xScale0: props.xScale,
+      xScale1: xScale
     });
   }
 
@@ -74,15 +74,15 @@ export class XAxis extends Component {
   }
 
   render() {
-    let {mounted} = this.state;
-    let {xScale, yScale, duration} = this.props;
+    let {state: {mounted, xScale0, xScale1}, props: {duration, yScale}} = this;
 
     let ticks = Object.keys(mounted).map(key => {
       let tick = mounted[key];
       return (
         <XAxisTick
           key={key} tick={tick}
-          xScale={xScale} yScale={yScale}
+          xScale0={xScale0} xScale1={xScale1}
+          yHeight={yScale.range()[0]}
           duration={duration}
           removeTick={this.removeTick.bind(this)}
         />
