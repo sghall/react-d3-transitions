@@ -109,7 +109,7 @@ export class App extends Component {
           showExpandableButton={false}
         />
         <div className='row' style={{marginLeft: 0, marginRight: 0}}>
-          <div className='col-md-6'>
+          <div className='col-md-6 col-sm-6'>
             <span>Show Top {showTopN} States:</span>
             <Slider
               style={{margin: '5px 0px'}}
@@ -118,7 +118,7 @@ export class App extends Component {
               onDragStop={() => dispatch(updateTopCount(showTopN))}
             />
           </div>
-          <div className='col-md-6'>
+          <div className='col-md-6 col-sm-6'>
             <span>Transition Duration: {(duration / 1000).toFixed(1)} Seconds</span>
             <Slider
               style={{margin: '5px 0px'}}
@@ -128,13 +128,13 @@ export class App extends Component {
           </div>
         </div>
         <div className='row' style={{margin: '20px 0px'}}>
-          <div className='col-md-12'>
+          <div className='col-md-12 col-sm-12'>
             <h4 style={{marginTop: -45, marginBottom: -10}}>Top States by Age Bracket, 2008</h4>
             <p>The bar chart shows the top states for the selected age bracket sorted by population percentage.</p>
           </div>
         </div>
         <div className='row'>
-          <div className='col-md-3'>
+          <div className='col-md-3 col-sm-3'>
             <Table
               wrapperStyle={{width: '100%'}} 
               onCellClick={d => dispatch(updateSortOrder(ages[d]))}
@@ -144,7 +144,7 @@ export class App extends Component {
               </TableBody>
             </Table>
           </div>
-          <div className='col-md-9' style={{padding: 0}}>
+          <div className='col-md-9 col-sm-9' style={{padding: 0}}>
             <Chart view={view} trbl={trbl}>
               {barNodes}{axis}
             </Chart>
