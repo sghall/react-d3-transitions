@@ -1,15 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
-// Material UI Components
 import {Card, CardHeader } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import { Chart } from '../components/Chart';
+import { Text } from '../components/Text';
+import { removeItem } from '../actions';
 
-import { Chart } from './Chart';
-import { Text } from './Text';
-import { removeItem } from '../actions/exampleActions';
-
-export class Example extends Component {
+export class App extends Component {
 
   removeItem(letter) {
     let { dispatch } = this.props;
@@ -52,44 +49,19 @@ export class Example extends Component {
             </Chart>
           </div>
         </div>
-        <hr />
-        <div className='row'>
-          <div className='col-md-12'>
-            <div className='pull-left'>
-              <FlatButton
-                linkButton={true}
-                label='Mike Bostock Original'
-                href='https://bost.ocks.org/mike/constancy/'
-                target='_blank'
-              />
-            </div>
-            <div className='pull-right'>
-              <FlatButton
-                linkButton={true}
-                label='GitHub Link'
-                href='https://github.com/callemall/material-ui'
-                target='_blank'
-              />
-            </div>
-          </div>
-        </div>
       </Card>
     );
   }
 }
 
-Example.propTypes = {
+App.propTypes = {
   mounted: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-  const { example } = state;
-
-  return {
-    mounted: example.mounted
-  };
+  return {mounted: state.mounted};
 }
 
-export default connect(mapStateToProps)(Example);
+export default connect(mapStateToProps)(App);
 

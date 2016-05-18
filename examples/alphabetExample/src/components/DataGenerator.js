@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { shuffle } from 'd3-array';
-import { dataUpdate } from '../actions/exampleActions';
+import { dataUpdate } from '../actions';
 
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
