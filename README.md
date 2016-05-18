@@ -19,7 +19,7 @@ Download the repo...
 $ cd examples/stackedChartExample
 $ npm install
 $ webpack
-$ python -m SimpleHTTPServer 7070 (or use your favorite local server!)
+$ python -m SimpleHTTPServer 7070 (on Mac or use your favorite local server!)
 
 Go to http://localhost:7070/
 ```
@@ -38,7 +38,7 @@ Download the repo...
 $ cd examples/barChartExample
 $ npm install
 $ webpack
-$ python -m SimpleHTTPServer 7070 (or use your favorite local server!)
+$ python -m SimpleHTTPServer 7070 (on Mac or use your favorite local server!)
 
 Go to http://localhost:7070/
 ```
@@ -57,7 +57,7 @@ Download the repo...
 $ cd examples/alphabetExample
 $ npm install
 $ webpack
-$ python -m SimpleHTTPServer 7070 (or use your favorite local server!)
+$ python -m SimpleHTTPServer 7070 (on Mac or use your favorite local server!)
 
 Go to http://localhost:7070/
 ```
