@@ -5,6 +5,8 @@ There is no use of React's findDOMNode or D3's select or selectAll in these exam
 
 The repo contains several examples of using React 15.0 in conjunction with the new D3 4.0 ES6 modules.  To make it clear what the dependencies are, each example is a mini Redux app that you can check out locally using the instructions below.
 
+For the moment I consider these prototypes. Comments, suggestions and criticism are welcome!!
+
 The only assumptions are that you have Webpack and ES Lint installed globally...
 ```html
 npm install webpack eslint -g
