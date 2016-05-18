@@ -130,7 +130,7 @@ export class App extends Component {
         <div className='row' style={{margin: '20px 0px'}}>
           <div className='col-md-12 col-sm-12'>
             <h4 style={{marginTop: -45, marginBottom: -10}}>Top States by Age Bracket, 2008</h4>
-            <p>The bar chart shows the top states for the selected age bracket sorted by population percentage.</p>
+            <p>The bar chart shows the top states for the selected age bracket sorted by population percentage. Adapted from Mike Bostock's <a href='https://bost.ocks.org/mike/constancy/'>classic example</a> on object constancy.</p>
           </div>
         </div>
         <div className='row'>
