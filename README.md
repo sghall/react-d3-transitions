@@ -1,9 +1,9 @@
 <h2>React D3 Chart Transitions</h2>
-<h4>Smooth D3 transitions in React with no contention over the DOM</h4>
+<h4>A Pattern for smooth D3 transitions in React with no contention over the DOM</h4>
 
-There is no use of React's findDOMNode or D3's select, or selectAll in these examples.  In fact, D3 selection code is not even bundled in the build.
+There is no use of React's findDOMNode or D3's select or selectAll in these examples. In fact, D3 selection code is not even bundled in the build. React is in control of what is in the DOM and D3 interpolators handle transitions between states.
 
-The repo contains several examples of using React 15.0 in conjunction with the new D3 4.0 ES6 modules.  Each example is a mini Redux app that you can check out locally using the instructions below.
+The repo contains several examples of using React 15.0 in conjunction with the new D3 4.0 ES6 modules.  To make it clear what the dependencies are, each example is a mini Redux app that you can check out locally using the instructions below.
 
 The only assumptions are that you have Webpack and ES Lint installed globally...
 ```html
