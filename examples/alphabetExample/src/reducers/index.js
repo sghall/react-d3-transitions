@@ -3,11 +3,7 @@ import {
   EXAMPLE_REMOVE_ITEM
 } from '../actions';
 
-let colors = {
-  mounting: '#CDDC39',
-  updating: '#FAFAFA',
-  removing: '#F44336'
-};
+let colors = {entering: '#CDDC39', updating: '#FAFAFA', exiting: '#F44336'};
 
 function processUpdate(state, data) {
   let result = {};
@@ -25,14 +21,14 @@ function processUpdate(state, data) {
       result[letter] = {
         udid: letter,
         fill: colors['updating'],
-        type: 'updating',
+        type: 'UPDATING',
         xVal: cursor * 32
       };
     } else {
       result[letter] = {
         udid: letter,
-        fill: colors['mounting'],
-        type: 'mounting',
+        fill: colors['entering'],
+        type: 'ENTERING',
         xVal: cursor * 32
       };
     }
@@ -42,8 +38,8 @@ function processUpdate(state, data) {
     if (!result[letter] && !state.removed[letter]) {
       result[letter] = {
         udid: letter,
-        fill: colors['removing'],
-        type: 'removing',
+        fill: colors['exiting'],
+        type: 'EXITING',
         xVal: state.mounted[letter].xVal
       };
     }
