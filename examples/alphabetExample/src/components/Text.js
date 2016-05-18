@@ -25,7 +25,7 @@ export class Text extends Component {
 
   componentWillReceiveProps(next) {
     let {
-      props: {node: {xVal, name }, removeItem}, refs: {node}
+      props: {node: {xVal, udid}, removeItem}, refs: {node}
     } = this;
 
     this.transition.stop();
@@ -48,7 +48,7 @@ export class Text extends Component {
         node.setAttribute('opacity', opacity);
         if (t === 1) {
           this.transition.stop();
-          removeItem(name);
+          removeItem(udid);
         }
       }); 
     }
@@ -59,15 +59,20 @@ export class Text extends Component {
   }
 
   render() {
-    let {props: {node: {name, fill}}} = this;
+    let {props: {node: {udid, fill}}} = this;
 
     return (
-      <text ref='node' dy='0.35em' fill={fill} opacity={1e-6}>{name}</text>
+      <text ref='node' dy='0.35em' fill={fill} opacity={1e-6}>{udid}</text>
     );
   }
 }
 
 Text.propTypes = {
-  node: PropTypes.object.isRequired,
+  node: PropTypes.shape({
+    udid: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    fill: PropTypes.string.isRequired,
+    xVal: PropTypes.number.isRequired
+  }).isRequired,
   removeItem: PropTypes.func.isRequired
 };

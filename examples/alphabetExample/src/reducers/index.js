@@ -23,14 +23,14 @@ function processUpdate(state, data) {
       cursor -= 1;
     } else if (state.mounted[letter] && !state.removed[letter]) {
       result[letter] = {
-        name: letter,
+        udid: letter,
         fill: colors['updating'],
         type: 'updating',
         xVal: cursor * 32
       };
     } else {
       result[letter] = {
-        name: letter,
+        udid: letter,
         fill: colors['mounting'],
         type: 'mounting',
         xVal: cursor * 32
@@ -41,7 +41,7 @@ function processUpdate(state, data) {
   for (let letter in state.mounted) {
     if (!result[letter] && !state.removed[letter]) {
       result[letter] = {
-        name: letter,
+        udid: letter,
         fill: colors['removing'],
         type: 'removing',
         xVal: state.mounted[letter].xVal
