@@ -1,7 +1,9 @@
 <h2>React D3 Chart Transitions</h2>
-<h4>Smooth transitions with no contention over the DOM</h4>
+<h4>Smooth D3 transitions in React with no contention over the DOM</h4>
 
-This repo contains several examples of using React 15.0 in conjunction with the new D3 4.0 ES6 modules.  Each example is a mini Redux app that you can check out locally using the instructions below.
+There is no use of React's findDOMNode or D3's select, or selectAll in these examples.  In fact, D3 selection code is not even bundled in the build.
+
+The repo contains several examples of using React 15.0 in conjunction with the new D3 4.0 ES6 modules.  Each example is a mini Redux app that you can check out locally using the instructions below.
 
 The only assumptions are that you have Webpack and ESlint installed globally...
 ```html
@@ -14,18 +16,19 @@ npm install webpack eslint -g
 ```html
 Download the repo...
 
-cd examples/stackedChartExample
-npm install
-webpack --watch
-python -m SimpleHTTPServer 7070 (or use your favorite local server!)
+$ cd examples/stackedChartExample
+$ npm install
+$ webpack
+$ python -m SimpleHTTPServer 7070 (or use your favorite local server!)
 
 Go to http://localhost:7070/
+```
 
 For better performance you can use the production webpack config...
-webpack --config webpack.prod.config.js --progress --profile --colors
-
-For even better performance you can remove the redux-logger from store.js
+```html
+$ webpack --config webpack.prod.config.js --progress --profile --colors
 ```
+<strong>Hint: </strong>For even better performance you can remove the redux-logger from store.js
 
 <h3>Bar Chart Example</h3>
 <img src="README/bar.png" height="250px"/>
