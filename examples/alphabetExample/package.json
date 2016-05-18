@@ -1,16 +1,10 @@
 {
   "name": "alphabet-example",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sghall/chart-transitions-react.git"
   },
-  "author": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sghall/chart-transitions-react/issues"
@@ -19,13 +13,14 @@
   "dependencies": {
     "d3-array": "0.7.1",
     "d3-interpolate": "0.7.0",
-    "d3-timer": "0.4.1",
+    "d3-timer": "0.4.3",
     "material-ui": "0.15.0",
     "react": "15.0.2",
     "react-dom": "15.0.2",
-    "react-redux": "4.4.4",
+    "react-redux": "4.4.5",
     "react-tap-event-plugin": "1.0.0",
-    "redux": "3.4.0"
+    "redux": "3.5.2",
+    "redux-logger": "2.6.1"
   },
   "devDependencies": {
     "babel-core": "6.7.6",
