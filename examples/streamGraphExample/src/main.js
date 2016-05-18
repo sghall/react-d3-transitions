@@ -19,5 +19,5 @@ render(
     <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
       <App />
     </MuiThemeProvider>
-	</Provider>, document.getElementById('content')
+  </Provider>, document.getElementById('content')
 );

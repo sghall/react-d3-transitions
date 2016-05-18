@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { updatePaths, toggledName, removedNode, changeOffset } from '../actions';
+import { updatePaths, toggleName, removeNode, changeOffset } from '../actions';
 import { Table, TableRow, TableRowColumn, TableBody } from 'material-ui/table';
 import { Card, CardHeader } from 'material-ui/Card';
 import Slider from 'material-ui/Slider';
@@ -38,7 +38,7 @@ export class App extends Component {
 
   removeItem(key) {
     let {dispatch} = this.props;
-    dispatch(removedNode(key));
+    dispatch(removeNode(key));
   }
 
   setDuration(e, value) {
@@ -55,7 +55,7 @@ export class App extends Component {
 
   toggleName(index) {
     let { dispatch } = this.props;
-    dispatch(toggledName(index));
+    dispatch(toggleName(index));
   }
 
   render() {

@@ -1,18 +1,18 @@
-export const APP_REMOVED_NODE = 'APP_REMOVED_NODE';
-export const APP_TOGGLED_NAME = 'APP_TOGGLED_NAME';
+export const APP_REMOVE_NODE = 'APP_REMOVE_NODE';
+export const APP_TOGGLE_NAME = 'APP_TOGGLE_NAME';
 export const APP_UPDATE_PATHS = 'APP_UPDATE_PATHS';
 export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
 
-export function removedNode(udid) {
+export function removeNode(udid) {
   return {
-    type: APP_REMOVED_NODE,
+    type: APP_REMOVE_NODE,
     udid: udid
   };
 }
 
-export function toggledName(index) {
+export function toggleName(index) {
   return {
-    type: APP_TOGGLED_NAME,
+    type: APP_TOGGLE_NAME,
     index: index
   };
 }

@@ -1,6 +1,6 @@
 import {
-  APP_REMOVED_NODE,
-  APP_TOGGLED_NAME,
+  APP_REMOVE_NODE,
+  APP_TOGGLE_NAME,
   APP_UPDATE_PATHS,
   APP_CHANGE_OFFSET
 } from '../actions';
@@ -92,17 +92,16 @@ export function reducer(state = initialState, action) {
 
   switch (action.type) {
 
-  case APP_TOGGLED_NAME:
+  case APP_TOGGLE_NAME:
     return Object.assign({}, state, toggleNode(state, action));
 
-  case APP_REMOVED_NODE:
+  case APP_REMOVE_NODE:
     return Object.assign({}, state, {
       removed: removedNode(state, action.udid)
     });
 
   case APP_UPDATE_PATHS:
-    let { names, offset } = state;
-    return Object.assign({}, state, updateNodes(state, names, offset));
+    return Object.assign({}, state, updateNodes(state, state.names, state.offset));
 
   case APP_CHANGE_OFFSET:
     return Object.assign({}, state, updateNodes(state, state.names, action.name));
