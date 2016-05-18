@@ -82,8 +82,7 @@ function getUpdateHandler(keyFunc) {
       removed: {},
       sortKey: sortKey,
       xScale: x,
-      yScale: y,
-      isFetching: false
+      yScale: y
     };
   };
 }
