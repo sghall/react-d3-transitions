@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sghall/chart-transitions-react.git"
+    "url": "git+https://github.com/sghall/react-d3-transitions.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sghall/chart-transitions-react/issues"
+    "url": "https://github.com/sghall/react-d3-transitions/issues"
   },
-  "homepage": "https://github.com/sghall/chart-transitions-react#readme",
+  "homepage": "https://github.com/sghall/react-d3-transitions#readme",
   "dependencies": {
     "d3-format": "0.5.1",
     "d3-interpolate": "0.7.0",
