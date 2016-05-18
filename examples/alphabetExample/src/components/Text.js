@@ -7,7 +7,7 @@ const duration = 750;
 export class Text extends Component {
 
   componentDidMount() {
-    let {props: { data: { xVal }}, refs: { node }} = this;
+    let {props: {node: {xVal}}, refs: {node}} = this;
 
     node.setAttribute('x', xVal);
 
@@ -25,13 +25,13 @@ export class Text extends Component {
 
   componentWillReceiveProps(next) {
     let {
-      props: { data: { xVal, name }, removeItem }, refs: { node }
+      props: {node: {xVal, name }, removeItem}, refs: {node}
     } = this;
 
     this.transition.stop();
 
-    if (next.data.type === 'updating') {
-      let interp = interpolateNumber(xVal, next.data.xVal);
+    if (next.node.type === 'updating') {
+      let interp = interpolateNumber(xVal, next.node.xVal);
       this.transition = timer(elapsed => {
         let t = elapsed < duration ? (elapsed / duration): 1;
         node.setAttribute('x', interp(t));
@@ -59,7 +59,7 @@ export class Text extends Component {
   }
 
   render() {
-    let {props: {data: { name, fill }}} = this;
+    let {props: {node: {name, fill}}} = this;
 
     return (
       <text ref='node' dy='0.35em' fill={fill} opacity={1e-6}>{name}</text>
@@ -68,6 +68,6 @@ export class Text extends Component {
 }
 
 Text.propTypes = {
-  data: PropTypes.object.isRequired,
+  node: PropTypes.object.isRequired,
   removeItem: PropTypes.func.isRequired
 };
