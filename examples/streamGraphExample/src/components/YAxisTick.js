@@ -112,10 +112,10 @@ export class YAxisTick extends Component {
 
 YAxisTick.propTypes = {
   tick: PropTypes.shape({
-    udid: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-    data: React.PropTypes.number.isRequired,
-    text: React.PropTypes.string.isRequired
+    udid: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    data: PropTypes.number.isRequired,
+    text: PropTypes.string.isRequired
   }).isRequired,
   yScale0: PropTypes.func.isRequired,
   yScale1: PropTypes.func.isRequired,

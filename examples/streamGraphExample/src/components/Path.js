@@ -94,9 +94,9 @@ export class Path extends Component {
 Path.propTypes = {
   fill: PropTypes.string.isRequired,
   node: PropTypes.shape({
-    udid: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-    path: React.PropTypes.string.isRequired
+    udid: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired
   }).isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

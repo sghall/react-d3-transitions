@@ -126,10 +126,10 @@ export class Bar extends Component {
 
 Bar.propTypes = {
   node: PropTypes.shape({
-    udid: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-    xVal: React.PropTypes.number.isRequired,
-    yVal: React.PropTypes.number.isRequired
+    udid: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    xVal: PropTypes.number.isRequired,
+    yVal: PropTypes.number.isRequired
   }).isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

@@ -111,10 +111,10 @@ export class XAxisTick extends Component {
 
 XAxisTick.propTypes = {
   tick: PropTypes.shape({
-    udid: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-    data: React.PropTypes.object.isRequired,
-    text: React.PropTypes.string.isRequired
+    udid: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    data: PropTypes.object.isRequired,
+    text: PropTypes.string.isRequired
   }).isRequired,
   xScale0: PropTypes.func.isRequired,
   xScale1: PropTypes.func.isRequired,
