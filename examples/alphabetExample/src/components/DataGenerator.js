@@ -2,6 +2,7 @@ import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { shuffle } from 'd3-array';
 import { dataUpdate } from '../actions';
+import { interval } from 'd3-timer';
 
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -12,7 +13,7 @@ export class DataGenerator extends Component {
 
     dispatch(dataUpdate(alphabet));
 
-    setInterval(() => {
+    interval(() => {
       dispatch(dataUpdate(shuffle(alphabet)
         .slice(0, Math.floor(Math.random() * 26))
         .sort()));
