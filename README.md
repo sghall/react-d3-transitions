@@ -40,8 +40,8 @@ $ webpack --config webpack.prod.config.js --progress --profile --colors
 <strong>Hint: </strong>For even better performance you can remove the redux-logger from store.js
 
 <h3>Stacked Chart Example</h3>
-<img src="README/stacked.png" height="250px"/>
 <a href='http://projects.delimited.io/experiments/react-d3/stackedChartExample/'>Live Demo of Example</a><br />
+<img src="README/stacked.png" height="250px"/>
 ```html
 Download the repo and cd into the folder...
 
@@ -60,8 +60,8 @@ $ webpack --config webpack.prod.config.js --progress --profile --colors
 <strong>Hint: </strong>For even better performance you can remove the redux-logger from store.js
 
 <h3>Alphabet Example</h3>
-<img src="README/alphabet.png" height="250px"/>
 <a href='http://projects.delimited.io/experiments/react-d3/alphabetExample/'>Live Demo of Example</a><br />
+<img src="README/alphabet.png" height="250px"/>
 ```html
 Download the repo and cd into the folder...
 
