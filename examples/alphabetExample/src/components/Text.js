@@ -34,6 +34,7 @@ export class Text extends Component {
     node.setAttribute('x', xVal);
 
     let interp = interpolateObject({opacity: 1e-6, y: 0}, {opacity: 1, y: 200});
+
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
       let {opacity, y } = interp(t);
@@ -48,6 +49,7 @@ export class Text extends Component {
   isUpating({node: {xVal, udid}, removeItem}, next, {node}) {
 
     let interp = interpolateNumber(xVal, next.node.xVal);
+
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
       node.setAttribute('x', interp(t));
@@ -58,6 +60,7 @@ export class Text extends Component {
   }
 
   isExiting({node: {udid}, removeItem}, {node}) {
+
     let interp = interpolateObject({y: 200, opacity: 1}, {y: 400, opacity: 1e-6});
 
     this.transition = timer(elapsed => {
