@@ -3,6 +3,8 @@
 
 There is no use of React's findDOMNode or D3's select or selectAll in these examples (even in the axes). In fact, D3 selection code is not even bundled in the build. React is in control of what is in the DOM and D3 interpolators handle transitions between states.
 
+Interested? Read the <a href='http://www.delimited.io/blog/2016/5/18/react-and-d3-40'>blog post.</a><br />
+
 <h3>Checkout the live demos:</h3>
 <a href='http://projects.delimited.io/experiments/react-d3/barChartExample/'>Bar Chart Example</a><br />
 <a href='http://projects.delimited.io/experiments/react-d3/stackedChartExample/'>Stacked Chart Example</a><br />
