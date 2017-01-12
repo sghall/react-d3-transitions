@@ -10,7 +10,7 @@ Interested? Read the <a href='http://www.delimited.io/blog/2016/5/18/react-and-d
 <a href='http://projects.delimited.io/experiments/react-d3/stackedChartExample/'>Stacked Chart Example</a><br />
 <a href='http://projects.delimited.io/experiments/react-d3/alphabetExample/'>Alphabet Example</a><br />
 
-The repo contains several examples of using React 15.0 in conjunction with the new D3 4.0 ES6 modules.  To make it clear what the dependencies are, each example is a mini Redux app with its own package.json that you can check out locally using the instructions below.
+The repo contains several examples of using React 15 in conjunction with the new D3 4.0+ ES6 modules.  To make it clear what the dependencies are, each example is a mini Redux app with its own package.json that you can check out locally using the instructions below.
 
 <strong>For the moment I consider these prototypes. Comments, suggestions and criticism are welcome!!</strong>
 
