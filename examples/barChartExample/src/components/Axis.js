@@ -11,6 +11,8 @@ export class Axis extends Component {
       xScale0: null,
       xScale1: null
     };
+
+    this.removeTick = this.removeTick.bind(this);
   }
 
   componentDidMount() {
@@ -81,10 +83,11 @@ export class Axis extends Component {
       return (
         <AxisTick
           key={key} tick={tick}
-          xScale0={xScale0} xScale1={xScale1}
+          xScale0={xScale0}
+          xScale1={xScale1}
           yHeight={yScale.range()[1]}
           duration={duration}
-          removeTick={this.removeTick.bind(this)}
+          removeTick={this.removeTick}
         />
       );
     });
