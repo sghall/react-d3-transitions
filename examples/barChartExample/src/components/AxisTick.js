@@ -28,7 +28,6 @@ export class AxisTick extends Component {
   }
 
   isEntering({xScale0, xScale1, tick: {data}, duration}, {tick}) {
-
     let beg = `translate(${xScale0(data)},0)`;
     let end = `translate(${xScale1(data)},0)`;
 
@@ -39,6 +38,7 @@ export class AxisTick extends Component {
       let t = elapsed < duration ? (elapsed / duration): 1;
       tick.setAttribute('transform', interp0(t));
       tick.setAttribute('opacity', interp1(t));
+
       if (t === 1) {
         this.transition.stop();
       }
@@ -46,7 +46,6 @@ export class AxisTick extends Component {
   }
 
   isUpating({xScale0, xScale1, tick: {data}, duration}, {tick}) {
-
     let beg = `translate(${xScale0(data)},0)`;
     let end = `translate(${xScale1(data)},0)`;
 
@@ -55,8 +54,10 @@ export class AxisTick extends Component {
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
+
       tick.setAttribute('transform', interp0(t));
       tick.setAttribute('opacity', interp1(t));
+
       if (t === 1) {
         this.transition.stop();
       }
@@ -64,7 +65,6 @@ export class AxisTick extends Component {
   }
 
   isExiting({xScale0, xScale1, tick: {udid, data}, removeTick, duration}, {tick}) {
-
     let beg = `translate(${xScale0(data)},0)`;
     let end = `translate(${xScale1(data)},0)`;
 
@@ -73,8 +73,10 @@ export class AxisTick extends Component {
 
     this.transition = timer(elapsed => {
       let t = elapsed < duration ? (elapsed / duration): 1;
+
       tick.setAttribute('transform', interp0(t));
       tick.setAttribute('opacity', interp1(t));
+
       if (t === 1) {
         this.transition.stop();
         removeTick(udid);
