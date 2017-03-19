@@ -11,8 +11,7 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.md', '.txt'],
     alias: {
-      docs: path.resolve(__dirname, '../docs'),
-      resonance: path.resolve(__dirname, '../src'),
+      docs: path.resolve(__dirname, '../react-d3-transitions'),
     },
   },
   devServer: {
