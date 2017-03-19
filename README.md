@@ -10,3 +10,4 @@ To run the examples in this repo...
 1. Clone the repo and cd into the directory
 2. npm install
 3. npm start
+4. got to http://localhost:3000/
