@@ -64,9 +64,6 @@ const config = {
       },
     ],
   },
-  eslint: {
-    configFile: '../.eslintrc',
-  },
 };
 
 module.exports = config;
