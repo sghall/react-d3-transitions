@@ -4,12 +4,6 @@
 import Home from './Home';
 import AppFrame from '../components/AppFrame';
 
-import SurfaceDocs from './documentation/Surface';
-import NodeGroupDocs from './documentation/NodeGroup';
-import TickGroupDocs from './documentation/TickGroup';
-
-const docContext = require.context('!raw-loader!./documentation', true);
-
 import store, { injectReducer } from '../store';
 
 const routes = {
