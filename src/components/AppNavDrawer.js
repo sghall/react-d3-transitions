@@ -77,27 +77,6 @@ class AppNavDrawer extends Component {
           onChange={onChangeList}
         >
           <ListItem
-            primaryText="Documentation"
-            primaryTogglesNestedList
-            nestedItems={[
-              <ListItem
-                primaryText="Surface"
-                value="/documentation/surface"
-                href="#/documentation/surface"
-              />,
-              <ListItem
-                primaryText="NodeGroup"
-                value="/documentation/node-group"
-                href="#/documentation/node-group"
-              />,
-              <ListItem
-                primaryText="TickGroup"
-                value="/documentation/tick-group"
-                href="#/documentation/tick-group"
-              />,
-            ]}
-          />
-          <ListItem
             primaryText="Examples"
             primaryTogglesNestedList
             nestedItems={[
