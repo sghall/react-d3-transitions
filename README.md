@@ -1,3 +1,7 @@
-# Docs
+# React-d3-transitions
 
-Todo - Put some great content here
+Update: March 18, 2017
+
+Deprecating this repo in favor of [resonance](https://github.com/sghall/resonance)!!
+
+Work continues over there.
